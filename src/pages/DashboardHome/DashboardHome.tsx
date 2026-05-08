@@ -9,11 +9,26 @@ import { FocusTypesChart } from './components/charts/FocusTypesChart';
 import { FocusFoundChart } from './components/charts/FocusFoundChart';
 import { RegionChart } from './components/charts/RegionChart';
 import { AgentPerformanceChart } from './components/charts/Agentperformancechhart';
+import { userService } from '../../services/User.service';
+import type { UserDetails } from '../../types/user';
 
 export const DashboardHome = () => {
   const [loading, setLoading] = useState(true);
   const [kpiData, setKpiData] = useState<KPIStats | null>(null);
   const [chartData, setChartData] = useState<ChartsResponse['charts'] | null>(null);
+  const [agents, setAgents] = useState<UserDetails[]>([]);
+
+  useEffect(() => {
+    const loadAgents = async () => {
+      const response = await userService.findAll();
+      if (response.success && response.users) {
+        // Filtra apenas quem é AGENT, se desejar
+        //const onlyAgents = response.users.filter(u => u.role === "AGENT");
+        setAgents(response.users);
+      }
+    };
+    loadAgents();
+  }, []);
 
   const initialFilters: DashboardFilters = {
     startDate: '',
@@ -90,12 +105,15 @@ export const DashboardHome = () => {
           {/* ID DO USUÁRIO / AGENTE */}
           <div className="filter-group">
             <label><User size={12}/> ID DO AGENTE (UUID)</label>
-            <input 
-              type="text" 
-              placeholder="Ex: 38b4aea1..."
-              value={filters.userId}
+            <select 
+              value={filters.userId} 
               onChange={(e) => setFilters({...filters, userId: e.target.value})}
-            />
+            >
+              <option value="">Todos os Agentes</option>
+              {agents.map(agent => (
+                <option key={agent.id} value={agent.id}>{agent.name}</option>
+              ))}
+            </select>
           </div>
 
           {/* LOCALIDADE (localityCode) */}
@@ -141,6 +159,7 @@ export const DashboardHome = () => {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
             <AgentPerformanceChart data={chartData.performanceByAgent} />
             <RegionChart data={chartData.visitsByRegion} />
+            <FocusFoundChart data={chartData.focusFoundPerPeriod} />
           </div>
         </div>
 
@@ -152,14 +171,14 @@ export const DashboardHome = () => {
           <div className="chart-card">
             <h3 className="chart-title">Resumo de Campo</h3>
             <div className="summary-list">
-               <div className="summary-item">
-                  <span>Taxa de Foco: </span>
-                  <strong>{kpiData?.infestationRate}%</strong>
-               </div>
-               <div className="summary-item">
-                  <span>Amostras/Visita: </span>
-                  <strong>{kpiData ? (kpiData.samplesCollected / kpiData.totalVisits).toFixed(2) : 0}</strong>
-               </div>
+                <div className="summary-item">
+                    <span>Taxa de Foco: </span>
+                    <strong>{kpiData?.infestationRate}%</strong>
+                </div>
+                <div className="summary-item">
+                    <span>Amostras/Visita: </span>
+                    <strong>{kpiData ? (kpiData.samplesCollected / kpiData.totalVisits).toFixed(2) : 0}</strong>
+                </div>
             </div>
           </div>
         </div>
