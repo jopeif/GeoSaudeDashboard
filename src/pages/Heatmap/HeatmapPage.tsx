@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { LayersControl, MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet.heat';
 import 'leaflet/dist/leaflet.css';
@@ -158,13 +158,43 @@ export const HeatmapPage = () => {
       <div className="map-wrapper-container">
         <MapContainer 
           center={[-5.148306510400497, -38.09915291438934]} 
-          zoom={14} // Aumentei um pouco o zoom para 14 para focar melhor na cidade
+          zoom={14} 
           className="leaflet-main-map"
         >
-          <TileLayer
-            attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          />
+          <LayersControl position="topright">
+            {/* Opção 1: Minimalista Claro (Padrão) */}
+            <LayersControl.BaseLayer checked name="Mapa Claro">
+              <TileLayer
+                attribution='&copy; CARTO'
+                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+              />
+            </LayersControl.BaseLayer>
+
+            {/* Opção 2: Minimalista Escuro */}
+            <LayersControl.BaseLayer name="Mapa Escuro">
+              <TileLayer
+                attribution='&copy; CARTO'
+                url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+              />
+            </LayersControl.BaseLayer>
+
+            {/* Opção 3: Satélite (Útil para ver terrenos baldios) */}
+            <LayersControl.BaseLayer name="Satélite">
+              <TileLayer
+                attribution='&copy; Esri'
+                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              />
+            </LayersControl.BaseLayer>
+
+            {/* Opção 4: Padrão (OpenStreetMap) */}
+            <LayersControl.BaseLayer name="Padrão">
+              <TileLayer
+                attribution='&copy; OpenStreetMap'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+            </LayersControl.BaseLayer>
+          </LayersControl>
+
           <HeatmapLayer points={points} />
         </MapContainer>
       </div>
