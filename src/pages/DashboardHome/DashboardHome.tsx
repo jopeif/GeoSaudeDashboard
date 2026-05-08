@@ -8,7 +8,7 @@ import { EvolutionChart } from './components/charts/EvolutionChart';
 import { FocusTypesChart } from './components/charts/FocusTypesChart';
 import { FocusFoundChart } from './components/charts/FocusFoundChart';
 import { RegionChart } from './components/charts/RegionChart';
-import { AgentPerformanceChart } from './components/charts/Agentperformancechhart';
+import { AgentPerformanceChart } from './components/charts/AgentPerformanceChart';
 import { userService } from '../../services/User.service';
 import type { UserDetails } from '../../types/user';
 
@@ -156,8 +156,10 @@ export const DashboardHome = () => {
         <div className="main-charts-column">
           <EvolutionChart data={chartData.evolution} periodType={filters.groupBy} />
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+          <div style={{ gap: '24px' }}>
             <AgentPerformanceChart data={chartData.performanceByAgent} />
+          </div>
+          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px'}}>
             <RegionChart data={chartData.visitsByRegion} />
             <FocusFoundChart data={chartData.focusFoundPerPeriod} />
           </div>
