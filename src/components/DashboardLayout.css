@@ -129,3 +129,41 @@
     padding: 20px;
   }
 }
+
+/* No seu DashboardLayout.css, adicione/ajuste: */
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: #94a3b8; /* Cor suave para itens inativos */
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  margin: 2px 0;
+}
+
+.nav-link:hover {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
+
+.nav-link.active {
+  background-color: var(--primary-green);
+  color: white !important;
+}
+
+/* Para o ícone do ShieldCheck não ficar "colado" no topo */
+.sidebar-header {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #1e293b;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+}

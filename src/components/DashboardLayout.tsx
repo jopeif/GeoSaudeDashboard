@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, ShieldCheck } from 'lucide-react';
-import './DashboardLayout.css'; // Importando o CSS que criamos
+import { LayoutDashboard, LogOut, ShieldCheck, Map } from 'lucide-react'; // Importado Map
+import './DashboardLayout.css';
 
 export const DashboardLayout = () => {
   const navigate = useNavigate();
@@ -15,13 +15,24 @@ export const DashboardLayout = () => {
     <div className="app-container">
       <aside className="sidebar">
         <div className="sidebar-header">
-          <ShieldCheck size={24} color="#469472" /> {/* Verde institucional */}
+          <ShieldCheck size={24} color="#469472" />
           <span>GeoSaúde</span>
         </div>
 
         <nav className="nav-menu">
-          <NavLink to="/dashboard" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+          <NavLink 
+            to="/dashboard" 
+            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+          >
             <LayoutDashboard size={18} /> Dashboard
+          </NavLink>
+          
+          {/* Novo Link para o Mapa de Calor */}
+          <NavLink 
+            to="/heatmap" 
+            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+          >
+            <Map size={18} /> Mapa de Calor
           </NavLink>
         </nav>
 

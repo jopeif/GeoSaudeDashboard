@@ -2,7 +2,8 @@ import api from '../api/client';
 import type { 
   DashboardFilters, 
   KPIResponse, 
-  ChartsResponse 
+  ChartsResponse, 
+  HeatmapParams
 } from '../types/dashboard';
 
 export const dashboardService = {
@@ -24,5 +25,10 @@ export const dashboardService = {
       params: filters,
     });
     return data;
+  },
+
+  async getHeatmapData(params: HeatmapParams) {
+    const { data } = await api.get('/dashboard/heatmap', { params });
+    return data;  
   }
 };

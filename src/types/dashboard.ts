@@ -62,3 +62,14 @@ export interface ChartsResponse {
     evolution: EvolutionData[];
   };
 }
+
+export interface HeatmapParams {
+  startDate?: string;
+  endDate?: string;
+  userId?: string;
+  localityCode?: string;
+  minLat?: number;
+  minLng?: number;
+  maxLat?: number;
+  maxLng?: number;
+}

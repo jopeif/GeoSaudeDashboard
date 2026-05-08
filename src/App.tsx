@@ -3,6 +3,7 @@ import { type ReactElement } from 'react';
 import { LoginPage } from './pages/login/LoginPage';
 import { DashboardLayout } from './components/DashboardLayout';
 import { DashboardHome } from './pages/DashboardHome/DashboardHome';
+import { HeatmapPage } from './pages/Heatmap/HeatmapPage';
 
 // Componente simples para proteger as rotas
 const ProtectedRoute = ({ children }: { children: ReactElement }) => {
@@ -34,6 +35,8 @@ function App() {
         {/* Rota padrão ao entrar no sistema */}
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<DashboardHome />} />
+
+        <Route path="heatmap" element={< HeatmapPage/>} />
         
         {/* Outras rotas administrativas virão aqui */}
         {/* <Route path="relatorios" element={<ReportsPage />} /> */}

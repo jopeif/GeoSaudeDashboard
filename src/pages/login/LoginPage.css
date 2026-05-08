@@ -7,6 +7,8 @@
   --border-color: #e5e7eb;
 }
 
+
+
 .login-wrapper {
   min-height: 100vh;
   display: flex;
@@ -98,8 +100,25 @@
   box-shadow: 0 0 0 3px rgba(70, 148, 114, 0.1);
 }
 
+/* No topo do arquivo LoginPage.css */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Garanta que o wrapper da senha também ocupe 100% */
 .password-input-wrapper {
   position: relative;
+  width: 100%;
+}
+
+.form-group-mobile input {
+  width: 100%; /* Agora o padding será calculado DENTRO dos 100% */
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.2s;
+  display: block; /* Remove folgas de elementos inline */
 }
 
 .password-toggle-btn {

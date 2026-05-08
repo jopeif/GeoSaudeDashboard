@@ -88,16 +88,16 @@ export const LoginPage: React.FC = () => {
             </div>
           </div>
 
-          <span className="forgot-password-link">Esqueceu sua senha?</span>
+          {/* <span className="forgot-password-link">Esqueceu sua senha?</span> */}
 
           <button type="submit" disabled={isLoading} className="btn-submit-mobile">
             {isLoading ? 'Acessando...' : 'Entrar'}
           </button>
         </form>
 
-        <div className="login-footer-mobile">
+        {/* <div className="login-footer-mobile">
           <p>Não tem conta? <span className="link-green">Cadastre-se</span></p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
