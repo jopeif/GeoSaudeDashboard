@@ -2,8 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    // baseURL: 'https://geosaudeapi.onrender.com/', 
-    baseURL:'http://localhost:3000/'
+    baseURL: 'https://geosaudeapi.onrender.com', 
 });
 
 api.interceptors.request.use((config) => {
@@ -24,7 +23,7 @@ api.interceptors.response.use(
         const refreshToken = localStorage.getItem('@App:refreshToken');
 
         try {
-            const response = await axios.post('http://localhost:3000/auth/refresh-token/', { refreshToken });
+            const response = await axios.post('/refresh-token', { refreshToken });
             console.log(response)
             const { access_token, refresh_token } = response.data.user;
 
