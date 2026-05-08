@@ -4,7 +4,7 @@ import './DashboardLayout.css'; // Importando o CSS que criamos
 
 export const DashboardLayout = () => {
   const navigate = useNavigate();
-  const userName = localStorage.getItem('@App:userName') || "João Pedro"; 
+  const userName = localStorage.getItem('@App:userName') || "Usuário"; 
 
   const handleLogout = () => {
     localStorage.clear();
@@ -22,9 +22,6 @@ export const DashboardLayout = () => {
         <nav className="nav-menu">
           <NavLink to="/dashboard" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
             <LayoutDashboard size={18} /> Dashboard
-          </NavLink>
-          <NavLink to="/kpis" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-            <Users size={18} /> KPIs
           </NavLink>
         </nav>
 

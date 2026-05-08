@@ -6,6 +6,9 @@ import { Filter, Calendar, User, BarChart, MapPin } from 'lucide-react';
 import './DashboardHome.css';
 import { EvolutionChart } from './components/charts/EvolutionChart';
 import { FocusTypesChart } from './components/charts/FocusTypesChart';
+import { FocusFoundChart } from './components/charts/FocusFoundChart';
+import { RegionChart } from './components/charts/RegionChart';
+import { AgentPerformanceChart } from './components/charts/Agentperformancechhart';
 
 export const DashboardHome = () => {
   const [loading, setLoading] = useState(true);
@@ -127,13 +130,42 @@ export const DashboardHome = () => {
       </section>
 
       <KPISection data={kpiData} loading={loading} />
-      {chartData && (
-        <div className="charts-grid">
+
+    {chartData && (
+      <div className="dashboard-content-layout">
+        
+        {/* COLUNA PRINCIPAL: Tendências e Performance */}
+        <div className="main-charts-column">
           <EvolutionChart data={chartData.evolution} periodType={filters.groupBy} />
-          <FocusTypesChart data={chartData.focusTypes} />
-          {/* Outros gráficos aqui... */}
+          
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            <AgentPerformanceChart data={chartData.performanceByAgent} />
+            <RegionChart data={chartData.visitsByRegion} />
+          </div>
         </div>
-      )}
+
+        {/* COLUNA LATERAL: Distribuição e Resumo Rápido */}
+        <div className="side-charts-column">
+          <FocusTypesChart data={chartData.focusTypes} />
+          
+          {/* Card de Informação Extra (Despoluído) */}
+          <div className="chart-card">
+            <h3 className="chart-title">Resumo de Campo</h3>
+            <div className="summary-list">
+               <div className="summary-item">
+                  <span>Taxa de Foco: </span>
+                  <strong>{kpiData?.infestationRate}%</strong>
+               </div>
+               <div className="summary-item">
+                  <span>Amostras/Visita: </span>
+                  <strong>{kpiData ? (kpiData.samplesCollected / kpiData.totalVisits).toFixed(2) : 0}</strong>
+               </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    )}
     </div>
   );
 };
