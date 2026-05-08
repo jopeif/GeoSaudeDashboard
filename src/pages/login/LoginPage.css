@@ -1,0 +1,160 @@
+:root {
+  --app-bg: #d5e8dc;          /* Cor verde-água do fundo */
+  --card-bg: #ffffff;
+  --primary-green: #469472;   /* Verde do botão e logo */
+  --text-main: #111827;
+  --text-muted: #9ca3af;
+  --border-color: #e5e7eb;
+}
+
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--app-bg); /* Garante que o fundo mude */
+  padding: 20px;
+}
+
+.login-card-mobile {
+  background-color: var(--card-bg);
+  width: 100%;
+  max-width: 400px;
+  padding: 48px 32px;
+  border-radius: 32px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.login-app-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.mosquito-logo-placeholder {
+  background-color: var(--primary-green);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 7px;
+}
+
+.login-app-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.geo-destaque {
+  color: var(--primary-green);
+}
+
+.login-titles {
+  margin-bottom: 28px;
+}
+
+.login-intro {
+  font-size: 15px;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.login-large-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.login-form-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group-mobile label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.form-group-mobile input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.form-group-mobile input:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(70, 148, 114, 0.1);
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.password-toggle-btn svg {
+  width: 20px;
+}
+
+.forgot-password-link {
+  font-size: 13px;
+  color: var(--primary-green);
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: -10px;
+}
+
+.btn-submit-mobile {
+  background-color: var(--primary-green);
+  color: white;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.login-footer-mobile {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.link-green {
+  color: var(--primary-green);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-error-box {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  border-left: 4px solid #ef4444;
+}

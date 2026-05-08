@@ -1,0 +1,131 @@
+/* Container principal que segura a Sidebar e o Conteúdo */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--bg-main);
+}
+
+/* Sidebar Lateral */
+.sidebar {
+  width: 260px;
+  background-color: var(--sidebar-bg); /* O tom escuro #0f172a */
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.sidebar-header {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #1e293b;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* Menu de Navegação */
+.nav-menu {
+  flex: 1;
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: #94a3b8; /* Cor do texto não selecionado */
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: #1e293b;
+  color: white;
+}
+
+/* Estado Ativo (NavLink do React Router) */
+.nav-link.active {
+  background-color: var(--primary-green); /* Usando o verde institucional */
+  color: white;
+  box-shadow: 0 4px 12px rgba(70, 148, 114, 0.2);
+}
+
+/* Área de Conteúdo à Direita */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Header Superior */
+.header {
+  height: 70px;
+  min-height: 70px;
+  background-color: var(--white);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Container da Página (Onde o Outlet renderiza) */
+.page-container {
+  padding: 40px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Estilização do Botão de Sair específico */
+.btn-logout-sidebar {
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.btn-logout-sidebar:hover {
+  background-color: rgba(239, 68, 68, 0.1); /* Fundo vermelho suave */
+  color: #ef4444; /* Texto vermelho */
+}
+
+/* Ajustes Responsivos */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none; /* Em uma implementação futura, aqui entraria o menu hambúrguer */
+  }
+  .header {
+    padding: 0 20px;
+  }
+  .page-container {
+    padding: 20px;
+  }
+}

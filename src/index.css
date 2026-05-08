@@ -1,0 +1,28 @@
+/* Importando a fonte Inter do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* Variáveis de Cores Baseadas no Protótipo */
+:root {
+  --app-bg: #d5e8dc;          /* Verde-água claro do fundo */
+  --card-bg: #ffffff;          /* Branco do card */
+  --primary-green: #469472;   /* Verde institucional do botão e detalhes */
+  --text-main: #111827;        /* Cinza quase preto para textos principais */
+  --text-muted: #6b7280;      /* Cinza médio para labels e placeholders */
+  --border-color: #e5e7eb;    /* Cinza claro para bordas de input */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--app-bg);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Classes Utilitárias (vazias, se necessário, ou removidas se preferir) */
