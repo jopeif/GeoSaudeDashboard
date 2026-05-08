@@ -18,7 +18,7 @@ export const EvolutionChart = ({ data, periodType }: EvolutionChartProps) => {
     }
     if (periodType === 'day') {
       // Ex: 2024-05-07 -> 07/05
-      const [year, month, day] = tickItem.split('-');
+      const [ month, day] = tickItem.split('-');
       return `${day}/${month}`;
     }
     return tickItem; // Para 'week' mantemos o padrão da API ou formatamos conforme necessário
