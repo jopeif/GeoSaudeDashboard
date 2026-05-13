@@ -1,0 +1,278 @@
+/* src/pages/ProfilePage/ProfilePage.css */
+
+.profile-page {
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-back-btn {
+    width: fit-content;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: white;
+
+    border: 1px solid #dbe4ee;
+    border-radius: 12px;
+
+    padding: 10px 14px;
+
+    cursor: pointer;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    color: #334155;
+
+    transition: 0.2s;
+}
+
+.profile-back-btn:hover {
+    background: #f8fafc;
+}
+
+.profile-card {
+    background: white;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+.profile-banner {
+    height: 140px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #469472,
+            #5fb388
+        );
+}
+
+.profile-header {
+    padding: 0 32px;
+
+    margin-top: -48px;
+
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.profile-avatar {
+    width: 110px;
+    height: 110px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    border: 6px solid white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #469472;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.08);
+}
+
+.profile-main-info {
+    padding-bottom: 12px;
+}
+
+.profile-main-info h1 {
+    margin: 0;
+
+    font-size: 1.8rem;
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+.profile-role {
+    margin-top: 6px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    background: #ecfdf5;
+
+    color: #047857;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.profile-content {
+    padding: 32px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.profile-section h2 {
+    margin: 0;
+
+    font-size: 1.1rem;
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(240px, 1fr)
+    );
+
+    gap: 18px;
+}
+
+.profile-info-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+}
+
+.profile-info-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+    flex-shrink: 0;
+}
+
+.profile-info-card label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    color: #64748b;
+
+    text-transform: uppercase;
+}
+
+.profile-info-card span {
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    color: #0f172a;
+
+    word-break: break-word;
+}
+
+.system-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.system-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 20px;
+
+    border-radius: 16px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+}
+
+.system-info-row span {
+    color: #64748b;
+
+    font-weight: 600;
+}
+
+.system-info-row strong {
+    color: #0f172a;
+
+    font-size: 0.92rem;
+}
+
+.status-active {
+    color: #16a34a !important;
+}
+
+.status-banned {
+    color: #dc2626 !important;
+}
+
+@media (max-width: 768px) {
+    .profile-page {
+        padding: 16px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+
+        text-align: center;
+
+        padding: 0 20px;
+    }
+
+    .profile-main-info {
+        padding-bottom: 0;
+    }
+
+    .profile-content {
+        padding: 20px;
+    }
+
+    .system-info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}

@@ -1,0 +1,282 @@
+.agent-stats-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* =========================
+   KPI GRID
+========================= */
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.kpi-card {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #edf2f7;
+    border-radius: 20px;
+
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+
+    overflow: hidden;
+
+    transition: 0.2s ease;
+}
+
+.kpi-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background: #469472;
+}
+
+.kpi-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+}
+
+.kpi-icon-bg {
+    width: 54px;
+    height: 54px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+}
+
+.kpi-icon-bg svg {
+    stroke-width: 2.2;
+}
+
+/* VARIAÇÕES */
+
+.kpi-icon-bg.gray {
+    background: rgba(100, 116, 139, 0.12);
+    color: #64748b;
+}
+
+.kpi-icon-bg.green {
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+}
+
+.kpi-icon-bg.yellow {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+}
+
+.kpi-icon-bg.red {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+}
+
+/* =========================
+   KPI CONTENT
+========================= */
+
+.kpi-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    min-width: 0;
+}
+
+.kpi-content label {
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+
+    color: #94a3b8;
+}
+
+.kpi-content span {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+
+    color: #0f172a;
+}
+
+/* =========================
+   CHART CARD
+========================= */
+
+.chart-card-full {
+    background: #ffffff;
+
+    border: 1px solid #edf2f7;
+    border-radius: 24px;
+
+    padding: 24px;
+
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+
+    transition: 0.2s ease;
+}
+
+.chart-card-full:hover {
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.07);
+}
+
+.chart-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 24px;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+
+    color: #0f172a;
+}
+
+.chart-title svg {
+    color: #469472;
+}
+
+/* =========================
+   TOOLTIP / RECHARTS
+========================= */
+
+.recharts-default-tooltip {
+    border-radius: 14px !important;
+    border: 1px solid #e2e8f0 !important;
+
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08) !important;
+
+    padding: 12px 14px !important;
+}
+
+.recharts-tooltip-label {
+    font-weight: 700 !important;
+    margin-bottom: 6px !important;
+
+    color: #0f172a !important;
+}
+
+.recharts-legend-wrapper {
+    padding-top: 10px !important;
+}
+
+.recharts-legend-item-text {
+    color: #475569 !important;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.recharts-cartesian-axis-tick-value {
+    font-weight: 500;
+}
+
+/* =========================
+   SKELETON / LOADING
+========================= */
+
+.chart-placeholder.skeleton {
+    width: 100%;
+    height: 220px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(248, 250, 252, 0.9),
+            rgba(241, 245, 249, 0.9)
+        );
+
+    border: 1px solid #edf2f7;
+
+    color: #64748b;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 992px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-card-full {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .kpi-card {
+        padding: 18px;
+    }
+
+    .kpi-content span {
+        font-size: 26px;
+    }
+
+    .chart-title {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 540px) {
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kpi-card {
+        gap: 14px;
+    }
+
+    .kpi-icon-bg {
+        width: 48px;
+        height: 48px;
+    }
+
+    .kpi-content span {
+        font-size: 24px;
+    }
+
+    .chart-card-full {
+        padding: 16px;
+    }
+}

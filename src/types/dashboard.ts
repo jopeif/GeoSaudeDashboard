@@ -73,3 +73,13 @@ export interface HeatmapParams {
   maxLat?: number;
   maxLng?: number;
 }
+export interface AgentRouteParams {
+  userId: string;
+  startDate?: string;
+  endDate?: string;
+  localityCode?: string;
+  minLat?: number;
+  minLng?: number;
+  maxLat?: number;
+  maxLng?: number;
+}

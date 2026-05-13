@@ -1,17 +1,62 @@
+// src/App.tsx
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { type ReactElement } from 'react';
+
 import { LoginPage } from './pages/login/LoginPage';
+
 import { DashboardLayout } from './components/DashboardLayout';
+
 import { DashboardHome } from './pages/DashboardHome/DashboardHome';
 import { HeatmapPage } from './pages/Heatmap/HeatmapPage';
+import { NewVisitPage } from './pages/NewVisitPage/NewVisitPage';
+import { AgentsActivityPage } from './pages/AgentActivityPage/AgentActivityPage';
+import { AgentDetails } from './pages/AgentDetails/AgentDetails';
+import { VisitDetailsPage } from './pages/VisitDetailPage.tsx/VisitDetailsPage';
 
-// Componente simples para proteger as rotas
-const ProtectedRoute = ({ children }: { children: ReactElement }) => {
-  const token = localStorage.getItem('@App:token');
-  
-  if (!token) {
-    // Se não houver token, manda de volta para o login
+import { useAuth } from './contexts/AuthContext';
+import { ProfilePage } from './pages/ProfilePage/ProfilePage';
+
+interface ProtectedRouteProps {
+  children: ReactElement;
+}
+
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const { authenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          height: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '14px',
+          color: '#64748b',
+          background: '#f8fafc'
+        }}
+      >
+        Carregando...
+      </div>
+    );
+  }
+
+  if (!authenticated) {
     return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
+
+const PublicRoute = ({ children }: ProtectedRouteProps) => {
+  const { authenticated, loading } = useAuth();
+
+  if (loading) {
+    return null;
+  }
+
+  if (authenticated) {
+    return <Navigate to="/dashboard" replace />;
   }
 
   return children;
@@ -20,10 +65,17 @@ const ProtectedRoute = ({ children }: { children: ReactElement }) => {
 function App() {
   return (
     <Routes>
-      {/* Rota Pública */}
-      <Route path="/login" element={<LoginPage />} />
+      {/* ROTAS PÚBLICAS */}
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
 
-      {/* Rotas Privadas (Envolvidas pelo Layout e Proteção) */}
+      {/* ROTAS PRIVADAS */}
       <Route
         path="/"
         element={
@@ -32,18 +84,25 @@ function App() {
           </ProtectedRoute>
         }
       >
-        {/* Rota padrão ao entrar no sistema */}
         <Route index element={<Navigate to="/dashboard" replace />} />
+
         <Route path="dashboard" element={<DashboardHome />} />
 
-        <Route path="heatmap" element={< HeatmapPage/>} />
+        <Route path="heatmap" element={<HeatmapPage />} />
+
+        <Route path="new-visit" element={<NewVisitPage />} />
+
+        <Route path="agent" element={<AgentsActivityPage />} />
+
+        <Route path="agents/:id" element={<AgentDetails />} />
+
+        <Route path="visit/:id" element={<VisitDetailsPage />} />
         
-        {/* Outras rotas administrativas virão aqui */}
-        {/* <Route path="relatorios" element={<ReportsPage />} /> */}
+        <Route path="/profile" element={<ProfilePage/>}/>
       </Route>
 
-      {/* Redirecionamento de rotas inexistentes */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      {/* FALLBACK */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

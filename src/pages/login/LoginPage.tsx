@@ -1,31 +1,41 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '../../services/Auth.service';
-import "./LoginPage.css"
+import { Eye, EyeOff, ShieldAlert } from 'lucide-react';
+import logo from "../../imgs/logo.png"
+import { useAuth } from '../../contexts/AuthContext';
+
+import './LoginPage.css';
 
 export const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const { signIn } = useAuth();
+
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+
   const [showPassword, setShowPassword] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
+
   const [error, setError] = useState<string | null>(null);
-  
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+
     setError(null);
+    setIsLoading(true);
 
     try {
-      const data = await authService.login(login, password);
-      
-      if (data.success) {
-        navigate('/dashboard');
-      }
+      await signIn(login, password);
+
+      navigate('/dashboard');
     } catch (err: any) {
-      // Pega a mensagem da API ou um fallback amigável
-      const message = err.response?.data?.message || 'Erro ao conectar com o servidor.';
+      const message =
+        err?.response?.data?.message ||
+        err?.message ||
+        'Erro ao realizar login.';
+
       setError(message);
     } finally {
       setIsLoading(false);
@@ -35,69 +45,83 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="login-wrapper">
       <div className="login-card-mobile">
+        
         <div className="login-app-header">
           <div className="mosquito-logo-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
-                <path d="M12 8v4"/><path d="M12 16h.01"/>
-            </svg>
+            <img src={logo} alt="" />
           </div>
-          <h1>Geo<span className="geo-destaque">Saúde</span></h1>
+
+          <h1>
+            Geo<span className="geo-destaque">Saúde</span>
+          </h1>
         </div>
 
         <div className="login-titles">
-          <p className="login-intro">Bem vindo ao <span className="geo-destaque">GeoSaúde</span></p>
-          <h2 className="login-large-title">Login</h2>
+          <p className="login-intro">
+            Plataforma de Supervisão Epidemiológica
+          </p>
+
+          <h2 className="login-large-title">
+            Entrar no Sistema
+          </h2>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form-mobile">
-          {error && <div className="login-error-box">{error}</div>}
+          
+          {error && (
+            <div className="login-error-box">
+              {error}
+            </div>
+          )}
 
           <div className="form-group-mobile">
-            <label>Coloque seu e-mail</label>
+            <label>E-mail</label>
+
             <input
               type="email"
               required
-              placeholder="E-mail"
+              autoComplete="email"
+              placeholder="Digite seu e-mail"
               value={login}
               onChange={(e) => setLogin(e.target.value)}
             />
           </div>
 
           <div className="form-group-mobile">
-            <label>Coloque sua senha</label>
+            <label>Senha</label>
+
             <div className="password-input-wrapper">
               <input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 required
-                placeholder="Senha"
+                autoComplete="current-password"
+                placeholder="Digite sua senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button 
-                type="button" 
+
+              <button
+                type="button"
                 className="password-toggle-btn"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => setShowPassword(prev => !prev)}
               >
                 {showPassword ? (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9.88 9.88L14.12 14.12M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7ZM12 9a3 3 0 103 3M4.35 4.35l15.3 15.3"/></svg>
+                  <EyeOff size={18} />
                 ) : (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <Eye size={18} />
                 )}
               </button>
             </div>
           </div>
 
-          {/* <span className="forgot-password-link">Esqueceu sua senha?</span> */}
-
-          <button type="submit" disabled={isLoading} className="btn-submit-mobile">
-            {isLoading ? 'Acessando...' : 'Entrar'}
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="btn-submit-mobile"
+          >
+            {isLoading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
-
-        {/* <div className="login-footer-mobile">
-          <p>Não tem conta? <span className="link-green">Cadastre-se</span></p>
-        </div> */}
       </div>
     </div>
   );

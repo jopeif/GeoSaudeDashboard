@@ -3,7 +3,8 @@ import type {
   DashboardFilters, 
   KPIResponse, 
   ChartsResponse, 
-  HeatmapParams
+  HeatmapParams,
+  AgentRouteParams
 } from '../types/dashboard';
 
 export const dashboardService = {
@@ -30,5 +31,10 @@ export const dashboardService = {
   async getHeatmapData(params: HeatmapParams) {
     const { data } = await api.get('/dashboard/heatmap', { params });
     return data;  
+  },
+
+  async getAgentRoute(params: AgentRouteParams) {
+    const { data } = await api.get('/dashboard/agent-route', {params})
+    return data
   }
 };

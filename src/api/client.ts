@@ -1,51 +1,86 @@
 // src/api/client.ts
+
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://geosaudeapi.onrender.com', 
+    baseURL: 'https://geosaudeapi.onrender.com',
+});
+
+const refreshApi = axios.create({
+    baseURL: 'https://geosaudeapi.onrender.com',
 });
 
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('@App:token');
+
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
 });
 
 api.interceptors.response.use(
     (response) => response,
+
     async (error) => {
         const originalRequest = error.config;
 
         if (
-        error.response?.status === 401 &&
-        !originalRequest._retry &&
-        originalRequest.url !== '/auth/refresh-token'
+            error.response?.status === 401 &&
+            !originalRequest._retry &&
+            !originalRequest.url?.includes('/auth/refresh-token')
         ) {
-        originalRequest._retry = true;
+            originalRequest._retry = true;
 
-        const refreshToken = localStorage.getItem('@App:refreshToken');
+            const refreshToken =
+                localStorage.getItem('@App:refreshToken');
 
-        try {
-            const response = await api.post('/auth/refresh-token', {
-            refreshToken,
-            });
+            if (!refreshToken) {
+                window.location.href = '/login';
 
-            const { access_token, refresh_token } = response.data.user;
+                return Promise.reject(error);
+            }
 
-            localStorage.setItem('@App:token', access_token);
-            localStorage.setItem('@App:refreshToken', refresh_token);
+            try {
+                const response = await refreshApi.post(
+                    '/auth/refresh-token',
+                    {
+                        refreshToken,
+                    }
+                );
 
-            originalRequest.headers.Authorization = `Bearer ${access_token}`;
+                const accessToken =
+                    response.data.user.access_token;
 
-            return api(originalRequest);
-        } catch (refreshError) {
-            localStorage.clear();
-            window.location.href = '/login';
+                const newRefreshToken =
+                    response.data.user.refresh_token;
 
-            return Promise.reject(refreshError);
-        }
+                localStorage.setItem(
+                    '@App:token',
+                    accessToken
+                );
+
+                localStorage.setItem(
+                    '@App:refreshToken',
+                    newRefreshToken
+                );
+
+                originalRequest.headers.Authorization =
+                    `Bearer ${accessToken}`;
+
+                return api(originalRequest);
+
+            } catch (refreshError) {
+                localStorage.removeItem('@App:token');
+                localStorage.removeItem('@App:refreshToken');
+                localStorage.removeItem('@App:userId');
+                localStorage.removeItem('@App:role');
+
+                window.location.href = '/login';
+
+                return Promise.reject(refreshError);
+            }
         }
 
         return Promise.reject(error);
