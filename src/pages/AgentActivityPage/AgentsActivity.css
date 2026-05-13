@@ -91,6 +91,8 @@
 ========================= */
 
 .filter-group .kpi-value {
+    
+    font-size: 30px;
     display: flex;
     align-items: center;
 
@@ -108,8 +110,7 @@
         );
 
     color: white;
-    font-weight: 700;
-
+    font-weight: 600;
     box-shadow:
         0 10px 24px rgba(70, 148, 114, 0.22);
 }
@@ -373,9 +374,10 @@
     align-items: center;
     gap: 12px;
 
+    min-width: 220px; /* trava largura */
     height: 50px;
 
-    padding: 0 16px;
+    padding: 0 18px;
 
     border: 1px solid #dbe4ee;
     border-radius: 14px;
@@ -385,9 +387,8 @@
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
         border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        background 0.2s ease;
 }
 
 .toggle-btn:hover {
@@ -500,3 +501,4 @@
         justify-content: space-between;
     }
 }
+

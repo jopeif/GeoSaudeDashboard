@@ -8,6 +8,48 @@ import { visitService } from '../../services/Visit.service';
 import './VisitDetailsPage.css';
 import type { FindVisitByIdDTOOutput } from '../../types/visit';
 
+const propertyTypeLabels: Record<string, string> = {
+    HOUSE: 'Casa',
+    APARTMENT: 'Apartamento',
+    RESIDENTIAL: 'Residencial',
+    COMMERCIAL: 'Comercial',
+    VACANT_LOT: 'Terreno Baldio',
+    OTHER: 'Outro'
+};
+
+const visitTypeLabels: Record<string, string> = {
+    ROUTINE: 'Rotina',
+    PENDENCY: 'Pendência',
+    SPECIAL: 'Especial',
+    RETURN: 'Retorno',
+    SURVEY: 'Levantamento'
+};
+
+const larvicideLabels: Record<string, string> = {
+    PYRIPROXYFEN: 'Piriproxifeno',
+    BTI: 'BTI',
+    TEMEPHOS: 'Temefós',
+    OTHER: 'Outro'
+};
+
+const depositTypeLabels: Record<string, string> = {
+    A1: 'Elevado',
+    A2: 'Reservatório ao nível do solo',
+    B: 'Móvel',
+    C: 'Fixo',
+    D1: 'Pneu',
+    D2: 'Lixo/Sucata',
+    E: 'Natural'
+};
+
+const pendingReasonLabels: Record<string, string> = {
+    ABSENT:"Ausente",
+    CLOSED_HOUSE: 'Imóvel fechado',
+    REFUSED_ENTRY: 'Entrada recusada',
+    EMPTY_PROPERTY: 'Imóvel vazio',
+    OTHER: 'Outro'
+};
+
 export const VisitDetailsPage = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -56,7 +98,9 @@ export const VisitDetailsPage = () => {
                         <div className="info-row"><label>LOCALIDADE</label><span>{visit.localityCode}</span></div>
                         <div className="info-row"><label>LADO DO QUARTEIRÃO</label><span>{visit.blockSide || "---"}</span></div>
                         <div className="info-row"><label>COMPLEMENTO</label><span>{visit.complement || "---"}</span></div>
-                        <div className="info-row"><label>TIPO DE IMÓVEL</label><span>{visit.propertyType.replace('_', ' ')}</span></div>
+                        <div className="info-row"><label>TIPO DE IMÓVEL</label><span>
+                            {propertyTypeLabels[visit.propertyType] || visit.propertyType}
+                        </span></div>
                     </div>
                 </section>
 
@@ -66,15 +110,19 @@ export const VisitDetailsPage = () => {
                     <div className="detail-info">
                         <div className="info-row"><label>DATA</label><span>{new Date(visit.visitDate).toLocaleDateString('pt-BR')}</span></div>
                         <div className="info-row"><label>HORA ENTRADA</label><span>{visit.entryTime || "---"}</span></div>
-                        <div className="info-row"><label>TIPO DE VISITA</label><span>{visit.visitType}</span></div>
+                        <div className="info-row"><label>TIPO DE VISITA</label><span>
+                            {visitTypeLabels[visit.visitType] || visit.visitType}
+                        </span></div>
                         <div className="info-row">
                             <label>STATUS</label>
                             <span className={`status-badge ${visit.inspected ? 'active' : 'banned'}`}>
-                                {visit.inspected ? 'INSPECIONADO' : 'PENDENTE'}
+                                {visit.inspected ? 'Inspecionado' : 'Pendente'}
                             </span>
                         </div>
                         {!visit.inspected && (
-                            <div className="info-row"><label>MOTIVO</label><span className="text-danger">{visit.pendingReason}</span></div>
+                            <div className="info-row"><label>MOTIVO</label><span className="text-danger">
+                                {pendingReasonLabels[visit.pendingReason || ''] || visit.pendingReason}
+                            </span></div>
                         )}
                     </div>
                 </section>
@@ -94,7 +142,15 @@ export const VisitDetailsPage = () => {
                         <div className="focus-summary-box">
                             <div className={`focus-status ${visit.depositsWithFocus ? 'alert' : 'safe'}`}>
                                 {visit.depositsWithFocus ? <AlertTriangle size={20} /> : <CheckCircle2 size={20} />}
-                                <span>{visit.depositsWithFocus ? `FOCO IDENTIFICADO EM DEPÓSITO TIPO ${visit.depositType}` : 'NENHUM FOCO ENCONTRADO'}</span>
+                                <span>
+                                    {visit.depositsWithFocus
+                                        ? `Foco identificado em depósito tipo ${
+                                            depositTypeLabels[
+                                                visit.depositType || ''
+                                            ] || visit.depositType
+                                        }`
+                                        : 'Nenhum foco encontrado'}
+                                </span>
                             </div>
                             <div className="action-stats">
                                 <p><strong>Eliminados:</strong> {visit.eliminatedDeposits}</p>
@@ -119,7 +175,11 @@ export const VisitDetailsPage = () => {
                         <div className="info-row"><label>TRATAMENTO APLICADO</label><span>{visit.treatmentApplied ? 'SIM' : 'NÃO'}</span></div>
                         {visit.treatmentApplied && (
                             <>
-                                <div className="info-row"><label>LARVICIDA</label><span>{visit.treatmentLarvicideType}</span></div>
+                                <div className="info-row"><label>LARVICIDA</label><span>
+                                    {larvicideLabels[
+                                        visit.treatmentLarvicideType || ''
+                                    ] || visit.treatmentLarvicideType}
+                                </span></div>
                                 <div className="info-row"><label>QUANTIDADE</label><span>{visit.larvicideAmount}g</span></div>
                             </>
                         )}
