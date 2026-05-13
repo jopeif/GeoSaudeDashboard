@@ -40,6 +40,11 @@ interface AuthContextData {
     ) => Promise<void>;
 
     signOut: () => void;
+
+    updateSession: (
+        accessToken: string,
+        refreshToken?: string
+    ) => void;
 }
 
 interface AuthProviderProps {
@@ -66,6 +71,63 @@ export const AuthProvider = ({
 
     const [loading, setLoading] =
         useState(true);
+
+    /* ========================================
+       UPDATE SESSION
+    ======================================== */
+
+    const updateSession = useCallback(
+        (
+            accessToken: string,
+            refreshToken?: string
+        ) => {
+            setUser(prev => {
+                if (!prev) return null;
+
+                return {
+                    ...prev,
+                    access_token: accessToken,
+                    refresh_token:
+                        refreshToken ||
+                        prev.refresh_token
+                };
+            });
+        },
+        []
+    );
+
+    /* ========================================
+       LISTENER TOKEN REFRESH
+    ======================================== */
+
+    useEffect(() => {
+        const listener = (event: Event) => {
+            const customEvent =
+                event as CustomEvent;
+
+            const {
+                accessToken,
+                refreshToken
+            } = customEvent.detail;
+
+            updateSession(
+                accessToken,
+                refreshToken
+            );
+        };
+
+        window.addEventListener(
+            'auth:update',
+            listener
+        );
+
+        return () => {
+            window.removeEventListener(
+                'auth:update',
+                listener
+            );
+        };
+    }, [updateSession]);
 
     /* ========================================
        LOAD SESSION
@@ -95,63 +157,76 @@ export const AuthProvider = ({
                     );
 
                 if (
-                    token &&
-                    role &&
-                    id &&
-                    refreshToken
+                    !token ||
+                    !role ||
+                    !id ||
+                    !refreshToken
                 ) {
-                    const normalizedRole =
-                        role.toUpperCase();
+                    setLoading(false);
+                    return;
+                }
 
-                    if (
-                        !ALLOWED_ROLES.includes(
-                            normalizedRole
-                        )
-                    ) {
-                        authService.logout();
+                const normalizedRole =
+                    role.toUpperCase();
 
-                        setUser(null);
+                if (
+                    !ALLOWED_ROLES.includes(
+                        normalizedRole
+                    )
+                ) {
+                    authService.logout();
 
-                        return;
-                    }
+                    setUser(null);
 
-                    // busca dados completos do usuário
+                    setLoading(false);
+
+                    return;
+                }
+
+                // NÃO derruba a sessão
+                // se a busca do perfil falhar
+                let profile:
+                    | UserDetails
+                    | undefined;
+
+                try {
                     const userResponse =
                         await userService.findById(
                             id
                         );
 
                     if (
-                        !userResponse.success ||
-                        !userResponse.user
+                        userResponse.success &&
+                        userResponse.user
                     ) {
-                        authService.logout();
+                        profile =
+                            userResponse.user;
 
-                        setUser(null);
-
-                        return;
+                        localStorage.setItem(
+                            '@App:userName',
+                            userResponse.user.name
+                        );
                     }
-
-                    // salva nome atualizado
-                    localStorage.setItem(
-                        '@App:userName',
-                        userResponse.user.name
+                } catch (error) {
+                    console.error(
+                        'Erro ao carregar perfil:',
+                        error
                     );
-
-                    setUser({
-                        id,
-
-                        role,
-
-                        access_token: token,
-
-                        refresh_token:
-                            refreshToken,
-
-                        profile:
-                            userResponse.user
-                    });
                 }
+
+                setUser({
+                    id,
+
+                    role,
+
+                    access_token: token,
+
+                    refresh_token:
+                        refreshToken,
+
+                    profile
+                });
+
             } catch (error) {
                 console.error(
                     'Erro ao carregar sessão:',
@@ -161,6 +236,7 @@ export const AuthProvider = ({
                 authService.logout();
 
                 setUser(null);
+
             } finally {
                 setLoading(false);
             }
@@ -207,26 +283,34 @@ export const AuthProvider = ({
                 );
             }
 
-            // busca usuário completo
-            const userResponse =
-                await userService.findById(
-                    response.user.id
-                );
+            let profile:
+                | UserDetails
+                | undefined;
 
-            if (
-                !userResponse.success ||
-                !userResponse.user
-            ) {
-                throw new Error(
-                    'Erro ao carregar dados do usuário.'
+            try {
+                const userResponse =
+                    await userService.findById(
+                        response.user.id
+                    );
+
+                if (
+                    userResponse.success &&
+                    userResponse.user
+                ) {
+                    profile =
+                        userResponse.user;
+
+                    localStorage.setItem(
+                        '@App:userName',
+                        userResponse.user.name
+                    );
+                }
+            } catch (error) {
+                console.error(
+                    'Erro ao carregar perfil:',
+                    error
                 );
             }
-
-            // salva nome
-            localStorage.setItem(
-                '@App:userName',
-                userResponse.user.name
-            );
 
             setUser({
                 id: response.user.id,
@@ -241,8 +325,7 @@ export const AuthProvider = ({
                     response.user
                         .refresh_token,
 
-                profile:
-                    userResponse.user
+                profile
             });
         },
         []
@@ -272,13 +355,16 @@ export const AuthProvider = ({
 
             signIn,
 
-            signOut
+            signOut,
+
+            updateSession
         }),
         [
             user,
             loading,
             signIn,
-            signOut
+            signOut,
+            updateSession
         ]
     );
 
