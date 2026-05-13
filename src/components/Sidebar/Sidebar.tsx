@@ -7,7 +7,6 @@ import {
     LogOut,
     Map,
     User,
-    Activity,
     ChevronRight
 } from 'lucide-react';
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { 
-    ArrowLeft, MapPin, Calendar, Clock, Clipboard, 
+    ArrowLeft, MapPin, Clipboard, 
     Beaker, Navigation, FileText, User, AlertTriangle, CheckCircle2 
 } from 'lucide-react';
 import { visitService } from '../../services/Visit.service';

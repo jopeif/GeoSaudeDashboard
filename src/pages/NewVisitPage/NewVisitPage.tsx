@@ -9,7 +9,7 @@ export const NewVisitPage = () => {
     // Busca o ID do usuário diretamente do localStorage seguindo o padrão do authService
     const userId = localStorage.getItem('@App:userId') || "";
 
-    const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<CreateNewVisitDTOInput>({
+    const { register, handleSubmit, setValue, watch, reset } = useForm<CreateNewVisitDTOInput>({
         defaultValues: {
             userId,
             visitDate: new Date().toISOString().split('T')[0],
@@ -51,6 +51,7 @@ export const NewVisitPage = () => {
     const isSampled = watch("sampleCollected");
 
     return (
+        
         <div className="dashboard-home">
             <h2 className="page-title">Nova Visita de Campo</h2>
             
