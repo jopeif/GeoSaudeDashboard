@@ -303,6 +303,16 @@
     color: var(--text-main);
 }
 
+.double-chart-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+
+    width: 100%;
+}
+
 /* =========================
    SUMMARY CARD
 ========================= */
@@ -349,22 +359,6 @@
     font-weight: 800;
 
     color: var(--primary);
-}
-
-/* =========================
-   INLINE CHART GRID
-========================= */
-
-.main-charts-column > div[style*="grid-template-columns"] {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 24px !important;
-}
-
-.main-charts-column > div[style*="gap"] {
-    display: flex !important;
-    flex-direction: column;
-    gap: 24px !important;
 }
 
 /* =========================
@@ -744,6 +738,10 @@
 @media (max-width: 992px) {
     .chart-card {
         padding: 22px;
+    }
+
+    .double-chart-grid {
+        grid-template-columns: 1fr;
     }
 }
 

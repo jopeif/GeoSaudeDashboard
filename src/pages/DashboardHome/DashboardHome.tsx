@@ -159,7 +159,7 @@ export const DashboardHome = () => {
           <div style={{ gap: '24px' }}>
             <AgentPerformanceChart data={chartData.performanceByAgent} />
           </div>
-          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px'}}>
+          <div className="double-chart-grid">
             <RegionChart data={chartData.visitsByRegion} />
             <FocusFoundChart data={chartData.focusFoundPerPeriod} />
           </div>

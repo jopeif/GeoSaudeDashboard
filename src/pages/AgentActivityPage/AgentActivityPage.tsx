@@ -1,77 +1,224 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, MapPin, ChevronRight, Search } from 'lucide-react';
+
+import {
+    User,
+    MapPin,
+    ChevronRight,
+    Search
+} from 'lucide-react';
+
 import { userService } from '../../services/User.service';
+
 import type { UserDetails } from '../../types/user';
+
 import './AgentsActivity.css';
 
 export const AgentsActivityPage = () => {
+
+    const roleLabels: Record<string, string> = {
+        AGENT: 'Agente',
+        SUPERVISOR: 'Supervisor',
+        ADM: 'Administrador',
+        ADMIN: 'Administrador',
+        SUPERADMIN: 'Super Administrador'
+    };
+
+
     const navigate = useNavigate();
-    const [agents, setAgents] = useState<UserDetails[]>([]);
+
+    const [users, setUsers] = useState<UserDetails[]>([]);
+
     const [loading, setLoading] = useState(true);
+
     const [searchTerm, setSearchTerm] = useState('');
 
+    const [onlyAgents, setOnlyAgents] =
+        useState(true);
+
     useEffect(() => {
-        const fetchAgents = async () => {
+        const fetchUsers = async () => {
             setLoading(true);
-            const response = await userService.findAll();
-            if (response.success && response.users) {
-                setAgents(response.users.filter((u) => u.role === "AGENT"));
+
+            try {
+                const response =    
+                    await userService.findAll();
+
+                if (
+                    response.success &&
+                    response.users
+                ) {
+                    setUsers(response.users);
+                }
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         };
-        fetchAgents();
+
+        fetchUsers();
     }, []);
 
-    const filteredAgents = agents.filter(agent =>
-        agent.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredUsers = useMemo(() => {
+        return users.filter((user) => {
+            const matchesSearch =
+                user.name
+                    .toLowerCase()
+                    .includes(
+                        searchTerm.toLowerCase()
+                    );
+
+            const matchesRole =
+                onlyAgents
+                    ? user.role === 'AGENT'
+                    : true;
+
+            return matchesSearch && matchesRole;
+        });
+    }, [
+        users,
+        searchTerm,
+        onlyAgents
+    ]);
 
     return (
-        <div className="dashboard-home">
-            <h2 className="page-title">Agentes em Campo</h2>
-            
+        <div className="dashboard-home agents-page">
+            <h2 className="page-title">
+                Agentes em Campo
+            </h2>
+
             <section className="filter-container">
-                <div className="filter-grid" style={{ gridTemplateColumns: '1fr auto' }}>
+                <div className="filter-grid agents-filter-grid">
+                    
+                    {/* SEARCH */}
                     <div className="filter-group">
-                        <label><Search size={12}/> BUSCAR AGENTE</label>
-                        <input 
-                            type="text" 
-                            placeholder="Digite o nome..." 
+                        <label>
+                            <Search size={12} />
+                            BUSCAR USUÁRIO
+                        </label>
+
+                        <input
+                            type="text"
+                            placeholder="Digite o nome..."
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={(e) =>
+                                setSearchTerm(
+                                    e.target.value
+                                )
+                            }
                         />
                     </div>
+
+                    {/* TOGGLE */}
+                    <div className="filter-group">
+                        <label>
+                            MOSTRAR APENAS AGENTES
+                        </label>
+
+                        <button
+                            type="button"
+                            className={`toggle-btn ${
+                                onlyAgents
+                                    ? 'active'
+                                    : ''
+                            }`}
+                            onClick={() =>
+                                setOnlyAgents(
+                                    (prev) => !prev
+                                )
+                            }
+                        >
+                            <span
+                                className="toggle-thumb"
+                            />
+
+                            <span className="toggle-label">
+                                {onlyAgents
+                                    ? 'Somente agentes'
+                                    : 'Todos usuários'}
+                            </span>
+                        </button>
+                    </div>
+
+                    {/* TOTAL */}
                     <div className="filter-group">
                         <label>TOTAL</label>
-                        <span className="kpi-value" style={{ fontSize: '18px' }}>
-                            {loading ? "Carregando..." : `${filteredAgents.length} Agentes`}
+
+                        <span className="kpi-value">
+                            {loading
+                                ? 'Carregando...'
+                                : `${filteredUsers.length} usuários`}
                         </span>
                     </div>
                 </div>
             </section>
 
-            <div className="agents-grid">
-                {filteredAgents.map(agent => (
-                    <div 
-                        key={agent.id} 
-                        className="agent-card" 
-                        onClick={() => navigate(`/agents/${agent.id}`)} // Redirecionamento dinâmico
-                    >
-                        <div className="agent-card-info">
-                            <div className="avatar-circle"><User size={20} color="#469472" /></div>
-                            <div className="user-text">
-                                <p className="agent-name">{agent.name}</p>
-                                <p className="agent-id">ID: {agent.id.substring(0, 8)}</p>
+            {loading ? (
+                <div className="agents-loading">
+                    Carregando usuários...
+                </div>
+            ) : filteredUsers.length === 0 ? (
+                <div className="agents-empty">
+                    Nenhum usuário encontrado.
+                </div>
+            ) : (
+                <div className="agents-grid">
+                    {filteredUsers.map((user) => (
+                        <div
+                            key={user.id}
+                            className="agent-card"
+                            onClick={() =>
+                                navigate(
+                                    `/agents/${user.id}`
+                                )
+                            }
+                        >
+                            <div className="agent-card-info">
+                                <div className="avatar-circle">
+                                    <User
+                                        size={20}
+                                        color="#469472"
+                                    />
+                                </div>
+
+                                <div className="user-text">
+                                    <p className="agent-name">
+                                        {user.name}
+                                    </p>
+
+                                    <p className="agent-id">
+                                        ID:{' '}
+                                        {user.id.substring(
+                                            0,
+                                            8
+                                        )}
+                                    </p>
+
+                                    <span className={`role-badge role-${user.role.toLowerCase()}`}>
+                                        {roleLabels[user.role] || user.role}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="agent-card-footer">
+                                <div className="agent-meta">
+                                    <MapPin size={14} />
+
+                                    <span>
+                                        {user.banned
+                                        ? 'Usuário Bloqueado'
+                                        : 'Em atividade'}
+                                    </span>
+                                </div>
+
+                                <ChevronRight
+                                    size={18}
+                                    className="arrow-icon"
+                                />
                             </div>
                         </div>
-                        <div className="agent-card-footer">
-                            <div className="agent-meta"><MapPin size={14} /><span>Ativo</span></div>
-                            <ChevronRight size={18} className="arrow-icon" />
-                        </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
