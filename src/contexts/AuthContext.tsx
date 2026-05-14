@@ -1,5 +1,3 @@
-// src/contexts/AuthContext.tsx
-
 import {
     createContext,
     useCallback,
@@ -7,7 +5,7 @@ import {
     useEffect,
     useMemo,
     useState,
-    type ReactNode
+    type ReactNode,
 } from 'react';
 
 import { authService } from '../services/Auth.service';
@@ -60,14 +58,16 @@ const ALLOWED_ROLES = [
     'SUPERVISOR',
     'ADMIN',
     'SUPERADMIN',
-    'ADM'
+    'ADM',
 ];
 
 export const AuthProvider = ({
-    children
+    children,
 }: AuthProviderProps) => {
     const [user, setUser] =
-        useState<AuthUser | null>(null);
+        useState<AuthUser | null>(
+            null
+        );
 
     const [loading, setLoading] =
         useState(true);
@@ -76,39 +76,55 @@ export const AuthProvider = ({
        UPDATE SESSION
     ======================================== */
 
-    const updateSession = useCallback(
-        (
-            accessToken: string,
-            refreshToken?: string
-        ) => {
-            setUser(prev => {
-                if (!prev) return null;
+    const updateSession =
+        useCallback(
+            (
+                accessToken: string,
+                refreshToken?: string
+            ) => {
+                setUser(
+                    (
+                        prev
+                    ) => {
+                        if (
+                            !prev
+                        ) {
+                            return null;
+                        }
 
-                return {
-                    ...prev,
-                    access_token: accessToken,
-                    refresh_token:
-                        refreshToken ||
-                        prev.refresh_token
-                };
-            });
-        },
-        []
-    );
+                        return {
+                            ...prev,
+
+                            access_token:
+                                accessToken,
+
+                            refresh_token:
+                                refreshToken ||
+                                prev.refresh_token,
+                        };
+                    }
+                );
+            },
+            []
+        );
 
     /* ========================================
-       LISTENER TOKEN REFRESH
+       REFRESH LISTENER
     ======================================== */
 
     useEffect(() => {
-        const listener = (event: Event) => {
+        const listener = (
+            event: Event
+        ) => {
             const customEvent =
                 event as CustomEvent;
 
             const {
                 accessToken,
-                refreshToken
-            } = customEvent.detail;
+
+                refreshToken,
+            } =
+                customEvent.detail;
 
             updateSession(
                 accessToken,
@@ -127,64 +143,151 @@ export const AuthProvider = ({
                 listener
             );
         };
-    }, [updateSession]);
+    }, [
+        updateSession,
+    ]);
 
     /* ========================================
        LOAD SESSION
     ======================================== */
 
     useEffect(() => {
-        const loadSession = async () => {
-            try {
-                const token =
-                    localStorage.getItem(
-                        '@App:token'
-                    );
+        const loadSession =
+            async () => {
+                try {
+                    const token =
+                        localStorage.getItem(
+                            '@App:token'
+                        );
 
-                const role =
-                    localStorage.getItem(
-                        '@App:role'
-                    );
+                    const role =
+                        localStorage.getItem(
+                            '@App:role'
+                        );
 
-                const id =
-                    localStorage.getItem(
-                        '@App:userId'
-                    );
+                    const id =
+                        localStorage.getItem(
+                            '@App:userId'
+                        );
 
-                const refreshToken =
-                    localStorage.getItem(
-                        '@App:refreshToken'
+                    const refreshToken =
+                        localStorage.getItem(
+                            '@App:refreshToken'
+                        );
+
+                    if (
+                        !token ||
+                        !role ||
+                        !id ||
+                        !refreshToken
+                    ) {
+                        return;
+                    }
+
+                    const normalizedRole =
+                        role.toUpperCase();
+
+                    if (
+                        !ALLOWED_ROLES.includes(
+                            normalizedRole
+                        )
+                    ) {
+                        authService.logout();
+
+                        return;
+                    }
+
+                    let profile:
+                        | UserDetails
+                        | undefined;
+
+                    try {
+                        const userResponse =
+                            await userService.findById(
+                                id
+                            );
+
+                        if (
+                            userResponse.success &&
+                            userResponse.user
+                        ) {
+                            profile =
+                                userResponse.user;
+
+                            localStorage.setItem(
+                                '@App:userName',
+                                profile.name
+                            );
+                        }
+                    } catch {
+                        //
+                    }
+
+                    setUser({
+                        id,
+
+                        role,
+
+                        access_token:
+                            token,
+
+                        refresh_token:
+                            refreshToken,
+
+                        profile,
+                    });
+
+                } finally {
+                    setLoading(
+                        false
+                    );
+                }
+            };
+
+        loadSession();
+    }, []);
+
+    /* ========================================
+       LOGIN
+    ======================================== */
+
+    const signIn =
+        useCallback(
+            async (
+                login: string,
+                password: string
+            ) => {
+                const response =
+                    await authService.login(
+                        login,
+                        password
                     );
 
                 if (
-                    !token ||
-                    !role ||
-                    !id ||
-                    !refreshToken
+                    !response.success ||
+                    !response.user
                 ) {
-                    setLoading(false);
-                    return;
+                    throw new Error(
+                        response.message ||
+                            'Credenciais inválidas.'
+                    );
                 }
 
-                const normalizedRole =
-                    role.toUpperCase();
+                const role =
+                    response.user.role.toUpperCase();
 
                 if (
                     !ALLOWED_ROLES.includes(
-                        normalizedRole
+                        role
                     )
                 ) {
                     authService.logout();
 
-                    setUser(null);
-
-                    setLoading(false);
-
-                    return;
+                    throw new Error(
+                        'Sem permissão.'
+                    );
                 }
 
-                // NÃO derruba a sessão
-                // se a busca do perfil falhar
                 let profile:
                     | UserDetails
                     | undefined;
@@ -192,7 +295,7 @@ export const AuthProvider = ({
                 try {
                     const userResponse =
                         await userService.findById(
-                            id
+                            response.user.id
                         );
 
                     if (
@@ -204,183 +307,87 @@ export const AuthProvider = ({
 
                         localStorage.setItem(
                             '@App:userName',
-                            userResponse.user.name
+                            profile.name
                         );
                     }
-                } catch (error) {
-                    console.error(
-                        'Erro ao carregar perfil:',
-                        error
-                    );
+                } catch {
+                    //
                 }
 
                 setUser({
-                    id,
+                    id: response.user.id,
 
-                    role,
+                    role:
+                        response.user.role,
 
-                    access_token: token,
+                    access_token:
+                        response.user
+                            .access_token,
 
                     refresh_token:
-                        refreshToken,
+                        response.user
+                            .refresh_token,
 
-                    profile
+                    profile,
                 });
-
-            } catch (error) {
-                console.error(
-                    'Erro ao carregar sessão:',
-                    error
-                );
-
-                authService.logout();
-
-                setUser(null);
-
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        loadSession();
-    }, []);
-
-    /* ========================================
-       LOGIN
-    ======================================== */
-
-    const signIn = useCallback(
-        async (
-            login: string,
-            password: string
-        ) => {
-            const response =
-                await authService.login(
-                    login,
-                    password
-                );
-
-            if (
-                !response.success ||
-                !response.user
-            ) {
-                throw new Error(
-                    response.message ||
-                    'Credenciais inválidas.'
-                );
-            }
-
-            const role =
-                response.user.role?.toUpperCase();
-
-            if (
-                !ALLOWED_ROLES.includes(role)
-            ) {
-                authService.logout();
-
-                throw new Error(
-                    'Você não possui permissão para acessar o painel.'
-                );
-            }
-
-            let profile:
-                | UserDetails
-                | undefined;
-
-            try {
-                const userResponse =
-                    await userService.findById(
-                        response.user.id
-                    );
-
-                if (
-                    userResponse.success &&
-                    userResponse.user
-                ) {
-                    profile =
-                        userResponse.user;
-
-                    localStorage.setItem(
-                        '@App:userName',
-                        userResponse.user.name
-                    );
-                }
-            } catch (error) {
-                console.error(
-                    'Erro ao carregar perfil:',
-                    error
-                );
-            }
-
-            setUser({
-                id: response.user.id,
-
-                role: response.user.role,
-
-                access_token:
-                    response.user
-                        .access_token,
-
-                refresh_token:
-                    response.user
-                        .refresh_token,
-
-                profile
-            });
-        },
-        []
-    );
+            },
+            []
+        );
 
     /* ========================================
        LOGOUT
     ======================================== */
 
-    const signOut = useCallback(() => {
-        authService.logout();
+    const signOut =
+        useCallback(
+            () => {
+                authService.logout();
 
-        setUser(null);
-    }, []);
+                setUser(
+                    null
+                );
+            },
+            []
+        );
 
-    /* ========================================
-       MEMO
-    ======================================== */
+    const value =
+        useMemo(
+            () => ({
+                user,
 
-    const value = useMemo(
-        () => ({
-            user,
+                loading,
 
-            loading,
+                authenticated:
+                    !!user,
 
-            authenticated: !!user,
+                signIn,
 
-            signIn,
+                signOut,
 
-            signOut,
-
-            updateSession
-        }),
-        [
-            user,
-            loading,
-            signIn,
-            signOut,
-            updateSession
-        ]
-    );
+                updateSession,
+            }),
+            [
+                user,
+                loading,
+                signIn,
+                signOut,
+                updateSession,
+            ]
+        );
 
     return (
         <AuthContext.Provider
             value={value}
         >
-            {children}
+            {
+                children
+            }
         </AuthContext.Provider>
     );
 };
 
-/* ========================================
-   HOOK
-======================================== */
-
-export const useAuth = () => {
-    return useContext(AuthContext);
-};
+export const useAuth =
+    () =>
+        useContext(
+            AuthContext
+        );

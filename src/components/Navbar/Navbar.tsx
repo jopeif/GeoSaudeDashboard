@@ -19,7 +19,6 @@ export const Navbar = () => {
   const { user } = useAuth();
 
   const userName = useMemo(() => {
-    console.log(localStorage.getItem('@App:userName'))
     return (
       localStorage.getItem('@App:userName') ||
       'Usuário'
