@@ -1,7 +1,7 @@
 import React from 'react';
 import { KPICard } from './KPICard';
-import type { KPIStats } from '../../../types/dashboard';
-import "./KIPSection.css"
+import type { KPIStats } from '../../../../types/dashboard';
+import './KPISection.css'
 
 interface KPISectionProps {
   data: KPIStats | null;

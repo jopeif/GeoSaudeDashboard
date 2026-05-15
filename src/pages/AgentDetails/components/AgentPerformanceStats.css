@@ -8,13 +8,13 @@
    KPI GRID
 ========================= */
 
-.kpi-grid {
+.agent-kpi-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 18px;
 }
 
-.kpi-card {
+.agent-kpi-card {
     position: relative;
 
     display: flex;
@@ -35,7 +35,7 @@
     transition: 0.2s ease;
 }
 
-.kpi-card::before {
+.agent-kpi-card::before {
     content: "";
 
     position: absolute;
@@ -48,13 +48,13 @@
     background: #469472;
 }
 
-.kpi-card:hover {
+.agent-kpi-card:hover {
     transform: translateY(-3px);
 
     box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
 }
 
-.kpi-icon-bg {
+.agent-kpi-icon-bg {
     width: 54px;
     height: 54px;
 
@@ -67,28 +67,28 @@
     border-radius: 16px;
 }
 
-.kpi-icon-bg svg {
+.agent-kpi-icon-bg svg {
     stroke-width: 2.2;
 }
 
 /* VARIAÇÕES */
 
-.kpi-icon-bg.gray {
+.agent-kpi-icon-bg.gray {
     background: rgba(100, 116, 139, 0.12);
     color: #64748b;
 }
 
-.kpi-icon-bg.green {
+.agent-kpi-icon-bg.green {
     background: rgba(16, 185, 129, 0.12);
     color: #10b981;
 }
 
-.kpi-icon-bg.yellow {
+.agent-kpi-icon-bg.yellow {
     background: rgba(245, 158, 11, 0.12);
     color: #f59e0b;
 }
 
-.kpi-icon-bg.red {
+.agent-kpi-icon-bg.red {
     background: rgba(239, 68, 68, 0.12);
     color: #ef4444;
 }
@@ -97,7 +97,7 @@
    KPI CONTENT
 ========================= */
 
-.kpi-content {
+.agent-kpi-content {
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -105,7 +105,7 @@
     min-width: 0;
 }
 
-.kpi-content label {
+.agent-kpi-content label {
     font-size: 11px;
     font-weight: 800;
 
@@ -115,7 +115,7 @@
     color: #94a3b8;
 }
 
-.kpi-content span {
+.agent-kpi-content span {
     font-size: 30px;
     font-weight: 800;
     line-height: 1;
@@ -127,7 +127,7 @@
    CHART CARD
 ========================= */
 
-.chart-card-full {
+.agent-chart-card {
     background: #ffffff;
 
     border: 1px solid #edf2f7;
@@ -140,11 +140,11 @@
     transition: 0.2s ease;
 }
 
-.chart-card-full:hover {
+.agent-chart-card:hover {
     box-shadow: 0 14px 32px rgba(15, 23, 42, 0.07);
 }
 
-.chart-title {
+.agent-chart-title {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -160,7 +160,7 @@
     color: #0f172a;
 }
 
-.chart-title svg {
+.agent-chart-title svg {
     color: #469472;
 }
 
@@ -199,10 +199,10 @@
 }
 
 /* =========================
-   SKELETON / LOADING
+   SKELETON
 ========================= */
 
-.chart-placeholder.skeleton {
+.agent-chart-placeholder.agent-chart-skeleton {
     width: 100%;
     height: 220px;
 
@@ -230,53 +230,59 @@
 }
 
 /* =========================
-   RESPONSIVIDADE
+   RESPONSIVO
 ========================= */
 
 @media (max-width: 992px) {
-    .kpi-grid {
+
+    .agent-kpi-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
 }
 
 @media (max-width: 768px) {
-    .chart-card-full {
+
+    .agent-chart-card {
         padding: 20px;
         border-radius: 20px;
     }
 
-    .kpi-card {
+    .agent-kpi-card {
         padding: 18px;
     }
 
-    .kpi-content span {
+    .agent-kpi-content span {
         font-size: 26px;
     }
 
-    .chart-title {
+    .agent-chart-title {
         font-size: 13px;
     }
+
 }
 
 @media (max-width: 540px) {
-    .kpi-grid {
+
+    .agent-kpi-grid {
         grid-template-columns: 1fr;
     }
 
-    .kpi-card {
+    .agent-kpi-card {
         gap: 14px;
     }
 
-    .kpi-icon-bg {
+    .agent-kpi-icon-bg {
         width: 48px;
         height: 48px;
     }
 
-    .kpi-content span {
+    .agent-kpi-content span {
         font-size: 24px;
     }
 
-    .chart-card-full {
+    .agent-chart-card {
         padding: 16px;
     }
+
 }

@@ -82,17 +82,20 @@ export const AgentsActivityPage = () => {
 
     return (
         <div className="dashboard-home agents-page">
-            <h2 className="page-title">
+
+            <h2 className="agents-page-title">
                 Agentes em Campo
             </h2>
 
-            <section className="filter-container">
-                <div className="filter-grid agents-filter-grid">
-                    
+            <section className="agents-filter-container">
+
+                <div className="agents-filter-grid">
+
                     {/* SEARCH */}
-                    <div className="filter-group">
+                    <div className="agents-filter-group">
+
                         <label>
-                            <Search size={12} />
+                            <Search size={12}/>
                             BUSCAR USUÁRIO
                         </label>
 
@@ -100,23 +103,25 @@ export const AgentsActivityPage = () => {
                             type="text"
                             placeholder="Digite o nome..."
                             value={searchTerm}
-                            onChange={(e) =>
+                            onChange={(e)=>
                                 setSearchTerm(
                                     e.target.value
                                 )
                             }
                         />
+
                     </div>
 
                     {/* TOGGLE */}
-                    <div className="filter-group">
+                    <div className="agents-filter-group">
+
                         <label>
                             MOSTRAR APENAS AGENTES
                         </label>
 
                         <button
                             type="button"
-                            className={`toggle-btn ${
+                            className={`agents-toggle-btn ${
                                 onlyAgents
                                     ? 'active'
                                     : ''
@@ -127,98 +132,156 @@ export const AgentsActivityPage = () => {
                                 )
                             }
                         >
+
                             <span
-                                className="toggle-thumb"
+                                className="agents-toggle-thumb"
                             />
 
-                            <span className="toggle-label">
-                                {onlyAgents
-                                    ? 'Somente agentes'
-                                    : 'Todos usuários'}
+                            <span className="agents-toggle-label">
+
+                                {
+                                    onlyAgents
+                                        ? 'Somente agentes'
+                                        : 'Todos usuários'
+                                }
+
                             </span>
+
                         </button>
+
                     </div>
 
                     {/* TOTAL */}
-                    <div className="filter-group">
-                        <label>TOTAL</label>
+                    <div className="agents-filter-group">
 
-                        <span className="kpi-value">
-                            {loading
-                                ? 'Carregando...'
-                                : `${filteredUsers.length} usuários`}
+                        <label>
+                            TOTAL
+                        </label>
+
+                        <span className="agents-kpi-value">
+
+                            {
+                                loading
+                                    ? 'Carregando...'
+                                    : `${filteredUsers.length} usuários`
+                            }
+
                         </span>
+
                     </div>
+
                 </div>
+
             </section>
 
-            {loading ? (
-                <div className="agents-loading">
-                    Carregando usuários...
-                </div>
-            ) : filteredUsers.length === 0 ? (
-                <div className="agents-empty">
-                    Nenhum usuário encontrado.
-                </div>
-            ) : (
-                <div className="agents-grid">
-                    {filteredUsers.map((user) => (
-                        <div
-                            key={user.id}
-                            className="agent-card"
-                            onClick={() =>
-                                navigate(
-                                    `/agents/${user.id}`
-                                )
-                            }
-                        >
-                            <div className="agent-card-info">
-                                <div className="avatar-circle">
-                                    <User
-                                        size={20}
-                                        color="#469472"
-                                    />
+            {
+                loading ? (
+
+                    <div className="agents-loading">
+                        Carregando usuários...
+                    </div>
+
+                ) : filteredUsers.length === 0 ? (
+
+                    <div className="agents-empty">
+                        Nenhum usuário encontrado.
+                    </div>
+
+                ) : (
+
+                    <div className="agents-grid">
+
+                        {
+                            filteredUsers.map((user) => (
+
+                                <div
+                                    key={user.id}
+                                    className="agent-card"
+                                    onClick={() =>
+                                        navigate(
+                                            `/agents/${user.id}`
+                                        )
+                                    }
+                                >
+
+                                    <div className="agent-card-info">
+
+                                        <div className="avatar-circle">
+
+                                            <User
+                                                size={20}
+                                                color="#469472"
+                                            />
+
+                                        </div>
+
+                                        <div className="user-text">
+
+                                            <p className="agent-name">
+                                                {user.name}
+                                            </p>
+
+                                            <p className="agent-id">
+
+                                                ID:{' '}
+
+                                                {
+                                                    user.id.substring(
+                                                        0,
+                                                        8
+                                                    )
+                                                }
+
+                                            </p>
+
+                                            <span
+                                                className={`role-badge role-${user.role.toLowerCase()}`}
+                                            >
+                                                {
+                                                    roleLabels[user.role]
+                                                    || user.role
+                                                }
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div className="agent-card-footer">
+
+                                        <div className="agent-meta">
+
+                                            <MapPin size={14}/>
+
+                                            <span>
+
+                                                {
+                                                    user.banned
+                                                        ? 'Usuário Bloqueado'
+                                                        : 'Em atividade'
+                                                }
+
+                                            </span>
+
+                                        </div>
+
+                                        <ChevronRight
+                                            size={18}
+                                            className="arrow-icon"
+                                        />
+
+                                    </div>
+
                                 </div>
 
-                                <div className="user-text">
-                                    <p className="agent-name">
-                                        {user.name}
-                                    </p>
+                            ))
+                        }
 
-                                    <p className="agent-id">
-                                        ID:{' '}
-                                        {user.id.substring(
-                                            0,
-                                            8
-                                        )}
-                                    </p>
+                    </div>
 
-                                    <span className={`role-badge role-${user.role.toLowerCase()}`}>
-                                        {roleLabels[user.role] || user.role}
-                                    </span>
-                                </div>
-                            </div>
+                )
+            }
 
-                            <div className="agent-card-footer">
-                                <div className="agent-meta">
-                                    <MapPin size={14} />
-
-                                    <span>
-                                        {user.banned
-                                        ? 'Usuário Bloqueado'
-                                        : 'Em atividade'}
-                                    </span>
-                                </div>
-
-                                <ChevronRight
-                                    size={18}
-                                    className="arrow-icon"
-                                />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
         </div>
     );
 };

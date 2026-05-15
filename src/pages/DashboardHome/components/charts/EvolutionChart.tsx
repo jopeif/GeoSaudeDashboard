@@ -13,7 +13,6 @@ import type { EvolutionData } from '../../../../types/dashboard';
 
 interface EvolutionChartProps {
   data: EvolutionData[];
-
   periodType?: 'day' | 'week' | 'month';
 }
 
@@ -22,9 +21,6 @@ export const EvolutionChart = ({
   periodType
 }: EvolutionChartProps) => {
 
-  /* ========================================
-     DATE FORMATTER
-  ======================================== */
 
   const formatXAxis = (
     tickItem: string

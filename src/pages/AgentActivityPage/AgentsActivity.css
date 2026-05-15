@@ -8,51 +8,75 @@
     gap: 24px;
 }
 
-.page-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #0f172a;
+.agents-page-title {
     margin: 0;
+
+    font-size: 2rem;
+    font-weight: 800;
+
+    letter-spacing: -0.02em;
+
+    color: #0f172a;
 }
 
 /* =========================
-   FILTER
+   FILTER CONTAINER
 ========================= */
 
-.filter-container {
+.agents-filter-container {
+    padding: 24px;
+
     background: #ffffff;
+
     border: 1px solid #e2e8f0;
     border-radius: 22px;
-    padding: 24px;
+
     box-shadow:
         0 4px 20px rgba(15, 23, 42, 0.04);
 }
 
-.filter-grid {
+/* =========================
+   FILTER GRID
+========================= */
+
+.agents-filter-grid {
     display: grid;
+
+    grid-template-columns:
+        minmax(240px, 1fr)
+        auto
+        auto;
+
     align-items: end;
+
     gap: 20px;
 }
 
-.filter-group {
+/* =========================
+   FILTER GROUP
+========================= */
+
+.agents-filter-group {
     display: flex;
     flex-direction: column;
+
     gap: 8px;
 }
 
-.filter-group label {
+.agents-filter-group label {
     display: flex;
     align-items: center;
     gap: 6px;
 
     font-size: 0.72rem;
     font-weight: 700;
+
     letter-spacing: 0.08em;
 
     color: #64748b;
 }
 
-.filter-group input {
+.agents-filter-group input {
     width: 100%;
     height: 50px;
 
@@ -72,11 +96,11 @@
         box-shadow 0.2s ease;
 }
 
-.filter-group input::placeholder {
+.agents-filter-group input::placeholder {
     color: #94a3b8;
 }
 
-.filter-group input:focus {
+.agents-filter-group input:focus {
     outline: none;
 
     border-color: #469472;
@@ -87,12 +111,10 @@
 }
 
 /* =========================
-   TOTAL
+   TOTAL KPI
 ========================= */
 
-.filter-group .kpi-value {
-    
-    font-size: 30px;
+.agents-kpi-value {
     display: flex;
     align-items: center;
 
@@ -110,9 +132,109 @@
         );
 
     color: white;
-    font-weight: 600;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+
     box-shadow:
         0 10px 24px rgba(70, 148, 114, 0.22);
+}
+
+/* =========================
+   TOGGLE
+========================= */
+
+.agents-toggle-btn {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 220px;
+    height: 50px;
+
+    padding: 0 18px;
+
+    border: 1px solid #dbe4ee;
+    border-radius: 14px;
+
+    background: #f8fafc;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.agents-toggle-btn:hover {
+    border-color: rgba(70, 148, 114, 0.4);
+}
+
+.agents-toggle-btn.active {
+    background: rgba(70, 148, 114, 0.08);
+
+    border-color: rgba(70, 148, 114, 0.35);
+
+    box-shadow:
+        0 0 0 4px rgba(70, 148, 114, 0.08);
+}
+
+.agents-toggle-thumb {
+    position: relative;
+
+    width: 42px;
+    height: 24px;
+
+    border-radius: 999px;
+
+    background: #cbd5e1;
+
+    transition:
+        background 0.2s ease;
+}
+
+.agents-toggle-thumb::after {
+    content: '';
+
+    position: absolute;
+
+    top: 3px;
+    left: 3px;
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow:
+        0 2px 6px rgba(0,0,0,0.12);
+
+    transition:
+        transform 0.2s ease;
+}
+
+.agents-toggle-btn.active .agents-toggle-thumb {
+    background: #469472;
+}
+
+.agents-toggle-btn.active .agents-toggle-thumb::after {
+    transform: translateX(18px);
+}
+
+.agents-toggle-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    color: #334155;
+
+    white-space: nowrap;
 }
 
 /* =========================
@@ -121,6 +243,7 @@
 
 .agents-grid {
     display: grid;
+
     grid-template-columns:
         repeat(auto-fill, minmax(280px, 1fr));
 
@@ -142,8 +265,12 @@
 
     padding: 22px;
 
-    border-radius: 24px;
+    overflow: hidden;
+
+    cursor: pointer;
+
     border: 1px solid #e2e8f0;
+    border-radius: 24px;
 
     background:
         linear-gradient(
@@ -151,10 +278,6 @@
             #ffffff,
             #f8fafc
         );
-
-    cursor: pointer;
-
-    overflow: hidden;
 
     transition:
         transform 0.22s ease,
@@ -173,6 +296,8 @@
     width: 100%;
     height: 5px;
 
+    opacity: 0;
+
     background:
         linear-gradient(
             90deg,
@@ -180,8 +305,8 @@
             #63ab8a
         );
 
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    transition:
+        opacity 0.2s ease;
 }
 
 .agent-card:hover {
@@ -210,12 +335,12 @@
 .avatar-circle {
     flex-shrink: 0;
 
-    width: 58px;
-    height: 58px;
-
     display: flex;
     align-items: center;
     justify-content: center;
+
+    width: 58px;
+    height: 58px;
 
     border-radius: 50%;
 
@@ -232,6 +357,7 @@
 .user-text {
     display: flex;
     flex-direction: column;
+
     gap: 4px;
 
     min-width: 0;
@@ -243,18 +369,52 @@
     font-size: 1rem;
     font-weight: 700;
 
-    color: #0f172a;
-
     line-height: 1.3;
+
+    color: #0f172a;
 }
 
 .agent-id {
     margin: 0;
 
     font-size: 0.82rem;
+
     color: #64748b;
 
     font-family: monospace;
+}
+
+/* =========================
+   ROLE BADGE
+========================= */
+
+.role-badge {
+    width: fit-content;
+
+    margin-top: 8px;
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+}
+
+.role-agent {
+    background: rgba(70, 148, 114, 0.12);
+    color: #469472;
+}
+
+.role-supervisor {
+    background: rgba(59, 130, 246, 0.12);
+    color: #2563eb;
+}
+
+.role-adm {
+    background: rgba(245, 158, 11, 0.12);
+    color: #d97706;
 }
 
 /* =========================
@@ -296,11 +456,12 @@
 
 .agent-card:hover .arrow-icon {
     transform: translateX(4px);
+
     color: #469472;
 }
 
 /* =========================
-   LOADING / EMPTY
+   EMPTY / LOADING
 ========================= */
 
 .agents-empty,
@@ -311,10 +472,10 @@
 
     min-height: 220px;
 
+    border: 1px dashed #cbd5e1;
     border-radius: 24px;
 
     background: #ffffff;
-    border: 1px dashed #cbd5e1;
 
     color: #64748b;
 
@@ -326,21 +487,29 @@
 ========================= */
 
 @media (max-width: 768px) {
-    .page-title {
+
+    .agents-page-title {
         font-size: 1.6rem;
     }
 
-    .filter-container {
+    .agents-filter-container {
         padding: 18px;
+
         border-radius: 18px;
     }
 
-    .filter-grid {
-        grid-template-columns: 1fr !important;
+    .agents-filter-grid {
+        grid-template-columns: 1fr;
     }
 
     .agents-grid {
         grid-template-columns: 1fr;
+    }
+
+    .agents-toggle-btn {
+        width: 100%;
+
+        justify-content: space-between;
     }
 
     .agent-card {
@@ -351,154 +520,3 @@
         margin-top: 20px;
     }
 }
-
-/* =========================
-   FILTER GRID
-========================= */
-
-.agents-filter-grid {
-    grid-template-columns:
-        minmax(240px, 1fr)
-        auto
-        auto;
-}
-
-/* =========================
-   TOGGLE
-========================= */
-
-.toggle-btn {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    min-width: 220px; /* trava largura */
-    height: 50px;
-
-    padding: 0 18px;
-
-    border: 1px solid #dbe4ee;
-    border-radius: 14px;
-
-    background: #f8fafc;
-
-    cursor: pointer;
-
-    transition:
-        border-color 0.2s ease,
-        background 0.2s ease;
-}
-
-.toggle-btn:hover {
-    border-color: rgba(70, 148, 114, 0.4);
-}
-
-.toggle-btn.active {
-    background: rgba(70, 148, 114, 0.08);
-
-    border-color: rgba(70, 148, 114, 0.35);
-
-    box-shadow:
-        0 0 0 4px rgba(70, 148, 114, 0.08);
-}
-
-.toggle-thumb {
-    position: relative;
-
-    width: 42px;
-    height: 24px;
-
-    border-radius: 999px;
-
-    background: #cbd5e1;
-
-    transition: background 0.2s ease;
-}
-
-.toggle-thumb::after {
-    content: '';
-
-    position: absolute;
-
-    top: 3px;
-    left: 3px;
-
-    width: 18px;
-    height: 18px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    box-shadow:
-        0 2px 6px rgba(0,0,0,0.12);
-
-    transition:
-        transform 0.2s ease;
-}
-
-.toggle-btn.active .toggle-thumb {
-    background: #469472;
-}
-
-.toggle-btn.active .toggle-thumb::after {
-    transform: translateX(18px);
-}
-
-.toggle-label {
-    font-size: 0.9rem;
-    font-weight: 600;
-
-    color: #334155;
-}
-
-/* =========================
-   ROLE BADGE
-========================= */
-
-.role-badge {
-    width: fit-content;
-
-    margin-top: 8px;
-    padding: 5px 10px;
-
-    border-radius: 999px;
-
-    font-size: 0.7rem;
-    font-weight: 700;
-
-    letter-spacing: 0.04em;
-}
-
-.role-agent {
-    background: rgba(70, 148, 114, 0.12);
-    color: #469472;
-}
-
-.role-supervisor {
-    background: rgba(59, 130, 246, 0.12);
-    color: #2563eb;
-}
-
-.role-adm {
-    background: rgba(245, 158, 11, 0.12);
-    color: #d97706;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 768px) {
-    .agents-filter-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .toggle-btn {
-        width: 100%;
-        justify-content: space-between;
-    }
-}
-

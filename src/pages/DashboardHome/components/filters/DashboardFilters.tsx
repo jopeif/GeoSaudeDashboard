@@ -1,20 +1,21 @@
-// src/pages/Heatmap/components/HeatmapFilters.tsx
-
-import React from 'react';
-
 import {
     Calendar,
     User,
+    BarChart,
     MapPin,
     BrushCleaning
 } from 'lucide-react';
 
-import type { DashboardFilters } from '../../../types/dashboard';
-import type { UserDetails } from '../../../types/user';
+import type {
+    DashboardFilters
+} from '../../../../types/dashboard';
 
-import '../Heatmap.css';
+import type {
+    UserDetails
+} from '../../../../types/user';
 
-interface HeatmapFiltersProps {
+import "./DashboardFilters.css"
+interface DashboardFiltersProps {
     filters: DashboardFilters;
 
     setFilters: React.Dispatch<
@@ -26,41 +27,48 @@ interface HeatmapFiltersProps {
     onClearFilters: () => void;
 }
 
-export const HeatmapFilters: React.FC<
-    HeatmapFiltersProps
-> = ({
+export const DashboardFiltersComponent = ({
     filters,
     setFilters,
     agents,
     onClearFilters
-}) => {
+}: DashboardFiltersProps) => {
 
     return (
+        <section className="filter-container">
 
-        <section className="heatmap-filter-container">
+            {/* ========================================
+                HEADER
+            ======================================== */}
 
-            <div className="heatmap-filter-header">
+            <div className="filter-header">
 
-                <div className="heatmap-filter-header-left">
+                <div className="filter-header-left">
 
                     <h3>
-                        Filtros Geográficos
+                        Filtros de análise
                     </h3>
 
                     {/* <p>
-                        Refine os focos exibidos
-                        no mapa em tempo real.
+                        Refine os dados exibidos
+                        nos gráficos e indicadores.
                     </p> */}
 
                 </div>
 
             </div>
 
-            <div className="heatmap-filter-grid">
+            {/* ========================================
+                FILTERS GRID
+            ======================================== */}
 
-                {/* DATA INICIAL */}
+            <div className="filter-grid">
 
-                <div className="heatmap-filter-group">
+                {/* ========================================
+                    DATA INICIAL
+                ======================================== */}
+
+                <div className="filter-group filter-group-date">
 
                     <label>
                         <Calendar size={12}/>
@@ -81,9 +89,11 @@ export const HeatmapFilters: React.FC<
 
                 </div>
 
-                {/* DATA FINAL */}
+                {/* ========================================
+                    DATA FINAL
+                ======================================== */}
 
-                <div className="heatmap-filter-group">
+                <div className="filter-group filter-group-date">
 
                     <label>
                         <Calendar size={12}/>
@@ -104,13 +114,15 @@ export const HeatmapFilters: React.FC<
 
                 </div>
 
-                {/* AGENTE */}
+                {/* ========================================
+                    AGENTE
+                ======================================== */}
 
-                <div className="heatmap-filter-group">
+                <div className="filter-group filter-group-agent">
 
                     <label>
                         <User size={12}/>
-                        AGENTE RESPONSÁVEL
+                        AGENTE
                     </label>
 
                     <select
@@ -145,9 +157,11 @@ export const HeatmapFilters: React.FC<
 
                 </div>
 
-                {/* LOCALIDADE */}
+                {/* ========================================
+                    LOCALIDADE
+                ======================================== */}
 
-                <div className="heatmap-filter-group">
+                <div className="filter-group filter-group-locality">
 
                     <label>
                         <MapPin size={12}/>
@@ -171,12 +185,53 @@ export const HeatmapFilters: React.FC<
 
                 </div>
 
-                {/* ACTIONS */}
+                {/* ========================================
+                    AGRUPAMENTO
+                ======================================== */}
 
-                <div className="heatmap-filter-actions">
+                <div className="filter-group filter-group-groupby">
+
+                    <label>
+                        <BarChart size={12}/>
+                        AGRUPAMENTO
+                    </label>
+
+                    <select
+                        value={filters.groupBy}
+                        onChange={(e)=>
+                            setFilters({
+                                ...filters,
+                                groupBy:
+                                    e.target
+                                        .value as any
+                            })
+                        }
+                    >
+
+                        <option value="day">
+                            Diário
+                        </option>
+
+                        <option value="week">
+                            Semanal
+                        </option>
+
+                        <option value="month">
+                            Mensal
+                        </option>
+
+                    </select>
+
+                </div>
+
+                {/* ========================================
+                    ACTIONS
+                ======================================== */}
+
+                <div className="filter-actions">
 
                     <button
-                        className="heatmap-btn-clear"
+                        className="btn-clear"
                         onClick={
                             onClearFilters
                         }
@@ -190,6 +245,5 @@ export const HeatmapFilters: React.FC<
             </div>
 
         </section>
-
     );
 };

@@ -336,43 +336,37 @@
 
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 10px;
 
-    padding: 14px;
+    padding: 12px 14px;
 
     border: none;
 
-    border-radius: 18px;
+    border-radius: 14px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ef4444,
-            #dc2626
-        );
+    background: transparent;
 
-    color: white;
+    color: #64748b;
 
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 600;
 
     cursor: pointer;
 
-    transition:
-        transform 0.22s ease,
-        opacity 0.22s ease,
-        box-shadow 0.22s ease;
+    transition: .22s ease;
 }
 
 .sidebar-logout-btn:hover {
-    transform: translateY(-2px);
+    background: #f8fafc;
 
-    opacity: 0.96;
+    color: var(--primary);
+
+    transform: translateX(2px);
 
     box-shadow:
-        0 12px 24px rgba(239,68,68,0.22);
+        0 12px 24px rgba(62, 62, 62, 0.22);
 }
+
 
 /* ========================================
    SCROLLBAR

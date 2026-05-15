@@ -1,19 +1,32 @@
 :root {
-  --app-bg: #f1f5f9;          /* Fundo cinza azulado muito suave */
-  --card-bg: #ffffff;
-  --primary-green: #0f9266;   /* Verde esmeralda mais moderno */
-  --primary-dark: #064e3b;
-  --text-main: #1e293b;       /* Slate 800 */
-  --text-muted: #64748b;      /* Slate 500 */
-  --border-color: #e2e8f0;    /* Slate 200 */
-  --sidebar-bg: #ffffff;      /* Sidebar branca para visual mais limpo */
+  --bg-page: #f4f7fb;
+
+    --card-bg: #ffffff;
+    --card-soft: #f8fafc;
+
+    --border-color: #e2e8f0;
+    --border-soft: #edf2f7;
+
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --text-light: #94a3b8;
+
+    --primary: #469472;
+    --primary-hover: #37785c;
+
+    --danger: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;    /* Sidebar branca para visual mais limpo */
 }
 
 body {
+  margin: 0;
+  padding: 0;
+  border: 0;
   font-family: 'Inter', sans-serif;
   letter-spacing: -0.01em;
 }
 
 /* Scrollbar fina para não poluir */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: var(--primary-green); border-radius: 10px; }

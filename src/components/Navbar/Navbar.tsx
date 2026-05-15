@@ -6,14 +6,19 @@ import { useNavigate } from 'react-router-dom';
 import {
   User,
   ChevronDown,
-  SearchX
+  //SearchX
 } from 'lucide-react';
 
 import { useAuth } from '../../contexts/AuthContext';
 
 import './Navbar.css';
 
-export const Navbar = () => {
+
+interface NavbarProps {
+    onLogout: () => void;
+}
+
+export const Navbar = ({onLogout}:NavbarProps) => {
   const navigate = useNavigate();
 
   const { user } = useAuth();
@@ -71,39 +76,47 @@ export const Navbar = () => {
       {/* RIGHT */}
       <div className="navbar-right">
 
-        {/* SEARCH DISABLED */}
-        <div className="navbar-search disabled">
-          <SearchX size={16} />
-
-          <span>
-            Busca temporariamente indisponível
-          </span>
-        </div>
+        
 
         {/* USER */}
-        <button
-          className="navbar-user"
-          onClick={handleGoToProfile}
-        >
-          <div className="navbar-user-info">
-            <span className="navbar-user-name">
-              {userName}
-            </span>
+        <div className="navbar-user-wrapper">
+          <button className="navbar-user">
+            <div className="navbar-user-info">
+              <span className="navbar-user-name">
+                {userName}
+              </span>
 
-            <span className="navbar-user-role">
-              {formattedRole}
-            </span>
+              <span className="navbar-user-role">
+                {formattedRole}
+              </span>
+            </div>
+
+            <div className="navbar-avatar">
+              {firstLetter || <User size={18} />}
+            </div>
+
+            <ChevronDown
+              size={16}
+              className="navbar-user-chevron"
+            />
+          </button>
+
+          <div className="navbar-user-dropdown">
+            <button
+              onClick={handleGoToProfile}
+              className="navbar-dropdown-item"
+            >
+              Perfil
+            </button>
+
+            <button
+              className="navbar-dropdown-item logout"
+              onClick={onLogout}
+            >
+              Sair
+            </button>
           </div>
-
-          <div className="navbar-avatar">
-            {firstLetter || <User size={18} />}
-          </div>
-
-          <ChevronDown
-            size={16}
-            className="navbar-user-chevron"
-          />
-        </button>
+        </div>
       </div>
     </header>
   );

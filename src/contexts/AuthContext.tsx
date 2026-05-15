@@ -15,29 +15,29 @@ import type { UserDetails } from '../types/user';
 
 interface AuthUser {
     id: string;
-
     role: string;
-
     access_token: string;
-
     refresh_token: string;
-
     profile?: UserDetails;
 }
 
 interface AuthContextData {
     user: AuthUser | null;
-
     loading: boolean;
-
     authenticated: boolean;
+
+    selectedPanel: string | null;
 
     signIn: (
         login: string,
         password: string
-    ) => Promise<void>;
+    ) => Promise<AuthUser>;
 
     signOut: () => void;
+
+    setSelectedPanel: (
+        panel: string | null
+    ) => void;
 
     updateSession: (
         accessToken: string,
@@ -64,6 +64,7 @@ const ALLOWED_ROLES = [
 export const AuthProvider = ({
     children,
 }: AuthProviderProps) => {
+
     const [user, setUser] =
         useState<AuthUser | null>(
             null
@@ -71,6 +72,44 @@ export const AuthProvider = ({
 
     const [loading, setLoading] =
         useState(true);
+
+    const [
+        selectedPanel,
+        setSelectedPanelState
+    ] = useState<string | null>(
+        localStorage.getItem(
+            '@App:selectedPanel'
+        )
+    );
+
+    /* ========================================
+       PANEL
+    ======================================== */
+
+    const setSelectedPanel =
+        useCallback(
+            (
+                panel: string | null
+            ) => {
+
+                if (panel) {
+                    localStorage.setItem(
+                        '@App:selectedPanel',
+                        panel
+                    );
+                } else {
+                    localStorage.removeItem(
+                        '@App:selectedPanel'
+                    );
+                }
+
+                setSelectedPanelState(
+                    panel
+                );
+
+            },
+            []
+        );
 
     /* ========================================
        UPDATE SESSION
@@ -82,13 +121,11 @@ export const AuthProvider = ({
                 accessToken: string,
                 refreshToken?: string
             ) => {
+
                 setUser(
-                    (
-                        prev
-                    ) => {
-                        if (
-                            !prev
-                        ) {
+                    prev => {
+
+                        if (!prev) {
                             return null;
                         }
 
@@ -104,6 +141,7 @@ export const AuthProvider = ({
                         };
                     }
                 );
+
             },
             []
         );
@@ -113,15 +151,16 @@ export const AuthProvider = ({
     ======================================== */
 
     useEffect(() => {
+
         const listener = (
             event: Event
         ) => {
+
             const customEvent =
                 event as CustomEvent;
 
             const {
                 accessToken,
-
                 refreshToken,
             } =
                 customEvent.detail;
@@ -130,6 +169,7 @@ export const AuthProvider = ({
                 accessToken,
                 refreshToken
             );
+
         };
 
         window.addEventListener(
@@ -138,11 +178,14 @@ export const AuthProvider = ({
         );
 
         return () => {
+
             window.removeEventListener(
                 'auth:update',
                 listener
             );
+
         };
+
     }, [
         updateSession,
     ]);
@@ -152,9 +195,12 @@ export const AuthProvider = ({
     ======================================== */
 
     useEffect(() => {
+
         const loadSession =
             async () => {
+
                 try {
+
                     const token =
                         localStorage.getItem(
                             '@App:token'
@@ -192,9 +238,11 @@ export const AuthProvider = ({
                             normalizedRole
                         )
                     ) {
+
                         authService.logout();
 
                         return;
+
                     }
 
                     let profile:
@@ -202,6 +250,7 @@ export const AuthProvider = ({
                         | undefined;
 
                     try {
+
                         const userResponse =
                             await userService.findById(
                                 id
@@ -211,6 +260,7 @@ export const AuthProvider = ({
                             userResponse.success &&
                             userResponse.user
                         ) {
+
                             profile =
                                 userResponse.user;
 
@@ -218,14 +268,15 @@ export const AuthProvider = ({
                                 '@App:userName',
                                 profile.name
                             );
+
                         }
+
                     } catch {
                         //
                     }
 
                     setUser({
                         id,
-
                         role,
 
                         access_token:
@@ -238,13 +289,17 @@ export const AuthProvider = ({
                     });
 
                 } finally {
+
                     setLoading(
                         false
                     );
+
                 }
+
             };
 
         loadSession();
+
     }, []);
 
     /* ========================================
@@ -256,7 +311,8 @@ export const AuthProvider = ({
             async (
                 login: string,
                 password: string
-            ) => {
+            ): Promise<AuthUser> => {
+
                 const response =
                     await authService.login(
                         login,
@@ -267,10 +323,12 @@ export const AuthProvider = ({
                     !response.success ||
                     !response.user
                 ) {
+
                     throw new Error(
                         response.message ||
-                            'Credenciais inválidas.'
+                        'Credenciais inválidas.'
                     );
+
                 }
 
                 const role =
@@ -281,11 +339,13 @@ export const AuthProvider = ({
                         role
                     )
                 ) {
+
                     authService.logout();
 
                     throw new Error(
                         'Sem permissão.'
                     );
+
                 }
 
                 let profile:
@@ -293,6 +353,7 @@ export const AuthProvider = ({
                     | undefined;
 
                 try {
+
                     const userResponse =
                         await userService.findById(
                             response.user.id
@@ -302,6 +363,7 @@ export const AuthProvider = ({
                         userResponse.success &&
                         userResponse.user
                     ) {
+
                         profile =
                             userResponse.user;
 
@@ -309,13 +371,16 @@ export const AuthProvider = ({
                             '@App:userName',
                             profile.name
                         );
+
                     }
+
                 } catch {
                     //
                 }
 
-                setUser({
-                    id: response.user.id,
+                const authUser: AuthUser = {
+                    id:
+                        response.user.id,
 
                     role:
                         response.user.role,
@@ -329,7 +394,14 @@ export const AuthProvider = ({
                             .refresh_token,
 
                     profile,
-                });
+                };
+
+                setUser(
+                    authUser
+                );
+
+                return authUser;
+
             },
             []
         );
@@ -341,14 +413,26 @@ export const AuthProvider = ({
     const signOut =
         useCallback(
             () => {
+
                 authService.logout();
+
+                setSelectedPanel(
+                    null
+                );
 
                 setUser(
                     null
                 );
+
             },
-            []
+            [
+                setSelectedPanel
+            ]
         );
+
+    /* ========================================
+       CONTEXT
+    ======================================== */
 
     const value =
         useMemo(
@@ -360,6 +444,10 @@ export const AuthProvider = ({
                 authenticated:
                     !!user,
 
+                selectedPanel,
+
+                setSelectedPanel,
+
                 signIn,
 
                 signOut,
@@ -369,8 +457,10 @@ export const AuthProvider = ({
             [
                 user,
                 loading,
+                selectedPanel,
                 signIn,
                 signOut,
+                setSelectedPanel,
                 updateSession,
             ]
         );
@@ -379,9 +469,7 @@ export const AuthProvider = ({
         <AuthContext.Provider
             value={value}
         >
-            {
-                children
-            }
+            {children}
         </AuthContext.Provider>
     );
 };

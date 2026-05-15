@@ -1,0 +1,236 @@
+/* =========================
+   NAVBAR
+========================= */
+
+.admin-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    width: 100%;
+
+    padding: 18px 28px;
+
+    border-bottom: 1px solid #e2e8f0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #f8fafc
+        );
+
+    box-shadow:
+        0 4px 20px rgba(15, 23, 42, 0.04);
+
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+}
+
+/* =========================
+   LEFT
+========================= */
+
+.admin-navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    min-width: 0;
+}
+
+.admin-navbar-left img {
+    width: 52px;
+    height: 52px;
+
+    object-fit: contain;
+
+    border-radius: 14px;
+
+    padding: 6px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(70, 148, 114, 0.12),
+            rgba(70, 148, 114, 0.22)
+        );
+
+    border: 1px solid rgba(70, 148, 114, 0.18);
+}
+
+.admin-navbar-left h2 {
+    margin: 0;
+
+    font-size: 1.35rem;
+    font-weight: 800;
+
+    color: #0f172a;
+
+    line-height: 1.2;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.admin-navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.admin-nav-btn {
+    height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 0 18px;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+/* =========================
+   SECONDARY
+========================= */
+
+.admin-nav-btn.secondary {
+    background:
+        linear-gradient(
+            135deg,
+            #f1f5f9,
+            #e2e8f0
+        );
+
+    color: #0f172a;
+
+    box-shadow:
+        0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.admin-nav-btn.secondary:hover {
+    transform: translateY(-2px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #e2e8f0,
+            #cbd5e1
+        );
+
+    box-shadow:
+        0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================
+   DANGER
+========================= */
+
+.admin-nav-btn.danger {
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #dc2626
+        );
+
+    color: white;
+
+    box-shadow:
+        0 10px 24px rgba(239, 68, 68, 0.22);
+}
+
+.admin-nav-btn.danger:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 30px rgba(239, 68, 68, 0.28);
+}
+
+/* =========================
+   ACTIVE PRESS
+========================= */
+
+.admin-nav-btn:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   ICONS
+========================= */
+
+.admin-nav-btn svg {
+    flex-shrink: 0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .admin-navbar {
+        flex-direction: column;
+        align-items: stretch;
+
+        padding: 18px;
+    }
+
+    .admin-navbar-left {
+        justify-content: center;
+    }
+
+    .admin-navbar-left h2 {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .admin-navbar-actions {
+        width: 100%;
+
+        flex-direction: column;
+    }
+
+    .admin-nav-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 540px) {
+
+    .admin-navbar-left {
+        flex-direction: column;
+    }
+
+    .admin-navbar-left img {
+        width: 46px;
+        height: 46px;
+    }
+
+    .admin-navbar-left h2 {
+        font-size: 1rem;
+    }
+}

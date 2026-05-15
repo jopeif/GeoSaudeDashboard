@@ -1,52 +1,13 @@
-:root {
-    --bg-page: #f4f7fb;
-
-    --card-bg: #ffffff;
-    --card-soft: #f8fafc;
-
-    --border-color: #e2e8f0;
-    --border-soft: #edf2f7;
-
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --text-light: #94a3b8;
-
-    --primary: #469472;
-    --primary-hover: #37785c;
-
-    --danger: #ef4444;
-    --success: #10b981;
-    --warning: #f59e0b;
-
-    --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.04);
-    --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.06);
-    --shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.08);
-
-    --radius-sm: 12px;
-    --radius-md: 18px;
-    --radius-lg: 26px;
-
-    --transition: 0.22s ease;
-}
-
 /* =========================
    PAGE
 ========================= */
 
 .dashboard-home {
-    min-height: 100vh;
-
+  display: flex;
+    flex-direction: column;
+    gap: 24px;
     padding: 32px;
-
-    background:
-        radial-gradient(
-            circle at top left,
-            rgba(70, 148, 114, 0.05),
-            transparent 30%
-        ),
-        var(--bg-page);
-
-    box-sizing: border-box;
+    width: 100%;
 }
 
 /* =========================
@@ -54,197 +15,11 @@
 ========================= */
 
 .page-title {
-    margin: 0 0 28px;
-
-    font-size: 34px;
-    font-weight: 900;
-    line-height: 1.1;
-
-    color: var(--text-main);
-
-    letter-spacing: -0.5px;
-}
-
-/* =========================
-   FILTER CONTAINER
-========================= */
-
-.filter-container {
-    background: rgba(255, 255, 255, 0.88);
-
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    border-radius: var(--radius-lg);
-
-    padding: 24px;
-
-    margin-bottom: 28px;
-
-    backdrop-filter: blur(18px);
-
-    box-shadow: var(--shadow-md);
-}
-
-.filter-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    margin-bottom: 22px;
-
-    font-size: 14px;
-    font-weight: 800;
-
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-
-    color: var(--text-main);
-}
-
-.filter-title svg {
-    color: var(--primary);
-}
-
-/* =========================
-   FILTER GRID
-========================= */
-
-.filter-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    align-items: end;
-}
-
-/* =========================
-   FILTER GROUP
-========================= */
-
-.filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.filter-group label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    font-size: 11px;
-    font-weight: 800;
-
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-
-    color: var(--text-muted);
-}
-
-.filter-group label svg {
-    color: var(--primary);
-}
-
-/* =========================
-   INPUTS
-========================= */
-
-.filter-group input,
-.filter-group select {
-    width: 100%;
-
-    height: 46px;
-
-    padding: 0 14px;
-
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-
-    background: white;
-
-    font-size: 14px;
-    font-weight: 500;
-
-    color: var(--text-main);
-
-    transition: var(--transition);
-
-    box-sizing: border-box;
-}
-
-.filter-group input::placeholder {
-    color: #94a3b8;
-}
-
-.filter-group input:hover,
-.filter-group select:hover {
-    border-color: #cbd5e1;
-}
-
-.filter-group input:focus,
-.filter-group select:focus {
-    outline: none;
-
-    border-color: var(--primary);
-
-    box-shadow:
-        0 0 0 4px rgba(70, 148, 114, 0.12);
-}
-
-/* =========================
-   ACTIONS
-========================= */
-
-.filter-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    flex-wrap: wrap;
-}
-
-.btn-apply,
-.btn-clear {
-    height: 46px;
-
-    padding: 0 20px;
-
-    border-radius: 14px;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: var(--transition);
-}
-
-.btn-apply {
-    border: none;
-
-    background: var(--primary);
-    color: white;
-}
-
-.btn-apply:hover {
-    background: var(--primary-hover);
-
-    transform: translateY(-1px);
-
-    box-shadow:
-        0 12px 24px rgba(70, 148, 114, 0.22);
-}
-
-.btn-clear {
-    border: 1px solid var(--border-color);
-
-    background: white;
-    color: var(--text-muted);
-}
-
-.btn-clear:hover {
-    background: #f8fafc;
-    color: var(--text-main);
-
-    border-color: #cbd5e1;
+  margin: 0;
+  color: var(--text-main);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 /* =========================
@@ -252,20 +27,18 @@
 ========================= */
 
 .dashboard-content-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 360px;
-    gap: 24px;
-
-    margin-top: 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 24px;
+  margin-top: 28px;
 }
 
 .main-charts-column,
 .side-charts-column {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-
-    min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
 }
 
 /* =========================
@@ -273,44 +46,54 @@
 ========================= */
 
 .chart-card {
-    background: var(--card-bg);
-
-    border: 1px solid var(--border-soft);
-    border-radius: var(--radius-lg);
-
-    padding: 24px;
-
-    box-shadow: var(--shadow-md);
-
-    transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 24px;
+  
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.98),
+    var(--card-soft)
+  );
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  
+  box-shadow: var(--shadow-md);
+  transition: var(--transition), border-color 0.25s ease;
 }
 
 .chart-card:hover {
-    transform: translateY(-2px);
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-lg);
+}
 
-    box-shadow: var(--shadow-lg);
+.chart-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-hover));
 }
 
 .chart-title {
-    margin: 0 0 20px;
-
-    font-size: 14px;
-    font-weight: 800;
-
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-
-    color: var(--text-main);
+  margin: 0 0 24px;
+  color: var(--text-main);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
 }
 
 .double-chart-grid {
-    display: grid;
-
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 24px;
-
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
 }
 
 /* =========================
@@ -318,47 +101,40 @@
 ========================= */
 
 .summary-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .summary-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 12px;
-
-    padding: 16px;
-
-    border-radius: 16px;
-
-    background: var(--card-soft);
-
-    border: 1px solid var(--border-soft);
-
-    transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  
+  background: var(--card-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
 }
 
 .summary-item:hover {
-    background: #ffffff;
-
-    transform: translateX(2px);
+  background: var(--card-bg);
+  transform: translateX(2px);
+  border-color: var(--border-color);
 }
 
 .summary-item span {
-    font-size: 14px;
-    font-weight: 600;
-
-    color: var(--text-muted);
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .summary-item strong {
-    font-size: 16px;
-    font-weight: 800;
-
-    color: var(--primary);
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 800;
 }
 
 /* =========================
@@ -366,420 +142,125 @@
 ========================= */
 
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 999px;
+  background: var(--primary);
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
+}
+
+/* ========================================
+   RECHARTS COMPONENTS (SVG/TOOLTIP)
+======================================== */
+
+.recharts-default-tooltip {
+  backdrop-filter: blur(12px);
+  padding: 14px 16px !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.recharts-tooltip-label {
+  margin-bottom: 10px !important;
+  color: var(--text-main) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.4px;
+}
+
+.recharts-tooltip-item {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.recharts-legend-item-text {
+  color: var(--text-muted) !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.recharts-cartesian-axis-line {
+  stroke: var(--border-color);
+}
+
+.recharts-cartesian-grid line {
+  stroke: var(--border-soft);
+}
+
+/* ========================================
+   CHART STATES (EMPTY & LOADING)
+======================================== */
+
+.chart-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  
+  background: var(--card-soft);
+  border: 1px dashed var(--text-light);
+  border-radius: var(--radius-md);
+  
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.chart-loading {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+  
+  background: linear-gradient(
+    90deg,
+    var(--border-soft) 0%,
+    var(--border-color) 50%,
+    var(--border-soft) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--radius-md);
+  animation: chartSkeleton 1.4s linear infinite;
+}
+
+@keyframes chartSkeleton {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 
-@media (max-width: 1280px) {
-    .dashboard-content-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .side-charts-column {
-        width: 100%;
-    }
-}
-
 @media (max-width: 992px) {
-    .main-charts-column > div[style*="grid-template-columns"] {
-        grid-template-columns: 1fr !important;
-    }
+  .dashboard-content-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .double-chart-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
-    .dashboard-home {
-        padding: 20px;
-    }
-
-    .page-title {
-        font-size: 28px;
-    }
-
-    .filter-container {
-        padding: 20px;
-    }
-
-    .filter-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .filter-actions {
-        width: 100%;
-    }
-
-    .btn-apply,
-    .btn-clear {
-        flex: 1;
-    }
-
-    .chart-card {
-        padding: 20px;
-    }
-}
-
-@media (max-width: 540px) {
-    .dashboard-home {
-        padding: 16px;
-    }
-
-    .page-title {
-        font-size: 24px;
-    }
-
-    .filter-container,
-    .chart-card {
-        border-radius: 20px;
-    }
-
-    .summary-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}
-
-/* ========================================
-   CHART CARD
-======================================== */
-
-.chart-card {
-    position: relative;
-
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,0.98),
-            rgba(248,250,252,0.96)
-        );
-
-    border: 1px solid rgba(226,232,240,0.9);
-
-    border-radius: 26px;
-
-    padding: 24px;
-
-    box-sizing: border-box;
-
-    box-shadow:
-        0 10px 30px rgba(15,23,42,0.05),
-        0 2px 8px rgba(15,23,42,0.03);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-}
-
-.chart-card:hover {
-    transform: translateY(-3px);
-
-    border-color: rgba(70,148,114,0.16);
-
-    box-shadow:
-        0 18px 40px rgba(15,23,42,0.08),
-        0 4px 12px rgba(15,23,42,0.04);
-}
-
-/* ========================================
-   TOP DECORATION
-======================================== */
-
-.chart-card::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 5px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #469472,
-            #63ab8a
-        );
-}
-
-/* ========================================
-   TITLE
-======================================== */
-
-.chart-title {
-    margin: 0 0 24px;
-
-    font-size: 14px;
-    font-weight: 800;
-
-    line-height: 1.5;
-
-    letter-spacing: 0.7px;
-    text-transform: uppercase;
-
-    color: #0f172a;
-}
-
-/* ========================================
-   RECHARTS CONTAINER
-======================================== */
-
-.recharts-wrapper {
-    font-family: inherit;
-}
-
-/* ========================================
-   TOOLTIP
-======================================== */
-
-.recharts-default-tooltip {
-    border: none !important;
-
-    border-radius: 18px !important;
-
-    padding: 14px 16px !important;
-
-    background: rgba(255,255,255,0.96) !important;
-
-    backdrop-filter: blur(12px);
-
-    box-shadow:
-        0 16px 36px rgba(15,23,42,0.12) !important;
-}
-
-.recharts-tooltip-label {
-    margin-bottom: 10px !important;
-
-    font-size: 12px !important;
-    font-weight: 800 !important;
-
-    color: #0f172a !important;
-
-    letter-spacing: 0.4px;
-}
-
-.recharts-tooltip-item {
-    font-size: 12px !important;
-    font-weight: 600 !important;
-}
-
-/* ========================================
-   LEGEND
-======================================== */
-
-.recharts-legend-wrapper {
-    padding-top: 6px;
-}
-
-.recharts-legend-item-text {
-    font-size: 12px !important;
-    font-weight: 700 !important;
-
-    color: #475569 !important;
-}
-
-/* ========================================
-   AXIS
-======================================== */
-
-.recharts-cartesian-axis-tick-value {
-    font-size: 11px;
-
-    font-weight: 600;
-
-    fill: #64748b;
-}
-
-.recharts-cartesian-axis-line {
-    stroke: #e2e8f0;
-}
-
-.recharts-cartesian-grid line {
-    stroke: #f1f5f9;
-}
-
-/* ========================================
-   BARS
-======================================== */
-
-.recharts-bar-rectangle path {
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
-}
-
-.recharts-bar-rectangle:hover path {
-    opacity: 0.82;
-}
-
-/* ========================================
-   PIE CHART
-======================================== */
-
-.recharts-pie-sector {
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
-}
-
-.recharts-pie-sector:hover {
-    opacity: 0.9;
-
-    filter: brightness(1.04);
-}
-
-/* ========================================
-   LINE CHART
-======================================== */
-
-.recharts-line-curve {
-    filter:
-        drop-shadow(
-            0 4px 8px rgba(0,0,0,0.06)
-        );
-}
-
-.recharts-dot circle {
-    transition:
-        r 0.2s ease,
-        opacity 0.2s ease;
-}
-
-.recharts-dot:hover circle {
-    r: 6;
-}
-
-/* ========================================
-   RESPONSIVE CHART CONTAINER
-======================================== */
-
-.chart-responsive-container {
-    width: 100%;
-    min-height: 300px;
-}
-
-/* ========================================
-   EMPTY STATES
-======================================== */
-
-.chart-empty-state {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    height: 300px;
-
-    border-radius: 18px;
-
-    background: #f8fafc;
-
-    border: 1px dashed #cbd5e1;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    color: #64748b;
-}
-
-/* ========================================
-   LOADING STATE
-======================================== */
-
-.chart-loading {
-    position: relative;
-
-    overflow: hidden;
-
-    height: 300px;
-
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #f1f5f9 0%,
-            #e2e8f0 50%,
-            #f1f5f9 100%
-        );
-
-    background-size: 200% 100%;
-
-    animation: chartSkeleton 1.4s linear infinite;
-}
-
-@keyframes chartSkeleton {
-    0% {
-        background-position: 200% 0;
-    }
-
-    100% {
-        background-position: -200% 0;
-    }
-}
-
-/* ========================================
-   RESPONSIVE
-======================================== */
-
-@media (max-width: 992px) {
-    .chart-card {
-        padding: 22px;
-    }
-
-    .double-chart-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 768px) {
-    .chart-card {
-        padding: 20px;
-
-        border-radius: 22px;
-    }
-
-    .chart-title {
-        margin-bottom: 18px;
-
-        font-size: 13px;
-    }
-
-    .recharts-cartesian-axis-tick-value {
-        font-size: 10px;
-    }
-
-    .recharts-legend-item-text {
-        font-size: 11px !important;
-    }
-}
-
-@media (max-width: 540px) {
-    .chart-card {
-        padding: 18px;
-
-        border-radius: 20px;
-    }
-
-    .chart-title {
-        font-size: 12px;
-    }
-
-    .recharts-tooltip-label,
-    .recharts-tooltip-item {
-        font-size: 11px !important;
-    }
+  .dashboard-home {
+    padding: 20px;
+  }
+  
+  .chart-card {
+    padding: 20px;
+    border-radius: var(--radius-md);
+  }
 }

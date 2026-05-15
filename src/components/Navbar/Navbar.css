@@ -395,3 +395,76 @@
     }
 }
 
+/* ========================================
+   USER DROPDOWN
+======================================== */
+
+.navbar-user-wrapper {
+    position: relative;
+}
+
+.navbar-user-dropdown {
+    position: absolute;
+
+    top: calc(100% + 10px);
+    right: 0;
+
+    min-width: 180px;
+
+    padding: 8px;
+
+    border-radius: 16px;
+
+    background: white;
+
+    border: 1px solid rgba(226,232,240,0.9);
+
+    box-shadow:
+        0 14px 40px rgba(15,23,42,0.08);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(8px);
+
+    transition: all .22s ease;
+
+    z-index: 999;
+}
+
+.navbar-user-wrapper:hover .navbar-user-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.navbar-dropdown-item {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: none;
+    background: transparent;
+
+    border-radius: 12px;
+
+    text-align: left;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: var(--text-main);
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.navbar-dropdown-item:hover {
+    background: #f8fafc;
+}
+
+.navbar-dropdown-item.logout {
+    color: #ef4444;
+}
+

@@ -1,7 +1,7 @@
 // src/layouts/DashboardLayout.tsx
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Sidebar } from './Sidebar/Sidebar';
-import { Navbar } from '../components/Navbar/Navbar';
+import { Sidebar } from '../../Sidebar/Sidebar';
+import { Navbar } from '../../Navbar/Navbar';
 import './DashboardLayout.css';
 
 export const DashboardLayout = () => {
@@ -14,10 +14,10 @@ export const DashboardLayout = () => {
 
   return (
     <div className="app-layout">
-      <Sidebar onLogout={handleLogout} />
+      <Sidebar />
       
       <div className="main-viewport">
-        <Navbar />
+        <Navbar onLogout={handleLogout}/>
         <main className="content-area">
           <Outlet />
         </main>

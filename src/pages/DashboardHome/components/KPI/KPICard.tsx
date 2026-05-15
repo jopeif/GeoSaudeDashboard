@@ -1,5 +1,5 @@
 import React from 'react';
-import "./KIPSection.css"
+import "./KPICard.css"
 
 interface KPICardProps {
     label: string;

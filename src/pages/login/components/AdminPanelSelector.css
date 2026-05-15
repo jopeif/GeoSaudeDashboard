@@ -1,0 +1,252 @@
+:root{
+    --primary:#469472;
+    --primary-dark:#2f6d52;
+
+    --text-main:#0f172a;
+    --text-soft:#64748b;
+
+    --border:#e2e8f0;
+}
+
+/* ========================================
+   OVERLAY
+======================================== */
+
+.panel-selector-overlay{
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 999999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(15,23,42,0.45);
+
+    backdrop-filter: blur(8px);
+
+    animation: fadeIn .25s ease;
+}
+
+/* ========================================
+   CARD
+======================================== */
+
+.panel-selector-card{
+    width: 100%;
+    max-width: 560px;
+
+    margin: 20px;
+
+    padding: 34px;
+
+    border-radius: 28px;
+
+    background: white;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.18);
+
+    animation: scaleIn .25s ease;
+}
+
+/* ========================================
+   HEADER
+======================================== */
+
+.panel-selector-badge{
+    display: inline-block;
+
+    margin-bottom: 14px;
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    background: rgba(70,148,114,0.08);
+
+    color: var(--primary);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: .7px;
+}
+
+.panel-selector-title{
+    margin: 0;
+
+    font-size: 28px;
+    font-weight: 800;
+
+    color: var(--text-main);
+}
+
+.panel-selector-subtitle{
+    margin-top: 12px;
+    margin-bottom: 28px;
+
+    line-height: 1.6;
+
+    color: var(--text-soft);
+
+    font-size: 15px;
+}
+
+/* ========================================
+   OPTIONS
+======================================== */
+
+.panel-selector-options{
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.panel-option-btn{
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 18px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    background: white;
+
+    cursor: pointer;
+
+    transition:
+        .22s ease;
+}
+
+.panel-option-btn:hover{
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(70,148,114,0.35);
+
+    box-shadow:
+        0 10px 30px rgba(15,23,42,0.06);
+}
+
+.panel-option-btn.primary{
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            #5ca784
+        );
+
+    color: white;
+
+    border: none;
+}
+
+.panel-option-btn.primary .panel-option-content span{
+    color:
+        rgba(255,255,255,.85);
+}
+
+.panel-option-btn.primary .panel-option-icon{
+    background:
+        rgba(255,255,255,.14);
+}
+
+/* ========================================
+   ICON
+======================================== */
+
+.panel-option-icon{
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background:
+        #f8fafc;
+
+    color: currentColor;
+}
+
+/* ========================================
+   CONTENT
+======================================== */
+
+.panel-option-content{
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+}
+
+.panel-option-content strong{
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.panel-option-content span{
+    margin-top: 4px;
+
+    font-size: 13px;
+
+    color: var(--text-soft);
+}
+
+/* ========================================
+   ANIMATION
+======================================== */
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes scaleIn{
+    from{
+        opacity:0;
+        transform: scale(.95);
+    }
+    to{
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 600px){
+
+    .panel-selector-card{
+        padding: 24px;
+    }
+
+    .panel-selector-title{
+        font-size: 22px;
+    }
+
+}

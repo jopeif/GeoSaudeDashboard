@@ -1,22 +1,20 @@
 // src/components/layout/Sidebar.tsx
 
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import {
     LayoutDashboard,
-    LogOut,
     Map,
     User,
-    ChevronRight
+    ChevronRight,
+    Shield
 } from 'lucide-react';
 
-import logo from "../../imgs/logo.png"
+import { useAuth } from '../../contexts/AuthContext';
+
+import logo from "../../imgs/logo.png";
 
 import './Sidebar.css';
-
-interface SidebarProps {
-    onLogout: () => void;
-}
 
 const navItems = [
     {
@@ -36,12 +34,23 @@ const navItems = [
     }
 ];
 
-export const Sidebar = ({ onLogout }: SidebarProps) => {
+export const Sidebar = () => {
+
+    const { user } = useAuth();
+
+    const isAdmin =
+        user?.role === 'ADMIN' ||
+        user?.role === 'ADM' ||
+        user?.role === 'SUPERADMIN';
+
     return (
         <aside className="sidebar">
+
             {/* HEADER */}
             <div className="sidebar-header">
+
                 <div className="sidebar-brand">
+
                     <img
                         src={logo}
                         alt="GeoSaúde"
@@ -49,6 +58,7 @@ export const Sidebar = ({ onLogout }: SidebarProps) => {
                     />
 
                     <div className="sidebar-brand-texts">
+
                         <span className="sidebar-brand-label">
                             Plataforma
                         </span>
@@ -56,18 +66,24 @@ export const Sidebar = ({ onLogout }: SidebarProps) => {
                         <h1 className="sidebar-brand-name">
                             GeoSaúde
                         </h1>
+
                     </div>
+
                 </div>
+
             </div>
 
             {/* NAV */}
             <nav className="sidebar-nav">
+
                 <span className="sidebar-section-title">
                     Navegação
                 </span>
 
                 <div className="sidebar-links">
+
                     {navItems.map((item) => {
+
                         const Icon = item.icon;
 
                         return (
@@ -80,53 +96,58 @@ export const Sidebar = ({ onLogout }: SidebarProps) => {
                                         : 'sidebar-link'
                                 }
                             >
+
                                 <div className="sidebar-link-left">
+
                                     <div className="sidebar-icon-wrapper">
                                         <Icon size={18} />
                                     </div>
 
-                                    <span>{item.label}</span>
+                                    <span>
+                                        {item.label}
+                                    </span>
+
                                 </div>
 
                                 <ChevronRight
                                     size={16}
                                     className="sidebar-link-arrow"
                                 />
+
                             </NavLink>
                         );
                     })}
+
                 </div>
+
             </nav>
 
-            {/* FOOTER */}
-            <div className="sidebar-footer">
-                {/* <div className="sidebar-status-card">
-                    <div className="status-indicator" />
+            {/* ADMIN ACCESS */}
+            {isAdmin && (
 
-                    <div className="status-content">
-                        <span className="status-label">
-                            Sistema
-                        </span>
+                <Link
+                    to="/admin"
+                    className="sidebar-admin-link"
+                >
 
-                        <strong className="status-value">
-                            Operacional
-                        </strong>
+                    <div className="sidebar-footer">
+
+                        <button className="sidebar-logout-btn admin-access-btn">
+
+                            <Shield size={16} />
+
+                            <span>
+                                Acessar painel administrativo
+                            </span>
+
+                        </button>
+
                     </div>
 
-                    <Activity
-                        size={18}
-                        className="status-icon"
-                    />
-                </div> */}
+                </Link>
 
-                <button
-                    onClick={onLogout}
-                    className="sidebar-logout-btn"
-                >
-                    <LogOut size={18} />
-                    <span>Sair do Sistema</span>
-                </button>
-            </div>
+            )}
+
         </aside>
     );
 };

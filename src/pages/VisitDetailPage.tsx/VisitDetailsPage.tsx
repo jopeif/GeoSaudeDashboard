@@ -4,9 +4,9 @@ import {
     ArrowLeft, MapPin, Clipboard, 
     Beaker, Navigation, FileText, User, AlertTriangle, CheckCircle2 
 } from 'lucide-react';
-import { visitService } from '../../services/Visit.service';
 import './VisitDetailsPage.css';
 import type { FindVisitByIdDTOOutput } from '../../types/visit';
+import { visitService } from '../../services/Visit.service';
 
 const propertyTypeLabels: Record<string, string> = {
     HOUSE: 'Casa',
