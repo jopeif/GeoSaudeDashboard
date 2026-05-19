@@ -6,10 +6,10 @@ import {
     LayoutDashboard,
     Map,
     User,
-    Clipboard,
     ChevronRight,
     Shield,
-    FileChartLine
+    FileChartLine,
+    FilePlusCorner
 } from 'lucide-react';
 
 import { useAuth } from '../../contexts/AuthContext';
@@ -35,14 +35,14 @@ const navItems = [
         icon: User
     },
     {
-        label: 'Nova visita',
-        path: '/new-visit',
-        icon: Clipboard
-    },
-    {
         label: 'Emitir relatórios',
         path: '/reports',
         icon: FileChartLine
+    },
+    {
+        label: 'Nova visita',
+        path: '/new-visit',
+        icon: FilePlusCorner
     },
 ];
 

@@ -10,7 +10,6 @@
     gap: 24px;
     padding: 32px;
     width: 100%;
-    min-height: 83vh;
     background: var(--bg-main);
 }
 
