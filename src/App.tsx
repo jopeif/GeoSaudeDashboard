@@ -29,6 +29,7 @@ import { AdminLayout } from './components/Layouts/AdminLayout/AdminLayout';
 import { ProfilePage } from './pages/ProfilePage/ProfilePage';
 import { VisitDetailsPage } from './pages/VisitDetailPage.tsx/VisitDetailsPage';
 import { NewVisitPage } from './pages/NewVisitPage/NewVisitPage';
+import ReportsPage from './pages/ReportsPage/ReportsPage';
 
 interface ProtectedRouteProps {
   children: ReactElement;
@@ -204,6 +205,12 @@ function App() {
           path="new-visit"
           element={
             <NewVisitPage />
+          }
+        />
+        <Route
+          path="reports"
+          element={
+            <ReportsPage />
           }
         />
 

@@ -6,8 +6,10 @@ import {
     LayoutDashboard,
     Map,
     User,
+    Clipboard,
     ChevronRight,
-    Shield
+    Shield,
+    FileChartLine
 } from 'lucide-react';
 
 import { useAuth } from '../../contexts/AuthContext';
@@ -31,7 +33,17 @@ const navItems = [
         label: 'Atividade dos Agentes',
         path: '/agent',
         icon: User
-    }
+    },
+    {
+        label: 'Nova visita',
+        path: '/new-visit',
+        icon: Clipboard
+    },
+    {
+        label: 'Emitir relatórios',
+        path: '/reports',
+        icon: FileChartLine
+    },
 ];
 
 export const Sidebar = () => {

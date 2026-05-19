@@ -10,6 +10,7 @@ interface RetryAxiosRequestConfig
 const BASE_URL =
     'https://geosaudeapi.onrender.com';
 
+
 const api = axios.create({
     baseURL: BASE_URL,
 });
@@ -133,8 +134,6 @@ api.interceptors.response.use(
                 '@App:token',
                 accessToken
             );
-
-            console.log(newRefreshToken)
 
             localStorage.setItem(
                 '@App:refreshToken',
