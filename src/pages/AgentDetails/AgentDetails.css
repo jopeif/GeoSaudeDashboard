@@ -434,6 +434,7 @@
 
 .map-section {
     overflow: hidden;
+    margin-top: 30px;
 }
 
 .map-container {

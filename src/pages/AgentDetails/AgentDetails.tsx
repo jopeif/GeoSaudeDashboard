@@ -160,7 +160,7 @@ export const AgentDetails = () => {
                                 ) : routePoints.length > 0 ? (
                                     <AgentRouteMap points={routePoints} />
                                 ) : (
-                                    <div className="empty-state">Sem registros no período.</div>
+                                    <div className="empty-state">Nenhum registro encontrado no período selecionado. Ajuste a data inicial e a data final e clique em “Atualizar” para tentar novamente.</div>
                                 )}
                             </div>
                         </section>

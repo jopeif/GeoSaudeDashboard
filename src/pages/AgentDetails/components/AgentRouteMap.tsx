@@ -229,9 +229,9 @@ export const AgentRouteMap = ({
                                         </span>
                                     </div>
 
-                                    <div className="popup-redirect">
+                                    {/* <div className="popup-redirect">
                                         Ver detalhes da visita
-                                    </div>
+                                    </div> */}
                                 </button>
                             </Popup>
                         </CircleMarker>
