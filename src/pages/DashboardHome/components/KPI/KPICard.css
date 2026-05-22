@@ -1,4 +1,6 @@
 .kpi-card {
+  position: relative;
+
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 14px;
@@ -11,6 +13,8 @@
   flex-direction: column;
   justify-content: space-between;
 
+  overflow: visible;
+
   box-shadow:
     0 1px 2px rgba(15, 23, 42, 0.03),
     0 4px 12px rgba(15, 23, 42, 0.04);
@@ -22,8 +26,6 @@
 }
 
 .kpi-card:hover {
-  transform: translateY(-2px);
-
   box-shadow:
     0 4px 10px rgba(15, 23, 42, 0.06),
     0 8px 20px rgba(15, 23, 42, 0.08);
@@ -103,4 +105,65 @@
   .kpi-value {
     font-size: 1.2rem;
   }
+}
+
+/* =========================
+   TOOLTIP
+========================= */
+
+.kpi-tooltip-wrapper {
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+
+  z-index: 100;
+}
+
+.info-tooltip {
+  position: relative;
+
+  overflow: visible;
+}
+
+/* BOTÃO */
+
+.kpi-tooltip-wrapper .info-tooltip-button {
+  width: 26px;
+  height: 26px;
+
+  min-width: 26px;
+
+  border-radius: 999px;
+}
+
+.kpi-tooltip-wrapper .info-tooltip-button svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* TOOLTIP BOX */
+
+.info-tooltip-box {
+  z-index: 9999;
+
+  width: 240px;
+}
+
+/* CARDS DA ESQUERDA → ABRE PRA DIREITA */
+
+.kpi-tooltip-wrapper.right .info-tooltip-box {
+  top: calc(100% + 8px);
+
+  left: 0;
+  right: auto;
+}
+
+/* CARDS DA DIREITA → ABRE PRA ESQUERDA */
+
+.kpi-tooltip-wrapper.left .info-tooltip-box {
+  top: calc(100% + 8px);
+
+  right: 0;
+  left: auto;
 }

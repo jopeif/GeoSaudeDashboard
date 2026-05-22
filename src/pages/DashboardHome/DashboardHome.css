@@ -264,3 +264,49 @@
     border-radius: var(--radius-md);
   }
 }
+
+
+/* INFO TOOLTIP */
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-bottom: 24px;
+}
+
+.summary-header .chart-title {
+  margin: 0;
+}
+
+.chart-section-header {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-bottom: 8px;
+}
+
+.chart-wrapper-with-tooltip {
+  position: relative;
+}
+
+.chart-tooltip-floating {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+}
+
+.summary-label-with-tooltip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

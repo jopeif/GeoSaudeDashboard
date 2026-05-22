@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 
-
 import { dashboardService } from '../../services/Dashboard.service';
 import { userService } from '../../services/User.service';
-import {DashboardFiltersComponent} from "./components/filters/DashboardFilters"
+
+import { DashboardFiltersComponent } from "./components/filters/DashboardFilters";
+
 import type {
   KPIStats,
   DashboardFilters,
@@ -20,10 +21,13 @@ import { FocusFoundChart } from './components/charts/FocusFoundChart';
 import { RegionChart } from './components/charts/RegionChart';
 import { AgentPerformanceChart } from './components/charts/AgentPerformanceChart';
 
-import "./DashboardHome.css"
+import { InfoTooltip } from '../../components/InfoTooltip/InfoTooltip';
+
+import "./DashboardHome.css";
 
 export const DashboardHome = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] =
+    useState(true);
 
   const [kpiData, setKpiData] =
     useState<KPIStats | null>(null);
@@ -34,64 +38,81 @@ export const DashboardHome = () => {
   const [agents, setAgents] =
     useState<UserDetails[]>([]);
 
-  const initialFilters = useMemo<DashboardFilters>(
-    () => ({
-      startDate: '',
-      endDate: '',
-      userId: '',
-      localityCode: '',
-      groupBy: 'day'
-    }),
-    []
-  );
+  const initialFilters =
+    useMemo<DashboardFilters>(
+      () => ({
+        startDate: '',
+        endDate: '',
+        userId: '',
+        localityCode: '',
+        groupBy: 'day'
+      }),
+      []
+    );
 
   const [filters, setFilters] =
-    useState<DashboardFilters>(initialFilters);
+    useState<DashboardFilters>(
+      initialFilters
+    );
 
   useEffect(() => {
-    const loadAgents = async () => {
-      const response =
-        await userService.findAll();
+    const loadAgents =
+      async () => {
+        const response =
+          await userService.findAll();
 
-      if (
-        response.success &&
-        response.users
-      ) {
-        setAgents(response.users);
-      }
-    };
+        if (
+          response.success &&
+          response.users
+        ) {
+          setAgents(
+            response.users
+          );
+        }
+      };
 
     loadAgents();
   }, []);
 
-  const fetchDashboardData = async (
-    params: DashboardFilters
-  ) => {
-    setLoading(true);
+  const fetchDashboardData =
+    async (
+      params: DashboardFilters
+    ) => {
+      setLoading(true);
 
-    try {
-      const [kpiRes, chartRes] =
-        await Promise.all([
-          dashboardService.getKPIs(params),
-          dashboardService.getCharts(params)
+      try {
+        const [
+          kpiRes,
+          chartRes
+        ] = await Promise.all([
+          dashboardService.getKPIs(
+            params
+          ),
+          dashboardService.getCharts(
+            params
+          )
         ]);
 
-      if (kpiRes.success) {
-        setKpiData(kpiRes.data);
-      }
+        if (kpiRes.success) {
+          setKpiData(
+            kpiRes.data
+          );
+        }
 
-      if (chartRes.success) {
-        setChartData(chartRes.charts);
+        if (chartRes.success) {
+          setChartData(
+            chartRes.charts
+          );
+        }
+      } catch (error) {
+        console.error(
+          'Erro ao carregar dashboard:',
+          error
+        );
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error(
-        'Erro ao carregar dashboard:',
-        error
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
   /*
     Debounce:
@@ -100,19 +121,27 @@ export const DashboardHome = () => {
     de fazer a request
   */
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      fetchDashboardData(filters);
-    }, 500);
+    const timeout =
+      setTimeout(() => {
+        fetchDashboardData(
+          filters
+        );
+      }, 500);
 
-    return () => clearTimeout(timeout);
+    return () =>
+      clearTimeout(timeout);
   }, [filters]);
 
-  const handleClearFilters = () => {
-    setFilters(initialFilters);
-  };
+  const handleClearFilters =
+    () => {
+      setFilters(
+        initialFilters
+      );
+    };
 
   return (
     <div className="dashboard-home">
+
       <h2 className="page-title">
         Painel de Supervisão
       </h2>
@@ -121,8 +150,10 @@ export const DashboardHome = () => {
         filters={filters}
         setFilters={setFilters}
         agents={agents}
-        onClearFilters={handleClearFilters}
-    />
+        onClearFilters={
+          handleClearFilters
+        }
+      />
 
       <KPISection
         data={kpiData}
@@ -135,20 +166,34 @@ export const DashboardHome = () => {
           {/* PRINCIPAL */}
           <div className="main-charts-column">
 
-            <EvolutionChart
-              data={
-                chartData.evolution
-              }
-              periodType={
-                filters.groupBy
-              }
-            />
+            {/* EVOLUTION */}
+            <div className="chart-wrapper-with-tooltip">
 
-            <div
-              style={{
-                gap: '24px'
-              }}
-            >
+              <div className="chart-tooltip-floating">
+                <InfoTooltip
+                  text="Exibe a evolução das visitas e atividades ao longo do período selecionado."
+                />
+              </div>
+
+              <EvolutionChart
+                data={
+                  chartData.evolution
+                }
+                periodType={
+                  filters.groupBy
+                }
+              />
+            </div>
+
+            {/* PERFORMANCE */}
+            <div className="chart-wrapper-with-tooltip">
+
+              <div className="chart-tooltip-floating">
+                <InfoTooltip
+                  text="Mostra o desempenho individual dos agentes com base na quantidade de visitas registradas."
+                />
+              </div>
+
               <AgentPerformanceChart
                 data={
                   chartData.performanceByAgent
@@ -158,17 +203,37 @@ export const DashboardHome = () => {
 
             <div className="double-chart-grid">
 
-              <RegionChart
-                data={
-                  chartData.visitsByRegion
-                }
-              />
+              {/* REGION */}
+              <div className="chart-wrapper-with-tooltip">
 
-              <FocusFoundChart
-                data={
-                  chartData.focusFoundPerPeriod
-                }
-              />
+                <div className="chart-tooltip-floating">
+                  <InfoTooltip
+                    text="Distribuição das visitas realizadas por região ou localidade."
+                  />
+                </div>
+
+                <RegionChart
+                  data={
+                    chartData.visitsByRegion
+                  }
+                />
+              </div>
+
+              {/* FOCUS FOUND */}
+              <div className="chart-wrapper-with-tooltip">
+
+                <div className="chart-tooltip-floating">
+                  <InfoTooltip
+                    text="Quantidade de focos encontrados durante o período selecionado."
+                  />
+                </div>
+
+                <FocusFoundChart
+                  data={
+                    chartData.focusFoundPerPeriod
+                  }
+                />
+              </div>
 
             </div>
           </div>
@@ -176,23 +241,47 @@ export const DashboardHome = () => {
           {/* LATERAL */}
           <div className="side-charts-column">
 
-            <FocusTypesChart
-              data={
-                chartData.focusTypes
-              }
-            />
+            {/* FOCUS TYPES */}
+            <div className="chart-wrapper-with-tooltip">
 
+              <div className="chart-tooltip-floating">
+                <InfoTooltip
+                  text="Mostra os tipos de focos mais encontrados pelos agentes."
+                />
+              </div>
+
+              <FocusTypesChart
+                data={
+                  chartData.focusTypes
+                }
+              />
+            </div>
+
+            {/* SUMMARY */}
             <div className="chart-card">
-              <h3 className="chart-title">
-                Resumo de Campo
-              </h3>
+
+              <div className="summary-header">
+
+                <h3 className="chart-title">
+                  Resumo de Campo
+                </h3>
+
+                <InfoTooltip
+                  text="Resumo geral dos indicadores calculados com base nas visitas realizadas."
+                />
+              </div>
 
               <div className="summary-list">
 
                 <div className="summary-item">
-                  <span>
-                    Taxa de Foco:
-                  </span>
+
+                  <div className="summary-label-with-tooltip">
+
+                    <span>
+                      Taxa de Foco:
+                    </span>
+
+                  </div>
 
                   <strong>
                     {
@@ -203,9 +292,14 @@ export const DashboardHome = () => {
                 </div>
 
                 <div className="summary-item">
-                  <span>
-                    Amostras/Visita:
-                  </span>
+
+                  <div className="summary-label-with-tooltip">
+
+                    <span>
+                      Amostras/Visita:
+                    </span>
+
+                  </div>
 
                   <strong>
                     {kpiData
