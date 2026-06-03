@@ -7,8 +7,12 @@ interface RetryAxiosRequestConfig
     _retry?: boolean;
 }
 
-const BASE_URL =
-    'https://geosaudeapi.onrender.com';
+//OFICIAL
+// const BASE_URL =
+//     'https://geosaudeapi.onrender.com';
+
+//BACKUP
+const BASE_URL = 'https://geosaudeapi-1.onrender.com/'
 
 // const BASE_URL = 'http://localhost:3000'
 
