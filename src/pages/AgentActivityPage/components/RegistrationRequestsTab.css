@@ -1,0 +1,294 @@
+.registration-requests {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.registration-filters {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #e8e8e8;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.registration-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f7f7f7;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+
+.registration-search svg {
+    color: #888;
+    flex-shrink: 0;
+}
+
+.registration-search input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+}
+
+.registration-filter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.registration-status-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.registration-status-filters button {
+    padding: 8px 16px;
+    border: 1px solid #d8d8d8;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+    color: #555;
+}
+
+.registration-status-filters button:hover {
+    background: #f3f3f3;
+}
+
+.registration-status-filters button.active {
+    background: #469472;
+    color: white;
+    border-color: #469472;
+}
+
+.registration-role-filter select {
+    padding: 9px 14px;
+    border-radius: 8px;
+    border: 1px solid #d8d8d8;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    background: white;
+}
+
+.registration-total {
+    font-size: 15px;
+    font-weight: 600;
+    color: #666;
+}
+
+.registration-loading,
+.registration-empty {
+    padding: 60px;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #ececec;
+    color: #777;
+}
+
+.registration-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+    gap: 20px;
+}
+
+.registration-card {
+    background: white;
+    border: 1px solid #e7e7e7;
+    padding:18px;
+    border-radius:16px;
+    gap:16px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.2s;
+}
+
+.registration-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.registration-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.registration-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #eaf6ef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #469472;
+    flex-shrink: 0;
+}
+
+.registration-header>div:last-child{
+    flex:1;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.registration-header h3{
+    margin:0;
+    font-size:17px;
+    font-weight:700;
+}
+
+.registration-status {
+    display: inline-block;
+    margin-top: 5px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin:0;
+    padding:4px 10px;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.registration-status-pending {
+    background: #fff4d8;
+    color: #aa7b00;
+}
+
+.registration-status-accepted {
+    background: #dff7e6;
+    color: #1d7c43;
+}
+
+.registration-status-rejected {
+    background: #ffe1e1;
+    color: #c02c2c;
+}
+
+.registration-info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.registration-info div{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+}
+
+.registration-info svg {
+    color: #469472;
+    flex-shrink: 0;
+}
+
+.registration-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 10px;
+    border-top: 1px solid #ececec;
+}
+
+.registration-details p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.registration-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 12px;
+}
+
+.registration-actions button {
+    flex: 1;
+    border: none;
+    border-radius: 8px;
+    padding: 11px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.registration-actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.accept-btn {
+    background: #469472;
+    color: white;
+}
+
+.accept-btn:hover:not(:disabled) {
+    background: #3b8162;
+}
+
+.reject-btn {
+    background: #e94b4b;
+    color: white;
+}
+
+.reject-btn:hover:not(:disabled) {
+    background: #d53c3c;
+}
+
+@media (max-width: 900px) {
+
+    .registration-filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .registration-status-filters {
+        width: 100%;
+    }
+
+    .registration-status-filters button {
+        flex: 1;
+    }
+
+    .registration-role-filter select {
+        width: 100%;
+    }
+
+    .registration-total {
+        text-align: center;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .registration-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .registration-actions {
+        flex-direction: column;
+    }
+
+}   

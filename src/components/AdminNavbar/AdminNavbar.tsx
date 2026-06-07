@@ -1,97 +1,94 @@
-import { LayoutDashboard, LogOut } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useMemo } from "react";
+import { ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from "../../contexts/AuthContext";
 
-import './AdminNavbar.css';
-
-import logo from "../../imgs/logo.png"
+import "./AdminNavbar.css";
 
 export const AdminNavbar = () => {
+    const navigate = useNavigate();
 
-    const navigate =
-        useNavigate();
+    const { signOut } = useAuth();
 
-    const {
-        signOut
-    } = useAuth();
+    const userName = useMemo(() => {
+        return (
+            localStorage.getItem("@App:userName") ||
+            "Administrador"
+        );
+    }, []);
 
+    const firstLetter =
+        userName.charAt(0).toUpperCase();
 
-    const handleLogout =
-        () => {
-
-            signOut();
-
-            navigate(
-                '/login'
-            );
-        };
-
-
-    const handleBackToSupervisor =
-        () => {
-
-            navigate(
-                '/dashboard'
-            );
-        };
-
+    const handleLogout = () => {
+        signOut();
+        navigate("/login");
+    };
 
     return (
-        <nav
-            className="admin-navbar"
-        >
+        <header className="admin-navbar">
 
-            <div
-                className="admin-navbar-left"
-            >
+            <div className="admin-navbar-left">
 
-                <img src={logo} />
+                <div className="admin-brand-texts">
 
-                <h2>
-                    Painel Administrativo
-                </h2>
+                    <span className="admin-brand-label">
+                        Sistema Administrativo
+                    </span>
 
-            </div>
+                    <h1 className="admin-brand-title">
+                        Painel Administrativo
+                    </h1>
 
-
-            <div
-                className="admin-navbar-actions"
-            >
-
-                <button
-                    className="admin-nav-btn secondary"
-                    onClick={
-                        handleBackToSupervisor
-                    }
-                >
-
-                    <LayoutDashboard
-                        size={16}
-                    />
-
-                    Supervisor
-
-                </button>
-
-
-                <button
-                    className="admin-nav-btn danger"
-                    onClick={
-                        handleLogout
-                    }
-                >
-
-                    <LogOut
-                        size={16}
-                    />
-
-                    Sair
-
-                </button>
+                </div>
 
             </div>
 
-        </nav>
+            <div className="admin-navbar-right">
+
+                <div className="admin-user-wrapper">
+
+                    <button className="admin-user">
+
+                        <div className="admin-user-info">
+
+                            <span className="admin-user-name">
+                                {userName}
+                            </span>
+
+                            <span className="admin-user-role">
+                                Administrador
+                            </span>
+
+                        </div>
+
+                        <div className="admin-avatar">
+                            {firstLetter}
+                        </div>
+
+                        <ChevronDown
+                            size={16}
+                            className="admin-user-chevron"
+                        />
+
+                    </button>
+
+                    <div className="admin-user-dropdown">
+
+                        <button
+                            className="admin-dropdown-item logout"
+                            onClick={handleLogout}
+                        >
+                            Sair
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
     );
 };

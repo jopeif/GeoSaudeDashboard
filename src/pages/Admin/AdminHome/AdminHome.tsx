@@ -1,62 +1,42 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from "react";
 
 import {
     Search,
     Plus,
-    Ban,
-    // Pencil,
     ArrowUpDown
-} from 'lucide-react';
+} from "lucide-react";
 
-import { userService } from '../../../services/User.service';
+
 
 import type {
-    UserDetails,
-    AgentRegisterParams,
-    SupervisorRegisterParams,
-    AdmRegisterParams
-} from '../../../types/user';
+    HealthDepartment
+} from "../../../types/healthDepartment";
 
-import './AdminHome.css';
-
-import { CreateUserModal } from './components/CreateUserModal';
+import "./AdminHome.css";
+import { HealthDepartmentService } from "../../../services/HealthDepartment.service";
+import { CreateHealthDepartmentModal } from "./components/CreateHealthDepartmentModal";
 
 type SortField =
-    | 'name'
-    | 'role';
-
-type CreateRole =
-    | 'AGENT'
-    | 'SUPERVISOR'
-    | 'ADM';
+    | "name"
+    | "city"
+    | "state";
 
 export const AdminHome = () => {
 
-    const roleLabels: Record<string, string> = {
-        AGENT: 'Agente',
-        SUPERVISOR: 'Supervisor',
-        ADM: 'Administrador',
-        ADMIN: 'Administrador',
-        SUPERADMIN: 'Super Admin'
-    };
-
-    const [users, setUsers] =
-        useState<UserDetails[]>([]);
+    const [healthDepartments, setHealthDepartments] =
+        useState<HealthDepartment[]>([]);
 
     const [loading, setLoading] =
         useState(true);
 
     const [searchTerm, setSearchTerm] =
-        useState('');
+        useState("");
 
-    const [roleFilter, setRoleFilter] =
-        useState('');
-
-    const [showOnlyBlocked, setShowOnlyBlocked] =
-        useState(false);
+    const [statusFilter, setStatusFilter] =
+        useState("");
 
     const [sortField, setSortField] =
-        useState<SortField>('name');
+        useState<SortField>("name");
 
     const [sortAsc, setSortAsc] =
         useState(true);
@@ -64,286 +44,196 @@ export const AdminHome = () => {
     const [showCreateModal, setShowCreateModal] =
         useState(false);
 
-    const [creatingUser, setCreatingUser] =
-        useState(false);
-
-    const [createRole, setCreateRole] =
-        useState<CreateRole>('AGENT');
+    const [creating, setCreating] =
+    useState(false);
 
     const [formData, setFormData] =
         useState({
-            name: '',
-            email: '',
-            phoneNumber: '',
-            password: '',
-            registration: '',
-            block: '',
-            accessLevel: 1
+            name: "",
+            city: "",
+            state: "",
+            primarySupervisor: {
+                name: "",
+                email: "",
+                phoneNumber: "",
+                password: ""
+            }
+        });
+    
+    const resetForm = () => {
+
+        setFormData({
+
+            name: "",
+
+            city: "",
+
+            state: "",
+
+            primarySupervisor: {
+
+                name: "",
+
+                email: "",
+
+                phoneNumber: "",
+
+                password: ""
+
+            }
+
         });
 
-    const [confirmModalOpen, setConfirmModalOpen] =
-        useState(false);
+};
 
-    const [selectedUser, setSelectedUser] =
-        useState<UserDetails | null>(null);
-
-    const [banLoading, setBanLoading] =
-        useState(false);
-    /* ========================================
-       FETCH USERS
-    ======================================== */
-
-    const fetchUsers = async () => {
-
-        setLoading(true);
+const handleCreateHealthDepartment =
+    async () => {
 
         try {
 
+            setCreating(true);
+
             const response =
-                await userService.findAll();
-
-            if (
-                response.success &&
-                response.users
-            ) {
-
-                setUsers(
-                    response.users
+                await HealthDepartmentService.create(
+                    formData
                 );
+
+            if (response.success) {
+
+                setShowCreateModal(false);
+
+                resetForm();
+
+                fetchHealthDepartments();
 
             }
 
         } finally {
 
-            setLoading(false);
+            setCreating(false);
 
         }
+
     };
+
+    const fetchHealthDepartments =
+        async () => {
+
+            setLoading(true);
+
+            try {
+
+                const response =
+                    await HealthDepartmentService.findAll();
+
+                if (
+                    response.success &&
+                    response.data
+                ) {
+
+                    setHealthDepartments(
+                        response.data
+                    );
+
+                }
+
+            } finally {
+
+                setLoading(false);
+
+            }
+
+        };
 
     useEffect(() => {
 
-        fetchUsers();
+        fetchHealthDepartments();
 
     }, []);
 
-    /* ========================================
-       FILTERED USERS
-    ======================================== */
-
-    const filteredUsers =
+    const filteredDepartments =
         useMemo(() => {
 
             let result =
-                [...users];
+                [...healthDepartments];
 
             result =
                 result.filter(
-                    (user) => {
+                    department => {
 
                         const matchesSearch =
-                            user.name
+
+                            department.name
                                 .toLowerCase()
                                 .includes(
                                     searchTerm.toLowerCase()
-                                ) ||
-                            user.email
+                                )
+
+                            ||
+
+                            department.city
                                 .toLowerCase()
                                 .includes(
                                     searchTerm.toLowerCase()
                                 );
 
-                        const matchesRole =
-                            roleFilter
-                                ? user.role === roleFilter
-                                : true;
+                        const matchesStatus =
 
-                        const matchesBlocked =
-                            showOnlyBlocked
-                                ? user.banned
-                                : true;
+                            statusFilter
+
+                                ?
+
+                                department.status === statusFilter
+
+                                :
+
+                                true;
 
                         return (
                             matchesSearch &&
-                            matchesRole &&
-                            matchesBlocked
+                            matchesStatus
                         );
+
                     }
                 );
 
-            result.sort(
-                (a, b) => {
+            result.sort((a, b) => {
 
-                    const valueA =
-                        a[
-                            sortField
-                        ]
-                            .toString();
+                const compare =
 
-                    const valueB =
-                        b[
-                            sortField
-                        ]
-                            .toString();
-
-                    const compare =
-                        valueA.localeCompare(
-                            valueB
+                    a[sortField]
+                        .toString()
+                        .localeCompare(
+                            b[sortField].toString()
                         );
 
-                    return sortAsc
-                        ? compare
-                        : compare * -1;
-                }
-            );
+                return sortAsc
+
+                    ?
+
+                    compare
+
+                    :
+
+                    compare * -1;
+
+            });
 
             return result;
 
         }, [
-            users,
+
+            healthDepartments,
+
             searchTerm,
-            roleFilter,
-            showOnlyBlocked,
+
+            statusFilter,
+
             sortField,
+
             sortAsc
+
         ]);
-
-    /* ========================================
-       BAN / UNBAN
-    ======================================== */
-
-    const handleBan =
-        async () => {
-
-            if (!selectedUser) {
-                return;
-            }
-
-            try {
-
-                setBanLoading(true);
-
-                await userService.ban(
-                    selectedUser.id
-                );
-
-                setConfirmModalOpen(false);
-
-                setSelectedUser(null);
-
-                fetchUsers();
-
-            } finally {
-
-                setBanLoading(false);
-
-            }
-        };
-
-    /* ========================================
-       CREATE USER
-    ======================================== */
-
-    const resetForm =
-        () => {
-
-            setFormData({
-                name: '',
-                email: '',
-                phoneNumber: '',
-                password: '',
-                registration: '',
-                block: '',
-                accessLevel: 1
-            });
-
-            setCreateRole(
-                'AGENT'
-            );
-        };
-
-    const handleCreateUser =
-        async () => {
-
-            try {
-
-                setCreatingUser(
-                    true
-                );
-
-                if (
-                    createRole === 'AGENT'
-                ) {
-
-                    const payload: AgentRegisterParams = {
-                        name: formData.name,
-                        email: formData.email,
-                        phoneNumber: formData.phoneNumber,
-                        password: formData.password,
-                        registration: formData.registration,
-                        block: formData.block
-                    };
-
-                    await userService.registerAgent(
-                        payload
-                    );
-                }
-
-                if (
-                    createRole === 'SUPERVISOR'
-                ) {
-
-                    const payload: SupervisorRegisterParams = {
-                        name: formData.name,
-                        email: formData.email,
-                        phoneNumber: formData.phoneNumber,
-                        password: formData.password,
-                        registration: formData.registration,
-                    };
-
-                    await userService.registerSupervisor(
-                        payload
-                    );
-                }
-
-                if (
-                    createRole === 'ADM'
-                ) {
-
-                    const payload: AdmRegisterParams = {
-                        name: formData.name,
-                        email: formData.email,
-                        phoneNumber: formData.phoneNumber,
-                        password: formData.password,
-                        accessLevel: Number(
-                            formData.accessLevel
-                        )
-                    };
-
-                    await userService.registerAdm(
-                        payload
-                    );
-                }
-
-                setShowCreateModal(
-                    false
-                );
-
-                resetForm();
-
-                fetchUsers();
-
-            } finally {
-
-                setCreatingUser(
-                    false
-                );
-
-            }
-        };
-
-    /* ========================================
-       SORT
-    ======================================== */
 
     const toggleSort =
         (
@@ -359,396 +249,340 @@ export const AdminHome = () => {
                 );
 
                 return;
+
             }
 
-            setSortField(
-                field
-            );
+            setSortField(field);
 
-            setSortAsc(
-                true
-            );
+            setSortAsc(true);
+
         };
 
     return (
         <div className="admin-page">
 
-            {/* ========================================
-                HEADER
-            ======================================== */}
-
             <div className="admin-header">
 
-                <h2>
-                    Painel Administrativo
-                </h2>
+                <div>
 
-            </div>
+                    <h2>
+                        Painel Administrativo
+                    </h2>
 
-            {/* 
-            ========================================
-            FILTERS
-            ========================================*/}
-
-            <section className="admin-users-filter-container">
-
-                <div className="admin-users-filter-header">
-
-                    <div className="admin-users-filter-header-left">
-
-                        <h3>
-                            Usuários cadastrados
-                        </h3>
-
-                        <p>
-                            Gerencie permissões, acessos e status dos usuários.
-                        </p>
-
-                    </div>
-
-                    <button
-                        className="admin-users-create-btn"
-                        onClick={() =>
-                            setShowCreateModal(true)
-                        }
-                    >
-                        <Plus size={18}/>
-                        Novo Usuário
-                    </button>
+                    <p>
+                        Gerencie as Secretarias de Saúde cadastradas.
+                    </p>
 
                 </div>
 
-                <div className="admin-users-filter-grid">
+            </div>
 
-                    <div className="admin-users-filter-group">
+            {/* RESUMO */}
 
-                        <label>
-                            <Search size={12}/>
-                            BUSCAR
-                        </label>
+            <section className="admin-summary">
 
-                        <input
-                            value={searchTerm}
-                            onChange={(e)=>
-                                setSearchTerm(
-                                    e.target.value
-                                )
-                            }
-                            placeholder="Nome ou email..."
-                        />
+                <div className="summary-card">
 
-                    </div>
+                    <span>Total</span>
 
-                    <div className="admin-users-filter-group">
+                    <strong>
+                        {healthDepartments.length}
+                    </strong>
 
-                        <label>
-                            CARGO
-                        </label>
+                </div>
 
-                        <select
-                            value={roleFilter}
-                            onChange={(e)=>
-                                setRoleFilter(
-                                    e.target.value
-                                )
-                            }
-                        >
-                            <option value="">
-                                Todos
-                            </option>
+                <div className="summary-card">
 
-                            <option value="AGENT">
-                                Agentes
-                            </option>
+                    <span>Ativas</span>
 
-                            <option value="SUPERVISOR">
-                                Supervisores
-                            </option>
+                    <strong>
 
-                            <option value="ADM">
-                                Administradores
-                            </option>
+                        {
+                            healthDepartments.filter(
+                                x => x.status === "ACTIVE"
+                            ).length
+                        }
 
-                        </select>
+                    </strong>
 
-                    </div>
+                </div>
 
-                    <div className="admin-users-filter-group">
+                <div className="summary-card">
 
-                        <label>
-                            BLOQUEADOS
-                        </label>
+                    <span>Inativas</span>
 
-                        <button
-                            className={`admin-users-toggle-btn ${
-                                showOnlyBlocked
-                                    ? 'active'
-                                    : ''
-                            }`}
-                            onClick={()=>
-                                setShowOnlyBlocked(
-                                    prev => !prev
-                                )
-                            }
-                        >
-                            {
-                                showOnlyBlocked
-                                    ? 'Mostrando bloqueados'
-                                    : 'Todos usuários'
-                            }
-                        </button>
+                    <strong>
 
-                    </div>
+                        {
+                            healthDepartments.filter(
+                                x => x.status === "INACTIVE"
+                            ).length
+                        }
+
+                    </strong>
 
                 </div>
 
             </section>
 
+            {/* FILTROS */}
 
-            {/* ========================================
-                TABLE
-            ======================================== */}
+            <section className="admin-toolbar">
 
-            {
-                loading ? (
+                <div className="admin-toolbar-left">
 
-                    <div>
-                        Carregando...
-                    </div>
+                    <div className="admin-search">
 
-                ) : (
+                        <Search size={16} />
 
-                    <table
-                        className="admin-table"
-                    >
-
-                        <thead>
-
-                            <tr>
-
-                                <th
-                                    onClick={()=>
-                                        toggleSort(
-                                            'name'
-                                        )
-                                    }
-                                >
-                                    Nome
-                                    <ArrowUpDown size={14}/>
-                                </th>
-
-                                <th>
-                                    Email
-                                </th>
-
-                                <th
-                                    onClick={()=>
-                                        toggleSort(
-                                            'role'
-                                        )
-                                    }
-                                >
-                                    Cargo
-                                    <ArrowUpDown size={14}/>
-                                </th>
-
-                                <th>
-                                    Status
-                                </th>
-
-                                <th>
-                                    Ações
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            {
-                                filteredUsers.map(
-                                    user => (
-
-                                        <tr
-                                            key={user.id}
-                                        >
-
-                                            <td>
-                                                {user.name}
-                                            </td>
-
-                                            <td>
-                                                {user.email}
-                                            </td>
-
-                                            <td>
-
-                                                <span
-                                                    className={`role-badge role-${user.role.toLowerCase()}`}
-                                                >
-                                                    {
-                                                        roleLabels[
-                                                            user.role
-                                                        ]
-                                                    }
-                                                </span>
-
-                                            </td>
-
-                                            <td>
-
-                                                <span
-                                                    className={`status-badge ${
-                                                        user.banned
-                                                            ? 'blocked'
-                                                            : 'active'
-                                                    }`}
-                                                >
-                                                    {
-                                                        user.banned
-                                                            ? 'Bloqueado'
-                                                            : 'Ativo'
-                                                    }
-                                                </span>
-
-                                            </td>
-
-                                            <td className="actions">
-
-                                                {/* <button
-                                                    className="edit-btn"
-                                                >
-                                                    <Pencil size={16}/>
-                                                </button> */}
-
-                                                <button
-                                                    className={`ban-btn ${
-                                                        user.banned
-                                                            ? 'unban'
-                                                            : 'ban'
-                                                    }`}
-                                                    onClick={() => {
-
-                                                        setSelectedUser(user);
-
-                                                        setConfirmModalOpen(true);
-                                                    }}
-                                                >
-                                                    <Ban size={16}/>
-
-                                                    <span>
-                                                        {
-                                                            user.banned
-                                                                ? 'Desbanir'
-                                                                : 'Banir'
-                                                        }
-                                                    </span>
-
-                                                </button>
-
-                                            </td>
-
-                                        </tr>
-                                    )
+                        <input
+                            placeholder="Buscar por nome ou cidade..."
+                            value={searchTerm}
+                            onChange={e =>
+                                setSearchTerm(
+                                    e.target.value
                                 )
                             }
+                        />
 
-                        </tbody>
+                    </div>
 
-                    </table>
+                    <select
+                        value={statusFilter}
+                        onChange={e =>
+                            setStatusFilter(
+                                e.target.value
+                            )
+                        }
+                    >
 
-                )
-            }
+                        <option value="">
+                            Todas
+                        </option>
 
-            {/* ========================================
-                CREATE USER MODAL
-            ======================================== */}
+                        <option value="ACTIVE">
+                            Ativas
+                        </option>
 
-            <CreateUserModal
-                open={showCreateModal}
-                creatingUser={creatingUser}
-                createRole={createRole}
-                formData={formData}
-                setCreateRole={setCreateRole}
-                setFormData={setFormData}
-                onClose={() => {
-                    setShowCreateModal(false);
-                    resetForm();
-                }}
-                onSubmit={handleCreateUser}
-            />
+                        <option value="INACTIVE">
+                            Inativas
+                        </option>
 
-            {
-                confirmModalOpen &&
-                selectedUser && (
+                    </select>
 
-                    <div className="confirm-overlay">
+                </div>
 
-                        <div className="confirm-modal">
+                <button
+                    className="admin-users-create-btn"
+                    onClick={() =>
+                        setShowCreateModal(true)
+                    }
+                >
 
-                            <div className="confirm-icon">
-                                <Ban size={28}/>
-                            </div>
+                    <Plus size={18} />
 
-                            <h3>
-                                {
-                                    selectedUser.banned
-                                        ? 'Desbanir usuário?'
-                                        : 'Banir usuário?'
-                                }
-                            </h3>
+                    Nova Secretaria
 
-                            <p>
-                                {
-                                    selectedUser.banned
-                                        ? `O usuário ${selectedUser.name} poderá acessar o sistema novamente.`
-                                        : `O usuário ${selectedUser.name} perderá acesso ao sistema.`
-                                }
-                            </p>
+                </button>
 
-                            <div className="confirm-actions">
+            </section>
 
-                                <button
-                                    className="cancel-btn"
-                                    onClick={() => {
+            {/* TABELA */}
 
-                                        setConfirmModalOpen(false);
+            <section className="admin-table-card">
 
-                                        setSelectedUser(null);
-                                    }}
-                                >
-                                    Cancelar
-                                </button>
+                {
 
-                                <button
-                                    className={`confirm-btn ${
-                                        selectedUser.banned
-                                            ? 'success'
-                                            : 'danger'
-                                    }`}
-                                    onClick={handleBan}
-                                    disabled={banLoading}
-                                >
-                                    {
-                                        banLoading
-                                            ? 'Processando...'
-                                            : selectedUser.banned
-                                                ? 'Desbanir'
-                                                : 'Banir'
-                                    }
-                                </button>
+                    loading ?
 
-                            </div>
+                        <div className="admin-loading">
+
+                            Carregando secretarias...
 
                         </div>
 
-                    </div>
-                )
+                        :
+
+                        <table className="admin-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th
+                                        onClick={() =>
+                                            toggleSort("name")
+                                        }
+                                    >
+
+                                        Nome
+
+                                        <ArrowUpDown size={14} />
+
+                                    </th>
+
+                                    <th
+                                        onClick={() =>
+                                            toggleSort("city")
+                                        }
+                                    >
+
+                                        Cidade
+
+                                        <ArrowUpDown size={14} />
+
+                                    </th>
+
+                                    <th
+                                        onClick={() =>
+                                            toggleSort("state")
+                                        }
+                                    >
+
+                                        Estado
+
+                                        <ArrowUpDown size={14} />
+
+                                    </th>
+
+                                    <th>
+
+                                        Supervisor Principal
+
+                                    </th>
+
+                                    <th>
+
+                                        Status
+
+                                    </th>
+
+                                    <th>
+
+                                        Ações
+
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {
+
+                                    filteredDepartments.map(
+                                        department => (
+
+                                            <tr
+                                                key={
+                                                    department.id
+                                                }
+                                            >
+
+                                                <td>
+
+                                                    {
+                                                        department.name
+                                                    }
+
+                                                </td>
+
+                                                <td>
+
+                                                    {
+                                                        department.city
+                                                    }
+
+                                                </td>
+
+                                                <td>
+
+                                                    {
+                                                        department.state
+                                                    }
+
+                                                </td>
+
+                                                <td>
+
+                                                    {
+                                                        department.primarySupervisor
+                                                    }
+
+                                                </td>
+
+                                                <td>
+
+                                                    <span
+                                                        className={`status-badge ${
+                                                            department.status === "ACTIVE"
+                                                                ? "active"
+                                                                : "inactive"
+                                                        }`}
+                                                    >
+
+                                                        {
+                                                            department.status === "ACTIVE"
+                                                                ? "Ativa"
+                                                                : "Inativa"
+                                                        }
+
+                                                    </span>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <button className="table-action-btn">
+
+                                                        {
+                                                            department.status === "ACTIVE"
+                                                                ? "Inativar"
+                                                                : "Ativar"
+                                                        }
+
+                                                    </button>
+
+                                                </td>
+
+                                            </tr>
+
+                                        )
+                                    )
+
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                }
+
+            </section>
+
+            {
+
+                showCreateModal &&
+
+                <CreateHealthDepartmentModal
+                    open={showCreateModal}
+                    creating={creating}
+                    formData={formData}
+                    setFormData={setFormData}
+                    onClose={() => {
+
+                        setShowCreateModal(false);
+
+                        resetForm();
+
+                    }}
+                    onSubmit={handleCreateHealthDepartment}
+                />
+
             }
 
         </div>
-
-        
     );
+
 };

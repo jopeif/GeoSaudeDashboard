@@ -2,8 +2,13 @@ import api from '../api/client';
 import type { AdmRegisterParams, AgentRegisterParams, BanUserResponse, FindAllUsersResponse, FindUserByIdResponse, SupervisorRegisterParams, UserRegisterReturn } from '../types/user';
 
 export const userService = {
-  async findAll(): Promise<FindAllUsersResponse> {
-    const { data } = await api.get<FindAllUsersResponse>('/user/');
+  async findAll(input:{page:number, limit:number}): Promise<FindAllUsersResponse> {
+    const { data } = await api.get<FindAllUsersResponse>('/user', {
+      params: {
+        page: input.page,
+        limit: input.limit,
+      },
+    });
     return data;
   },
 

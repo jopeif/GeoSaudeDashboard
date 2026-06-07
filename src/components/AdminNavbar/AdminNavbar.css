@@ -1,236 +1,250 @@
-/* =========================
-   NAVBAR
-========================= */
-
-.admin-navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-
-    width: 100%;
-
-    padding: 18px 28px;
-
-    border-bottom: 1px solid #e2e8f0;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ffffff,
-            #f8fafc
-        );
-
-    box-shadow:
-        0 4px 20px rgba(15, 23, 42, 0.04);
-
-    position: sticky;
-    top: 0;
-
-    z-index: 100;
+:root {
+    --admin-navbar-height: 78px;
 }
 
-/* =========================
-   LEFT
-========================= */
+.admin-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+
+    width: 100%;
+    height: var(--admin-navbar-height);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 28px;
+
+    background: rgba(255,255,255,.92);
+
+    backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid rgba(226,232,240,.9);
+
+    box-shadow: 0 4px 18px rgba(15,23,42,.05);
+
+    box-sizing: border-box;
+}
+
+/* LEFT */
 
 .admin-navbar-left {
     display: flex;
     align-items: center;
-    gap: 16px;
-
-    min-width: 0;
 }
 
-.admin-navbar-left img {
-    width: 52px;
-    height: 52px;
-
-    object-fit: contain;
-
-    border-radius: 14px;
-
-    padding: 6px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(70, 148, 114, 0.12),
-            rgba(70, 148, 114, 0.22)
-        );
-
-    border: 1px solid rgba(70, 148, 114, 0.18);
+.admin-brand-texts {
+    display: flex;
+    flex-direction: column;
 }
 
-.admin-navbar-left h2 {
+.admin-brand-label {
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+
+    color: #469472;
+}
+
+.admin-brand-title {
     margin: 0;
 
-    font-size: 1.35rem;
+    font-size: 20px;
     font-weight: 800;
 
     color: #0f172a;
-
-    line-height: 1.2;
 }
 
-/* =========================
-   ACTIONS
-========================= */
+/* RIGHT */
 
-.admin-navbar-actions {
+.admin-navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.admin-user-wrapper {
+    position: relative;
+}
+
+.admin-user {
     display: flex;
     align-items: center;
     gap: 12px;
-}
 
-/* =========================
-   BUTTONS
-========================= */
+    padding: 8px 10px;
 
-.admin-nav-btn {
-    height: 44px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    padding: 0 18px;
+    background: transparent;
 
     border: none;
-    border-radius: 14px;
 
-    font-size: 0.9rem;
-    font-weight: 700;
+    border-radius: 16px;
 
     cursor: pointer;
 
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease,
-        color 0.2s ease;
+    transition: .2s;
 }
 
-/* =========================
-   SECONDARY
-========================= */
+.admin-user:hover {
+    background: #f8fafc;
+}
 
-.admin-nav-btn.secondary {
-    background:
-        linear-gradient(
-            135deg,
-            #f1f5f9,
-            #e2e8f0
-        );
+.admin-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.admin-user-name {
+    font-size: 14px;
+    font-weight: 700;
 
     color: #0f172a;
-
-    box-shadow:
-        0 6px 18px rgba(15, 23, 42, 0.05);
 }
 
-.admin-nav-btn.secondary:hover {
-    transform: translateY(-2px);
+.admin-user-role {
+    font-size: 12px;
+    font-weight: 600;
 
-    background:
-        linear-gradient(
-            135deg,
-            #e2e8f0,
-            #cbd5e1
-        );
-
-    box-shadow:
-        0 10px 24px rgba(15, 23, 42, 0.08);
+    color: #64748b;
 }
 
-/* =========================
-   DANGER
-========================= */
+.admin-avatar {
+    width: 42px;
+    height: 42px;
 
-.admin-nav-btn.danger {
-    background:
-        linear-gradient(
-            135deg,
-            #ef4444,
-            #dc2626
-        );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #469472,
+        #63ab8a
+    );
 
     color: white;
 
-    box-shadow:
-        0 10px 24px rgba(239, 68, 68, 0.22);
-}
-
-.admin-nav-btn.danger:hover {
-    transform: translateY(-2px);
+    font-weight: 800;
 
     box-shadow:
-        0 14px 30px rgba(239, 68, 68, 0.28);
+        0 6px 16px rgba(70,148,114,.24);
 }
 
-/* =========================
-   ACTIVE PRESS
-========================= */
-
-.admin-nav-btn:active {
-    transform: scale(0.98);
+.admin-user-chevron {
+    color: #94a3b8;
 }
 
-/* =========================
-   ICONS
-========================= */
+/* DROPDOWN */
 
-.admin-nav-btn svg {
-    flex-shrink: 0;
+.admin-user-dropdown {
+    position: absolute;
+
+    top: calc(100% + 10px);
+    right: 0;
+
+    min-width: 180px;
+
+    padding: 8px;
+
+    background: white;
+
+    border-radius: 16px;
+
+    border: 1px solid rgba(226,232,240,.9);
+
+    box-shadow:
+        0 14px 40px rgba(15,23,42,.08);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(8px);
+
+    transition: .22s;
+
+    z-index: 1000;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+.admin-user-wrapper:hover
+.admin-user-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
 
-@media (max-width: 768px) {
+.admin-dropdown-item {
+    width: 100%;
 
-    .admin-navbar {
-        flex-direction: column;
-        align-items: stretch;
+    padding: 12px 14px;
 
-        padding: 18px;
+    background: transparent;
+
+    border: none;
+
+    border-radius: 12px;
+
+    text-align: left;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.admin-dropdown-item:hover {
+    background: #f8fafc;
+}
+
+.admin-dropdown-item.logout {
+    color: #ef4444;
+}
+
+/* RESPONSIVO */
+
+@media (max-width:700px){
+
+    .admin-navbar{
+        padding:0 18px;
     }
 
-    .admin-navbar-left {
-        justify-content: center;
+    .admin-user-info{
+        display:none;
     }
 
-    .admin-navbar-left h2 {
-        font-size: 1.1rem;
-        text-align: center;
+    .admin-user-chevron{
+        display:none;
     }
 
-    .admin-navbar-actions {
-        width: 100%;
-
-        flex-direction: column;
+    .admin-brand-label{
+        display:none;
     }
 
-    .admin-nav-btn {
-        width: 100%;
+    .admin-brand-title{
+        font-size:16px;
     }
 }
 
-@media (max-width: 540px) {
+@media (max-width:520px){
 
-    .admin-navbar-left {
-        flex-direction: column;
+    .admin-navbar{
+        height:72px;
+        padding:0 14px;
     }
 
-    .admin-navbar-left img {
-        width: 46px;
-        height: 46px;
+    .admin-brand-title{
+        font-size:14px;
     }
 
-    .admin-navbar-left h2 {
-        font-size: 1rem;
+    .admin-avatar{
+        width:38px;
+        height:38px;
     }
 }

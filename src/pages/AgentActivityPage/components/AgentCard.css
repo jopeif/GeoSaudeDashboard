@@ -1,0 +1,124 @@
+.agent-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+    background: white;
+    border: 1px solid #e7e7e7;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.agent-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,.06);
+}
+
+.agent-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.agent-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #eaf6ef;
+    color: #469472;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.agent-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.agent-header-text h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #222;
+}
+
+.agent-role {
+    display: inline-flex;
+    width: fit-content;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.role-agent {
+    background: #dff7e6;
+    color: #2b8c54;
+}
+
+.role-supervisor {
+    background: #e8efff;
+    color: #4361d8;
+}
+
+.role-adm {
+    background: #fff3d9;
+    color: #b07b00;
+}
+
+.agent-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.agent-card-content div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #555;
+    font-size: 14px;
+}
+
+.agent-card-content svg {
+    color: #469472;
+    flex-shrink: 0;
+}
+
+.agent-card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid #ececec;
+}
+
+.agent-status {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.agent-status.active {
+    background: #dff7e6;
+    color: #2b8c54;
+}
+
+.agent-status.banned {
+    background: #ffe2e2;
+    color: #c73232;
+}
+
+.agent-arrow {
+    color: #888;
+    transition: .2s;
+}
+
+.agent-card:hover .agent-arrow {
+    transform: translateX(4px);
+}

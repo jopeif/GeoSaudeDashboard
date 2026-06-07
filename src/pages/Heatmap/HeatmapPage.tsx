@@ -132,7 +132,7 @@ export const HeatmapPage = () => {
             async () => {
 
                 const response =
-                    await userService.findAll();
+                    await userService.findAll({page:1, limit:100});
 
                 if (
                     response.success &&

@@ -30,7 +30,6 @@ import { HeatmapPage } from './pages/Heatmap/HeatmapPage';
 import { AgentsActivityPage } from './pages/AgentActivityPage/AgentActivityPage';
 import { AgentDetails } from './pages/AgentDetails/AgentDetails';
 
-
 import { AdminHome } from './pages/Admin/AdminHome/AdminHome';
 
 import { AdminRoute } from './routes/AdminRoutes';
@@ -47,40 +46,64 @@ interface ProtectedRouteProps {
 }
 
 /* ========================================
-   PRIVATE ROUTE
+   LOADING
 ======================================== */
 
-const ProtectedRoute = ({
+const LoadingScreen = () => (
+  <div
+    style={{
+      height: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '14px',
+      color: '#64748b',
+      background: '#f8fafc'
+    }}
+  >
+    Carregando...
+  </div>
+);
+
+/* ========================================
+   SUPERVISOR ROUTE
+======================================== */
+
+const SupervisorRoute = ({
   children
 }: ProtectedRouteProps) => {
 
   const {
     authenticated,
-    loading
+    loading,
+    user
   } = useAuth();
 
   if (loading) {
-    return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '14px',
-          color: '#64748b',
-          background: '#f8fafc'
-        }}
-      >
-        Carregando...
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   if (!authenticated) {
     return (
       <Navigate
         to="/login"
+        replace
+      />
+    );
+  }
+
+  const role =
+    user?.role?.toUpperCase();
+
+  const isAdmin =
+    role === 'ADM' ||
+    role === 'ADMIN' ||
+    role === 'SUPERADMIN';
+
+  if (isAdmin) {
+    return (
+      <Navigate
+        to="/admin"
         replace
       />
     );
@@ -100,63 +123,73 @@ const PublicRoute = ({
   const {
     authenticated,
     loading,
-    user,
-    selectedPanel
+    user
   } = useAuth();
 
   if (loading) {
-    return null;
+    return <LoadingScreen />;
   }
 
   if (authenticated) {
 
     const role =
-      user?.role
-        ?.toUpperCase();
+      user?.role?.toUpperCase();
 
     const isAdmin =
       role === 'ADM' ||
       role === 'ADMIN' ||
       role === 'SUPERADMIN';
 
-    /*
-      Admin autenticado sem painel escolhido:
-      mantém na tela de login
-      para o modal aparecer
-    */
-    if (
-      isAdmin &&
-      !selectedPanel
-    ) {
-      return children;
-    }
-
-    /*
-      Admin com painel escolhido
-    */
-    if (
-      selectedPanel === 'admin'
-    ) {
-      return (
-        <Navigate
-          to="/admin"
-          replace
-        />
-      );
-    }
-
-    /*
-      Supervisor ou admin no painel supervisor
-    */
     return (
       <Navigate
-        to="/dashboard"
+        to={isAdmin ? '/admin' : '/dashboard'}
         replace
       />
     );
   }
 
   return children;
+};
+
+/* ========================================
+   DEFAULT ROUTE
+======================================== */
+
+const DefaultRoute = () => {
+
+  const {
+    authenticated,
+    loading,
+    user
+  } = useAuth();
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (!authenticated) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+      />
+    );
+  }
+
+  const role =
+    user?.role?.toUpperCase();
+
+  const isAdmin =
+    role === 'ADM' ||
+    role === 'ADMIN' ||
+    role === 'SUPERADMIN';
+
+  return (
+    <Navigate
+      to={isAdmin ? '/admin' : '/dashboard'}
+      replace
+    />
+  );
 };
 
 /* ========================================
@@ -169,6 +202,7 @@ function App() {
     <Routes>
 
       {/* LOGIN */}
+
       <Route
         path="/login"
         element={
@@ -178,13 +212,14 @@ function App() {
         }
       />
 
-      {/* DASHBOARD */}
+      {/* SUPERVISOR */}
+
       <Route
         path="/"
         element={
-          <ProtectedRoute>
+          <SupervisorRoute>
             <DashboardLayout />
-          </ProtectedRoute>
+          </SupervisorRoute>
         }
       >
 
@@ -218,6 +253,7 @@ function App() {
             <NewVisitPage />
           }
         />
+
         <Route
           path="reports"
           element={
@@ -226,14 +262,14 @@ function App() {
         />
 
         <Route
-          path="agent"
+          path="agents"
           element={
             <AgentsActivityPage />
           }
         />
 
         <Route
-          path="agents/:id"
+          path="agent/:id"
           element={
             <AgentDetails />
           }
@@ -256,38 +292,36 @@ function App() {
       </Route>
 
       {/* ADMIN */}
-      {/* ADMIN */}
-      <Route element={<AdminRoute />}>
+
+      <Route
+        element={<AdminRoute />}
+      >
+
+        <Route
+          path="/admin"
+          element={<AdminLayout />}
+        >
 
           <Route
-              path="/admin"
-              element={<AdminLayout />}
-          >
+            index
+            element={<AdminHome />}
+          />
 
-              <Route
-                  index
-                  element={<AdminHome />}
-              />
+          {/* futuras páginas */}
 
-              {/* futuras páginas */}
+          {/* /admin/users */}
+          {/* /admin/logs */}
+          {/* /admin/settings */}
 
-              {/* /admin/users */}
-              {/* /admin/logs */}
-              {/* /admin/settings */}
-
-          </Route>
+        </Route>
 
       </Route>
 
       {/* FALLBACK */}
+
       <Route
         path="*"
-        element={
-          <Navigate
-            to="/"
-            replace
-          />
-        }
+        element={<DefaultRoute />}
       />
 
     </Routes>

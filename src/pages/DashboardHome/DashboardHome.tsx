@@ -59,7 +59,7 @@ export const DashboardHome = () => {
     const loadAgents =
       async () => {
         const response =
-          await userService.findAll();
+          await userService.findAll({page:1, limit:1000});
 
         if (
           response.success &&

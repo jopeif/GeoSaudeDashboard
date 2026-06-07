@@ -38,7 +38,7 @@ export const AgentDetails = () => {
         if (!id) return;
         setFetchingRoute(true);
         try {
-            const response = await dashboardService.getAgentRoute({ ...params, userId: id });
+            const response = await dashboardService.getAgentRoute({ ...params, agentId: id });
             if (response.success) setRoutePoints(response.data);
         } catch (error) {
             console.error("Erro ao carregar rota:", error);
@@ -60,10 +60,15 @@ export const AgentDetails = () => {
             setLoading(false);
         };
         loadAgent();
-        fetchRoute(initialFilters);
-    }, [id, fetchRoute]);
+    }, [id]); // fetchRoute removido daqui
 
-    const handleApplyFilters = () => fetchRoute(filters);
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            fetchRoute(filters);
+        }, 500);
+        return () => clearTimeout(timeout);
+    }, [filters, fetchRoute]);
+
     const handleClearFilters = () => {
         setFilters(initialFilters);
         fetchRoute(initialFilters);
@@ -140,9 +145,7 @@ export const AgentDetails = () => {
                                     <input type="text" placeholder="Ex: LC-112" value={filters.localityCode} onChange={(e) => setFilters({...filters, localityCode: e.target.value})} />
                                 </div>
                                 <div className="filter-buttons">
-                                    <button className="btn-primary" onClick={handleApplyFilters} disabled={fetchingRoute}>
-                                        {fetchingRoute ? '...' : 'Atualizar'}
-                                    </button>
+                                    {fetchingRoute && <span className="filter-loading">...</span>}
                                     <button className="btn-ghost" onClick={handleClearFilters}>Limpar</button>
                                 </div>
                             </div>

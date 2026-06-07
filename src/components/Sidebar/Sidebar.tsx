@@ -9,7 +9,7 @@ import {
     ChevronRight,
     Shield,
     FileChartLine,
-    FilePlusCorner
+    //FilePlusCorner
 } from 'lucide-react';
 
 import { useAuth } from '../../contexts/AuthContext';
@@ -20,7 +20,7 @@ import './Sidebar.css';
 
 const navItems = [
     {
-        label: 'Dashboard',
+        label: 'Painel de Supervisão',
         path: '/dashboard',
         icon: LayoutDashboard
     },
@@ -31,7 +31,7 @@ const navItems = [
     },
     {
         label: 'Atividade dos Agentes',
-        path: '/agent',
+        path: '/agents',
         icon: User
     },
     {
@@ -39,11 +39,11 @@ const navItems = [
         path: '/reports',
         icon: FileChartLine
     },
-    {
-        label: 'Nova visita',
-        path: '/new-visit',
-        icon: FilePlusCorner
-    },
+    // {
+    //     label: 'Nova visita',
+    //     path: '/new-visit',
+    //     icon: FilePlusCorner
+    // },
 ];
 
 export const Sidebar = () => {
