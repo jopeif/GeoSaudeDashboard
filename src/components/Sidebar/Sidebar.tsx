@@ -4,11 +4,9 @@ import { Link, NavLink } from 'react-router-dom';
 
 import {
     LayoutDashboard,
-    Map,
     User,
     ChevronRight,
     Shield,
-    FileChartLine,
     //FilePlusCorner
 } from 'lucide-react';
 
