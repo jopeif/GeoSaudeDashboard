@@ -24,21 +24,21 @@ const navItems = [
         path: '/dashboard',
         icon: LayoutDashboard
     },
-    {
-        label: 'Mapa de Calor',
-        path: '/heatmap',
-        icon: Map
-    },
+    // {
+    //     label: 'Mapa de Calor',
+    //     path: '/heatmap',
+    //     icon: Map
+    // },
     {
         label: 'Atividade dos Agentes',
         path: '/agents',
         icon: User
     },
-    {
-        label: 'Emitir relatórios',
-        path: '/reports',
-        icon: FileChartLine
-    },
+    // {
+    //     label: 'Emitir relatórios',
+    //     path: '/reports',
+    //     icon: FileChartLine
+    // },
     // {
     //     label: 'Nova visita',
     //     path: '/new-visit',
