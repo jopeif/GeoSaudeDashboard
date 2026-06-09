@@ -62,6 +62,7 @@
     color: var(--text-muted);
 }
 
+.registration-status-filters button:hover {
     background: var(--card-soft);
 }
 

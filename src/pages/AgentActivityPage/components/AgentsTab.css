@@ -63,6 +63,7 @@
     transition: .2s;
 }
 
+.agents-status-filter button:hover {
     background: var(--card-soft);
 }
 

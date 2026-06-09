@@ -33,7 +33,7 @@
     font-weight: 600;
     transition: all .2s;
 }
-
+.agents-tabs button:hover {
     background: var(--card-soft);
 }
 
