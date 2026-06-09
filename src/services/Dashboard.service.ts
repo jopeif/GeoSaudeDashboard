@@ -12,9 +12,12 @@ export const dashboardService = {
    * Busca os indicadores (KPIs) com base nos filtros
    */
   async getKPIs(filters: DashboardFilters): Promise<KPIResponse> {
-    const { data } = await api.get<KPIResponse>('/dashboard/kpis', {
-      params: filters,
-    });
+    const params: any = { ...filters };
+    if (params.userId) {
+      params.agentId = params.userId;
+      delete params.userId;
+    }
+    const { data } = await api.get<KPIResponse>('/dashboard/kpis', { params });
     return data;
   },
 
@@ -22,9 +25,12 @@ export const dashboardService = {
    * Busca os dados dos gráficos com base nos filtros
    */
   async getCharts(filters: DashboardFilters): Promise<ChartsResponse> {
-    const { data } = await api.get<ChartsResponse>('/dashboard/charts', {
-      params: filters,
-    });
+    const params: any = { groupBy: 'day', ...filters }; 
+    if (params.userId) {
+      params.agentId = params.userId;
+      delete params.userId;
+    }
+    const { data } = await api.get<ChartsResponse>('/dashboard/charts', { params });
     return data;
   },
 

@@ -90,7 +90,7 @@ export const AgentDetails = () => {
                 <section className="agent-profile-card">
                     <div className="agent-profile-header">
                         <div className="avatar-wrapper">
-                            <User size={32} color="var(--primary-green)" />
+                            <User size={32} color="var(--primary)" />
                         </div>
                         <div className="profile-title">
                             <div className="name-row">

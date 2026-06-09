@@ -46,6 +46,15 @@ export const AgentPerformanceStats = ({
     const [loading, setLoading] =
         useState(false);
 
+    const formatDateLabel = (value: string) => {
+        if (!value) return '';
+        const datePart = value.split('T')[0];
+        const parts = datePart.split('-');
+        if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+        if (parts.length === 2) return `${parts[1]}/${parts[0]}`;
+        return value;
+    };
+
     const loadStats =
         useCallback(async () => {
 
@@ -226,6 +235,7 @@ export const AgentPerformanceStats = ({
                                 dataKey="label"
                                 axisLine={false}
                                 tickLine={false}
+                                tickFormatter={formatDateLabel}
                                 tick={{
                                     fontSize: 12,
                                     fill: '#64748b'
@@ -242,6 +252,7 @@ export const AgentPerformanceStats = ({
                             />
 
                             <Tooltip
+                                labelFormatter={(label) => formatDateLabel(String(label))}
                                 contentStyle={{
                                     borderRadius: '8px',
                                     border: 'none',

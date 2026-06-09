@@ -35,6 +35,16 @@ export const authService = {
         return data;
     },
 
+    async requestPasswordReset(email: string) {
+        const { data } = await api.post('/auth/password/request', { email });
+        return data;
+    },
+
+    async resetPassword(payload: any) {
+        const { data } = await api.post('/auth/password/reset', payload);
+        return data;
+    },
+
     saveSession(user: User) {
         localStorage.setItem(STORAGE_KEYS.TOKEN, user.access_token);
         localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, user.refresh_token);

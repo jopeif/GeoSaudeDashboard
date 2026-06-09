@@ -53,4 +53,4 @@ body {
 
 /* Scrollbar fina para não poluir */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-thumb { background: var(--primary-green); border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }

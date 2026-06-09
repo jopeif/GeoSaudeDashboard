@@ -17,40 +17,21 @@ interface FocusFoundChartProps {
    DATE FORMATTER ROBUSTO
 ======================================== */
 
-const formatDateLabel = (
-  value: string,
-  periodType?: 'day' | 'week' | 'month'
-) => {
+const formatDateLabel = (value: string) => {
   if (!value) return '';
 
-  // Se já tiver barras, validamos se precisa expandir o ano ou se já está ok
-  if (value.includes('/')) {
-    const parts = value.split('/');
-    // Caso receba "13/05", assume o ano atual ou mantém como está
-    if (parts.length === 2) return `${value}/${new Date().getFullYear()}`;
-    return value;
-  }
+  if (value.includes('/')) return value;
 
-  const parts = value.split('-');
-
-  // MONTH: YYYY-MM -> 01/MM/YYYY
-  if (periodType === 'month' && parts.length === 2) {
-    const [year, month] = parts;
-    return `01/${month}/${year}`;
-  }
-
-  // DAY/WEEK: YYYY-MM-DD -> DD/MM/YYYY
-  if (parts.length === 3) {
-    const [year, month, day] = parts;
-    return `${day}/${month}/${year}`;
-  }
-
+  const datePart = value.split('T')[0];
+  const parts = datePart.split('-');
+  if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+  if (parts.length === 2) return `${parts[1]}/${parts[0]}`;
+  
   return value;
 };
 
 export const FocusFoundChart = ({
-  data,
-  periodType
+  data
 }: FocusFoundChartProps) => {
   return (
     <div className="card chart-card">
@@ -71,18 +52,14 @@ export const FocusFoundChart = ({
               dataKey="label"
               fontSize={11}
               tickMargin={10}
-              tickFormatter={(value) =>
-                formatDateLabel(value, periodType)
-              }
+              tickFormatter={(value) => formatDateLabel(value)}
               stroke="#64748b"
             />
 
             <YAxis fontSize={12} stroke="#64748b" />
 
             <Tooltip
-              labelFormatter={(label) =>
-                formatDateLabel(String(label), periodType)
-              }
+              labelFormatter={(label) => formatDateLabel(String(label))}
               contentStyle={{
                 borderRadius: '8px',
                 border: 'none',

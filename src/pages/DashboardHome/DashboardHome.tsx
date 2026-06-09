@@ -284,10 +284,7 @@ export const DashboardHome = () => {
                   </div>
 
                   <strong>
-                    {
-                      kpiData?.infestationRate
-                    }
-                    %
+                    {Number(kpiData?.infestationRate || 0).toFixed(2)}%
                   </strong>
                 </div>
 

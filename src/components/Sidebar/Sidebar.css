@@ -195,7 +195,7 @@
 }
 
 .sidebar-link.active .sidebar-icon-wrapper {
-    background: rgba(255,255,255,0.16);
+    background: rgba(87, 85, 85, 0.16);
 
     color: white;
 }
@@ -231,7 +231,7 @@
 
     border-radius: 12px;
 
-    background: #f1f5f9;
+    background: var(--card-bg);
 
     transition:
         background 0.22s ease,

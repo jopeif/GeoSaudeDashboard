@@ -17,50 +17,17 @@ interface EvolutionChartProps {
 }
 
 export const EvolutionChart = ({
-  data,
-  periodType
+  data
 }: EvolutionChartProps) => {
 
 
-  const formatXAxis = (
-    tickItem: string
-  ) => {
-
-    if (!tickItem) {
-      return '';
-    }
-
-    /* =========================
-       MONTH
-       2026-05 -> 05/26
-    ========================= */
-
-    if (periodType === 'month') {
-
-      const [year, month] =
-        tickItem.split('-');
-
-      return `${month}/${year.slice(2)}`;
-    }
-
-    /* =========================
-       DAY
-       2026-05-13 -> 13/05/2026
-    ========================= */
-
-    if (periodType === 'day') {
-
-      const [year, month, day] =
-        tickItem.split('-');
-
-      return `${day}/${month}/${year}`;
-    }
-
-    /* =========================
-       WEEK
-    ========================= */
-
-    return tickItem;
+  const formatXAxis = (value: string) => {
+    if (!value) return '';
+    const datePart = value.split('T')[0];
+    const parts = datePart.split('-');
+    if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    if (parts.length === 2) return `${parts[1]}/${parts[0]}`;
+    return value;
   };
 
   return (

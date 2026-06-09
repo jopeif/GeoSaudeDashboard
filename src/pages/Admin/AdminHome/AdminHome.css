@@ -30,13 +30,13 @@
     font-size: 2rem;
     font-weight: 800;
 
-    color: #0f172a;
+    color: var(--text-main);
 }
 
 .admin-header p {
     margin-top: 6px;
 
-    color: #64748b;
+    color: var(--text-muted);
 
     font-size: 0.95rem;
 }
@@ -53,7 +53,7 @@
 }
 
 .summary-card {
-    background: white;
+    background: var(--card-bg);
 
     border-radius: 20px;
 
@@ -65,7 +65,7 @@
     box-shadow:
         0 8px 30px rgba(15, 23, 42, .05);
 
-    border: 1px solid #eef2f7;
+    border: 1px solid var(--border-color);
 }
 
 .summary-card span {
@@ -74,7 +74,7 @@
 
     text-transform: uppercase;
 
-    color: #64748b;
+    color: var(--text-muted);
 
     letter-spacing: .5px;
 }
@@ -85,7 +85,7 @@
     font-size: 2rem;
     font-weight: 800;
 
-    color: #469472;
+    color: var(--primary);
 }
 
 /* ==========================================
@@ -125,11 +125,11 @@
 
     padding: 0 16px;
 
-    background: white;
+    background: var(--card-bg);
 
     border-radius: 14px;
 
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-color);
 
     transition: .2s;
 }
@@ -143,7 +143,7 @@
 }
 
 .admin-search svg {
-    color: #94a3b8;
+    color: var(--text-muted);
 }
 
 .admin-search input {
@@ -157,10 +157,11 @@
     background: transparent;
 
     font-size: .95rem;
+    color: var(--text-main);
 }
 
 .admin-search input::placeholder {
-    color: #94a3b8;
+    color: var(--text-muted);
 }
 
 /* ==========================================
@@ -175,9 +176,10 @@
 
     border-radius: 14px;
 
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-color);
 
-    background: white;
+    background: var(--card-bg);
+    color: var(--text-main);
 
     padding: 0 14px;
 
@@ -237,13 +239,13 @@
 
 .admin-table-card {
 
-    background: white;
+    background: var(--card-bg);
 
     border-radius: 20px;
 
     overflow: hidden;
 
-    border: 1px solid #eef2f7;
+    border: 1px solid var(--border-color);
 
     box-shadow:
         0 8px 30px rgba(15,23,42,.05);
@@ -262,7 +264,7 @@
 
 .admin-table thead {
 
-    background: #f8fafc;
+    background: var(--card-soft);
 }
 
 .admin-table th {
@@ -274,7 +276,7 @@
     font-size: .9rem;
     font-weight: 700;
 
-    color: #475569;
+    color: var(--text-muted);
 
     cursor: pointer;
 
@@ -292,9 +294,9 @@
 
     padding: 18px;
 
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--border-soft);
 
-    color: #334155;
+    color: var(--text-main);
 
     font-size: .95rem;
 }
@@ -306,7 +308,7 @@
 
 .admin-table tbody tr:hover {
 
-    background: #fafafa;
+    background: var(--card-soft);
 }
 
 /* ==========================================
@@ -329,16 +331,16 @@
 
 .status-badge.active {
 
-    background: #ecfdf5;
+    background: rgba(16, 185, 129, 0.1);
 
-    color: #15803d;
+    color: var(--success);
 }
 
 .status-badge.inactive {
 
-    background: #fef2f2;
+    background: rgba(239, 68, 68, 0.1);
 
-    color: #dc2626;
+    color: var(--danger);
 }
 
 /* ==========================================
@@ -355,9 +357,9 @@
 
     border-radius: 10px;
 
-    background: #f8fafc;
+    background: var(--card-soft);
 
-    color: #334155;
+    color: var(--text-main);
 
     font-weight: 600;
 
@@ -368,7 +370,7 @@
 
 .table-action-btn:hover {
 
-    background: #eef2f7;
+    background: var(--border-soft);
 }
 
 /* ==========================================
