@@ -5,10 +5,10 @@
 }
 
 .registration-filters {
-    background: #fff;
+    background: var(--card-bg);
     border-radius: 12px;
     padding: 20px;
-    border: 1px solid #e8e8e8;
+    border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -18,8 +18,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #f7f7f7;
-    border: 1px solid #d9d9d9;
+    background: var(--card-soft);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 10px 14px;
 }
@@ -35,6 +35,7 @@
     outline: none;
     background: transparent;
     font-size: 15px;
+    color: var(--text-main);
 }
 
 .registration-filter-row {
@@ -53,17 +54,15 @@
 
 .registration-status-filters button {
     padding: 8px 16px;
-    border: 1px solid #d8d8d8;
-    background: white;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
-    transition: 0.2s;
-    color: #555;
+    color: var(--text-muted);
 }
 
-.registration-status-filters button:hover {
-    background: #f3f3f3;
+    background: var(--card-soft);
 }
 
 .registration-status-filters button.active {
@@ -75,27 +74,27 @@
 .registration-role-filter select {
     padding: 9px 14px;
     border-radius: 8px;
-    border: 1px solid #d8d8d8;
+    border: 1px solid var(--border-color);
     font-size: 14px;
     cursor: pointer;
     outline: none;
-    background: white;
+    background: var(--card-bg);
+    color: var(--text-main);
 }
 
 .registration-total {
     font-size: 15px;
-    font-weight: 600;
-    color: #666;
+    color: var(--text-muted);
 }
 
 .registration-loading,
 .registration-empty {
     padding: 60px;
     text-align: center;
-    background: white;
+    background: var(--card-bg);
     border-radius: 12px;
-    border: 1px solid #ececec;
-    color: #777;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
 }
 
 .registration-grid {
@@ -105,8 +104,8 @@
 }
 
 .registration-card {
-    background: white;
-    border: 1px solid #e7e7e7;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     padding:18px;
     border-radius:16px;
     gap:16px;
@@ -150,6 +149,7 @@
     margin:0;
     font-size:17px;
     font-weight:700;
+    color: var(--text-main);
 }
 
 .registration-status {
@@ -209,8 +209,7 @@
 
 .registration-details p {
     margin: 0;
-    font-size: 14px;
-    color: #555;
+    color: var(--text-muted);
 }
 
 .registration-actions {

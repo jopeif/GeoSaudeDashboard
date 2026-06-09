@@ -19,12 +19,36 @@
     --warning: #f59e0b;    /* Sidebar branca para visual mais limpo */
 }
 
+.dark {
+    --bg-page: #0f172a;
+
+    --card-bg: #1e293b;
+    --card-soft: #334155;
+
+    --border-color: #334155;
+    --border-soft: #475569;
+
+    --text-main: #f8fafc;
+    --text-muted: #cbd5e1;
+    --text-light: #94a3b8;
+
+    --primary: #469472;
+    --primary-hover: #52a683;
+
+    --danger: #f87171;
+    --success: #34d399;
+    --warning: #fbbf24;
+}
+
 body {
   margin: 0;
   padding: 0;
   border: 0;
   font-family: 'Inter', sans-serif;
   letter-spacing: -0.01em;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Scrollbar fina para não poluir */

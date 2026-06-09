@@ -9,8 +9,8 @@
     flex-direction: column;
     gap: 18px;
     padding: 20px;
-    background: #fff;
-    border: 1px solid #e6e6e6;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
 }
 
@@ -18,8 +18,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #f8f8f8;
-    border: 1px solid #d8d8d8;
+    background: var(--card-soft);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 10px 14px;
 }
@@ -35,6 +35,7 @@
     outline: none;
     background: transparent;
     font-size: 15px;
+    color: var(--text-main);
 }
 
 .agents-filter-row {
@@ -52,9 +53,9 @@
 }
 
 .agents-status-filter button {
-    border: 1px solid #d8d8d8;
-    background: white;
-    color: #555;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-muted);
     padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
@@ -62,8 +63,7 @@
     transition: .2s;
 }
 
-.agents-status-filter button:hover {
-    background: #f5f5f5;
+    background: var(--card-soft);
 }
 
 .agents-status-filter button.active {
@@ -75,24 +75,24 @@
 .agents-role-filter select {
     padding: 9px 14px;
     border-radius: 8px;
-    border: 1px solid #d8d8d8;
-    background: white;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-main);
     outline: none;
 }
 
 .agents-total {
-    font-weight: 600;
-    color: #666;
+    color: var(--text-muted);
 }
 
 .agents-loading,
 .agents-empty {
-    background: white;
+    background: var(--card-bg);
     border-radius: 12px;
-    border: 1px solid #ececec;
+    border: 1px solid var(--border-color);
     padding: 60px;
     text-align: center;
-    color: #777;
+    color: var(--text-muted);
 }
 
 .agents-grid {

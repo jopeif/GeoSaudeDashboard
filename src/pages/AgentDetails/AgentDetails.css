@@ -1,34 +1,3 @@
-:root {
-    --bg-page: #f3f6f9;
-    --card-bg: #ffffff;
-    --card-secondary: #f8fafc;
-
-    --border-color: #e2e8f0;
-    --border-soft: #edf2f7;
-
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --text-light: #94a3b8;
-
-    --primary-green: #469472;
-    --primary-green-hover: #37785c;
-
-    --danger: #ef4444;
-    --danger-bg: #fef2f2;
-
-    --success: #10b981;
-    --success-bg: #ecfdf5;
-
-    --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.04);
-    --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.06);
-    --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.08);
-
-    --radius-sm: 10px;
-    --radius-md: 16px;
-    --radius-lg: 22px;
-
-    --transition: 0.2s ease;
-}
 
 /* =========================
    PAGE
@@ -76,7 +45,7 @@
 }
 
 .btn-back:hover {
-    background: white;
+    background: var(--card-soft);
     color: var(--text-main);
     box-shadow: var(--shadow-sm);
 }
@@ -98,20 +67,20 @@
     margin-bottom: 28px;
 }
 
-.profile-header {
+.agent-profile-header {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 
-    padding-bottom: 24px;
+    padding-bottom: 15px;
     margin-bottom: 24px;
 
-    border-bottom: 1px solid var(--border-soft);
+    border-bottom: 2px solid var(--border-soft);
 }
 
 .avatar-wrapper {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
 
     flex-shrink: 0;
 
@@ -196,9 +165,9 @@
 }
 
 .info-cell {
-    background: var(--card-secondary);
+    background: var(--card-soft);
 
-    border: 1px solid var(--border-soft);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
 
     padding: 18px;
@@ -284,7 +253,7 @@
 
     border-bottom: 1px solid var(--border-soft);
 
-    background: rgba(248, 250, 252, 0.7);
+    background: var(--card-soft);
     backdrop-filter: blur(10px);
 }
 
@@ -337,7 +306,7 @@
     border: 1px solid var(--border-color);
     border-radius: 12px;
 
-    background: white;
+    background: var(--card-soft);
 
     padding: 12px 14px;
 
@@ -356,7 +325,7 @@
 }
 
 .input-group input:hover {
-    border-color: #cbd5e1;
+    border-color: var(--primary);
 }
 
 .input-group input:focus {
@@ -419,12 +388,12 @@
 .btn-ghost {
     border: 1px solid var(--border-color);
 
-    background: white;
+    background: var(--card-bg);
     color: var(--text-muted);
 }
 
 .btn-ghost:hover {
-    background: #f8fafc;
+    background: var(--card-soft);
     color: var(--text-main);
 }
 
@@ -455,12 +424,11 @@
 
     color: var(--text-muted);
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(248, 250, 252, 0.8),
-            rgba(241, 245, 249, 0.8)
-        );
+    background: var(--card-soft);
+
+    text-align: center;
+    padding: 24px;
+    box-sizing: border-box;
 }
 
 /* =========================
@@ -522,7 +490,7 @@
         padding: 22px;
     }
 
-    .profile-header {
+    .agent-profile-header {
         flex-direction: column;
         align-items: flex-start;
     }

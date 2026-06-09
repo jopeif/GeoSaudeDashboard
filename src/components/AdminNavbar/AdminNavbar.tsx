@@ -1,8 +1,9 @@
 import { useMemo } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Moon, Sun } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../contexts/AuthContext";
+import { useTheme } from "../../contexts/ThemeContext";
 
 import "./AdminNavbar.css";
 
@@ -10,6 +11,7 @@ export const AdminNavbar = () => {
     const navigate = useNavigate();
 
     const { signOut } = useAuth();
+    const { isDark, toggleTheme } = useTheme();
 
     const userName = useMemo(() => {
         return (
@@ -46,6 +48,14 @@ export const AdminNavbar = () => {
             </div>
 
             <div className="admin-navbar-right">
+                <button 
+                    onClick={toggleTheme} 
+                    className="admin-theme-toggle"
+                    title="Alternar tema"
+                    style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', color: 'var(--text-muted)' }}
+                >
+                    {isDark ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
 
                 <div className="admin-user-wrapper">
 

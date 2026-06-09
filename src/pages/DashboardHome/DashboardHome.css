@@ -53,7 +53,7 @@
   
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.98),
+    var(--card-bg),
     var(--card-soft)
   );
   border: 1px solid var(--border-color);
@@ -160,8 +160,8 @@
 .recharts-default-tooltip {
   backdrop-filter: blur(12px);
   padding: 14px 16px !important;
-  background: rgba(255, 255, 255, 0.96) !important;
-  border: none !important;
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
   border-radius: var(--radius-md) !important;
   box-shadow: var(--shadow-lg) !important;
 }

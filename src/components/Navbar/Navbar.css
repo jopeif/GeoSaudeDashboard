@@ -4,10 +4,10 @@
     --navbar-height: 78px;
 
     --navbar-bg:
-        rgba(255,255,255,0.92);
+        var(--card-bg);
 
     --navbar-border:
-        rgba(226,232,240,0.9);
+        var(--border-color);
 
     --navbar-shadow:
         0 4px 18px rgba(15,23,42,0.05);
@@ -79,7 +79,7 @@
 
     border-radius: 14px;
 
-    background: white;
+    background: var(--card-bg);
 
     padding: 4px;
 
@@ -117,6 +117,16 @@
     text-overflow: ellipsis;
 }
 
+.navbar-mobile-menu {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    margin-right: 14px;
+    padding: 6px;
+}
+
 /* ========================================
    RIGHT
 ======================================== */
@@ -141,7 +151,7 @@
 
     padding: 0 14px;
 
-    background: #f8fafc;
+    background: var(--card-soft);
 
     border:
         1px solid transparent;
@@ -155,7 +165,7 @@
 }
 
 .navbar-search:focus-within {
-    background: white;
+    background: var(--card-bg);
 
     border-color:
         rgba(70,148,114,0.35);
@@ -205,7 +215,7 @@
 
     border: none;
 
-    background: #f8fafc;
+    background: var(--card-soft);
 
     border-radius: 14px;
 
@@ -217,7 +227,7 @@
 }
 
 .navbar-icon-btn:hover {
-    background: #eef2f7;
+    background: var(--card-bg);
 
     transform: translateY(-1px);
 }
@@ -267,7 +277,7 @@
 }
 
 .navbar-user:hover {
-    background: #f8fafc;
+    background: var(--card-soft);
 
     transform: translateY(-1px);
 }
@@ -347,6 +357,10 @@
         display: none;
     }
 
+    .navbar-mobile-menu {
+        display: block;
+    }
+
     .brand-title {
         font-size: 16px;
     }
@@ -415,9 +429,9 @@
 
     border-radius: 16px;
 
-    background: white;
+    background: var(--card-bg);
 
-    border: 1px solid rgba(226,232,240,0.9);
+    border: 1px solid var(--border-color);
 
     box-shadow:
         0 14px 40px rgba(15,23,42,0.08);
@@ -461,7 +475,7 @@
 }
 
 .navbar-dropdown-item:hover {
-    background: #f8fafc;
+    background: var(--card-soft);
 }
 
 .navbar-dropdown-item.logout {

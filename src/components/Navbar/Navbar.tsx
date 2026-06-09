@@ -6,22 +6,28 @@ import { useNavigate } from 'react-router-dom';
 import {
   User,
   ChevronDown,
+  Moon,
+  Sun,
+  Menu
   //SearchX
 } from 'lucide-react';
 
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 
 import './Navbar.css';
 
 
 interface NavbarProps {
     onLogout: () => void;
+    onMenuClick?: () => void;
 }
 
-export const Navbar = ({onLogout}:NavbarProps) => {
+export const Navbar = ({onLogout, onMenuClick}:NavbarProps) => {
   const navigate = useNavigate();
 
   const { user } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
 
   const userName = useMemo(() => {
     return (
@@ -62,6 +68,11 @@ export const Navbar = ({onLogout}:NavbarProps) => {
     <header className="navbar">
       {/* LEFT */}
       <div className="navbar-left">
+        {onMenuClick && (
+          <button className="navbar-mobile-menu" onClick={onMenuClick}>
+            <Menu size={24} />
+          </button>
+        )}
         <div className="brand-texts">
           <span className="brand-label">
             Sistema de Supervisão
@@ -76,7 +87,14 @@ export const Navbar = ({onLogout}:NavbarProps) => {
       {/* RIGHT */}
       <div className="navbar-right">
 
-        
+        <button 
+          onClick={toggleTheme} 
+          className="navbar-theme-toggle"
+          title="Alternar tema"
+          style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', color: 'var(--text-muted)' }}
+        >
+          {isDark ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
 
         {/* USER */}
         <div className="navbar-user-wrapper">

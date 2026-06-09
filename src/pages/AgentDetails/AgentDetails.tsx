@@ -88,7 +88,7 @@ export const AgentDetails = () => {
             <div className="agent-details-wrapper">
                 {/* 1. PERFIL DO AGENTE */}
                 <section className="agent-profile-card">
-                    <div className="profile-header">
+                    <div className="agent-profile-header">
                         <div className="avatar-wrapper">
                             <User size={32} color="var(--primary-green)" />
                         </div>

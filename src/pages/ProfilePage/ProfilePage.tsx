@@ -60,9 +60,9 @@ export const ProfilePage = () => {
 
             <div className="profile-banner" />
 
-            <div className="profile-header">
+            <div className="profile-page-header">
             <div className="profile-avatar">
-                <UserCircle2 size={90} />
+                <UserCircle2 size={95} />
             </div>
 
             <div className="profile-main-info">

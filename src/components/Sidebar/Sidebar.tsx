@@ -1,12 +1,13 @@
 // src/components/layout/Sidebar.tsx
 
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, } from 'react-router-dom';
 
 import {
     LayoutDashboard,
     User,
     ChevronRight,
     Shield,
+    MapIcon,
     //FilePlusCorner
 } from 'lucide-react';
 
@@ -22,11 +23,11 @@ const navItems = [
         path: '/dashboard',
         icon: LayoutDashboard
     },
-    // {
-    //     label: 'Mapa de Calor',
-    //     path: '/heatmap',
-    //     icon: Map
-    // },
+    {
+        label: 'Mapa de Calor',
+        path: '/heatmap',
+        icon: MapIcon
+    },
     {
         label: 'Atividade dos Agentes',
         path: '/agents',
@@ -44,7 +45,12 @@ const navItems = [
     // },
 ];
 
-export const Sidebar = () => {
+interface SidebarProps {
+    isOpen?: boolean;
+    onClose?: () => void;
+}
+
+export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
     const { user } = useAuth();
 
@@ -54,7 +60,7 @@ export const Sidebar = () => {
         user?.role === 'SUPERADMIN';
 
     return (
-        <aside className="sidebar">
+        <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
 
             {/* HEADER */}
             <div className="sidebar-header">
@@ -80,6 +86,14 @@ export const Sidebar = () => {
                     </div>
 
                 </div>
+
+                {onClose && (
+                    <button className="sidebar-close-btn" onClick={onClose}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                )}
 
             </div>
 
