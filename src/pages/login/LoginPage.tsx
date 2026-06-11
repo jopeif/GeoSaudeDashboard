@@ -55,8 +55,17 @@ export const LoginPage: React.FC = () => {
       setSelectedPanel('supervisor');
       navigate('/dashboard');
     } catch (err: any) {
-      const message = err?.response?.data?.message || err?.message || 'Erro ao realizar login.';
-      setError(message);
+      const status = err?.response?.status;
+      if (status === 401) {
+        setError('Credenciais inválidas.');
+      } else if (status === 403) {
+        setError('Usuário banido do sistema.');
+      } else if (status === 500) {
+        setError('Erro interno do servidor. Tente novamente mais tarde.');
+      } else {
+        const message = err?.response?.data?.message || err?.message || 'Erro ao realizar login.';
+        setError(message);
+      }
     } finally {
       setIsLoading(false);
     }

@@ -14,9 +14,12 @@ export const HealthDepartmentService = {
     },
 
     async findAllPaginated(input:{page:number, limit:number}):Promise<FindAllHealthDepartmentPaginatedOutput>{
-
-        input
-        const {data} = await api.get<FindAllHealthDepartmentPaginatedOutput>("/health-department/all/paginated")
+        const {data} = await api.get<FindAllHealthDepartmentPaginatedOutput>("/health-department/all/paginated", {
+            params: {
+                p: input.page,
+                limit: input.limit
+            }
+        })
         return data
     },
 

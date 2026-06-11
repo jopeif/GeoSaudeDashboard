@@ -78,6 +78,42 @@
   background: linear-gradient(90deg, var(--primary), var(--primary-hover));
 }
 
+.page-title {
+    margin: 0 0 0px 0;
+    font-size: 30px;
+    color: var(--text-main);
+}
+
+.dashboard-header-with-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-add-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-add-user:hover {
+    background: var(--primary-hover);
+}
+
 .chart-title {
   margin: 0 0 24px;
   color: var(--text-main);

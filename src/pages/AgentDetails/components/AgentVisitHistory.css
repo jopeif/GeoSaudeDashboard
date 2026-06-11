@@ -89,6 +89,65 @@
 .history-link {
     text-decoration: none;
     color: inherit;
+    display: block;
+}
+
+/* =========================
+   ITEM WRAPPER (for delete button positioning)
+========================= */
+
+.history-item-wrapper {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.history-item-wrapper:hover .btn-delete-visit {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+    pointer-events: auto;
+}
+
+/* =========================
+   DELETE BUTTON
+========================= */
+
+.btn-delete-visit {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%) scale(0.85);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+
+    cursor: pointer;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.18s ease, transform 0.18s ease, background 0.18s ease;
+
+    z-index: 2;
+}
+
+.btn-delete-visit:hover {
+    background: rgba(239, 68, 68, 0.22);
+}
+
+.btn-delete-visit.deleting {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 /* =========================
@@ -109,8 +168,6 @@
     border: 1px solid transparent;
 
     transition: 0.22s ease;
-
-    margin-bottom: 12px;
 
     background: var(--card-bg);
 }
@@ -460,4 +517,98 @@
     .btn-load-more {
         padding: 12px;
     }
+}
+
+/* =========================
+   CUSTOM CONFIRM MODAL
+========================= */
+
+.custom-confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.custom-confirm-modal {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease-out;
+}
+
+.custom-confirm-modal h3 {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+    color: var(--text-main);
+}
+
+.custom-confirm-modal p {
+    margin: 0 0 24px 0;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.custom-confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-cancel-delete {
+    padding: 10px 16px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancel-delete:hover:not(:disabled) {
+    background: var(--card-soft);
+}
+
+.btn-confirm-delete {
+    padding: 10px 16px;
+    background: #ef4444;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-confirm-delete:hover:not(:disabled) {
+    background: #dc2626;
+}
+
+.btn-cancel-delete:disabled,
+.btn-confirm-delete:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

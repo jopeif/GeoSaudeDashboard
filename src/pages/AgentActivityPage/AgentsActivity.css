@@ -17,9 +17,46 @@
     color: var(--text-main);
 }
 
+.agents-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
 .agents-tabs {
     display: flex;
     gap: 12px;
+}
+
+.btn-add-agent {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-add-agent:hover {
+    background: var(--primary-hover);
+}
+
+.btn-add-supervisor {
+    background: transparent;
+    color: var(--text-main);
+    border: 1.5px solid var(--border-color);
+}
+
+.btn-add-supervisor:hover {
+    background: var(--card-soft);
+    border-color: var(--primary);
+    color: var(--primary);
 }
 
 .agents-tabs button {

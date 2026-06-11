@@ -31,10 +31,12 @@ import "./AgentPerformanceStats.css";
 
 interface AgentPerformanceStatsProps {
     filters: DashboardFilters;
+    refreshTrigger?: number;
 }
 
 export const AgentPerformanceStats = ({
-    filters
+    filters,
+    refreshTrigger = 0
 }: AgentPerformanceStatsProps) => {
 
     const [kpis, setKpis] =
@@ -99,7 +101,7 @@ export const AgentPerformanceStats = ({
 
         loadStats();
 
-    }, [loadStats]);
+    }, [loadStats, refreshTrigger]);
 
     if (loading) {
         return (

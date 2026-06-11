@@ -9,6 +9,7 @@ export interface UserDetails {
     registration?: string;
     block?: string;
     accessLevel?: number;
+    healthDepartment?: any;
 }
 
 export interface FindAllUsersResponse {
@@ -34,6 +35,7 @@ export interface AgentRegisterParams{
     password:string;
     registration: string;
     block: string;
+    healthDepartment?: string;
 }
 export interface SupervisorRegisterParams{
     name: string;
@@ -41,6 +43,7 @@ export interface SupervisorRegisterParams{
     phoneNumber: string;
     password:string;
     registration?: string;
+    healthDepartment?: string;
 }
 export interface AdmRegisterParams{
     name: string;

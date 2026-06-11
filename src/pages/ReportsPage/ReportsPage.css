@@ -147,11 +147,16 @@
 }
 
 .form-group label {
-    color: var(--text-main);
-    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    font-size: 0.72rem;
     font-weight: 800;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    
+    color: var(--text-muted);
 }
 
 .form-group input,

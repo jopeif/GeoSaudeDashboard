@@ -15,6 +15,8 @@ import type {
 import "./AdminHome.css";
 import { HealthDepartmentService } from "../../../services/HealthDepartment.service";
 import { CreateHealthDepartmentModal } from "./components/CreateHealthDepartmentModal";
+import { AddUserModal, type RoleType } from "../../../components/AddUserModal/AddUserModal";
+import { UserPlus, ShieldAlert } from "lucide-react";
 
 type SortField =
     | "name"
@@ -46,6 +48,25 @@ export const AdminHome = () => {
 
     const [creating, setCreating] =
     useState(false);
+
+    const [isAddUserOpen, setIsAddUserOpen] = useState(false);
+    const [modalRole, setModalRole] = useState<RoleType>('ADMIN');
+    const [modalDept, setModalDept] = useState('');
+    const [modalDeptFixed, setModalDeptFixed] = useState(false);
+
+    const handleOpenAddUserRole = (role: RoleType) => {
+        setModalRole(role);
+        setModalDept('');
+        setModalDeptFixed(false);
+        setIsAddUserOpen(true);
+    };
+
+    const handleOpenAddDeptUser = (role: RoleType, deptName: string) => {
+        setModalRole(role);
+        setModalDept(deptName);
+        setModalDeptFixed(true);
+        setIsAddUserOpen(true);
+    };
 
     const [formData, setFormData] =
         useState({
@@ -372,18 +393,42 @@ const handleCreateHealthDepartment =
 
                 </div>
 
-                <button
-                    className="admin-users-create-btn"
-                    onClick={() =>
-                        setShowCreateModal(true)
-                    }
-                >
+                <div className="admin-toolbar-actions" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                    <button
+                        className="admin-users-create-btn"
+                        onClick={() => handleOpenAddUserRole('ADMIN')}
+                        style={{ background: 'var(--text-main)', color: 'var(--card-bg)' }}
+                    >
+                        <ShieldAlert size={18} />
+                        Novo Admin
+                    </button>
 
-                    <Plus size={18} />
+                    <button
+                        className="admin-users-create-btn"
+                        onClick={() => handleOpenAddUserRole('SUPERVISOR')}
+                    >
+                        <UserPlus size={18} />
+                        Novo Supervisor
+                    </button>
 
-                    Nova Secretaria
+                    <button
+                        className="admin-users-create-btn"
+                        onClick={() => handleOpenAddUserRole('AGENT')}
+                    >
+                        <UserPlus size={18} />
+                        Novo Agente
+                    </button>
 
-                </button>
+                    <button
+                        className="admin-users-create-btn"
+                        onClick={() =>
+                            setShowCreateModal(true)
+                        }
+                    >
+                        <Plus size={18} />
+                        Nova Secretaria
+                    </button>
+                </div>
 
             </section>
 
@@ -532,9 +577,26 @@ const handleCreateHealthDepartment =
 
                                                 </td>
 
-                                                <td>
+                                                <td style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
 
-                                                    <button className="table-action-btn">
+                                                    <button 
+                                                        className="table-action-btn"
+                                                        onClick={() => handleOpenAddDeptUser('SUPERVISOR', department.id)}
+                                                        title="Adicionar Supervisor"
+                                                    >
+                                                        <UserPlus size={14} />
+                                                        Sup.
+                                                    </button>
+                                                    <button 
+                                                        className="table-action-btn"
+                                                        onClick={() => handleOpenAddDeptUser('AGENT', department.id)}
+                                                        title="Adicionar Agente"
+                                                    >
+                                                        <UserPlus size={14} />
+                                                        Agente
+                                                    </button>
+
+                                                    <button className="table-action-btn" style={{ marginLeft: 'auto' }}>
 
                                                         {
                                                             department.status === "ACTIVE"
@@ -581,6 +643,16 @@ const handleCreateHealthDepartment =
                 />
 
             }
+
+            <AddUserModal 
+                isOpen={isAddUserOpen}
+                onClose={() => setIsAddUserOpen(false)}
+                onSuccess={() => fetchHealthDepartments()}
+                defaultRole={modalRole}
+                fixedRole={true}
+                defaultHealthDepartment={modalDept}
+                fixedHealthDepartment={modalDeptFixed}
+            />
 
         </div>
     );

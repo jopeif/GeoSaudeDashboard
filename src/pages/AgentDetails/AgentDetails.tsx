@@ -25,11 +25,12 @@ export const AgentDetails = () => {
     const [loading, setLoading] = useState(true);
     const [fetchingRoute, setFetchingRoute] = useState(false);
     const [routePoints, setRoutePoints] = useState([]);
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     const initialFilters: DashboardFilters = {
         startDate: '',
         endDate: '',
-        userId: id || '',
+        agentId: id || '',
         localityCode: '',
     };
     const [filters, setFilters] = useState<DashboardFilters>(initialFilters);
@@ -72,6 +73,11 @@ export const AgentDetails = () => {
     const handleClearFilters = () => {
         setFilters(initialFilters);
         fetchRoute(initialFilters);
+    };
+
+    const handleVisitDeleted = () => {
+        setRefreshTrigger(prev => prev + 1);
+        fetchRoute(filters);
     };
 
     if (loading) return <div className="page-loader">Carregando dados do agente...</div>;
@@ -151,7 +157,7 @@ export const AgentDetails = () => {
                             </div>
                         </section>
 
-                        <AgentPerformanceStats filters={filters} />
+                        <AgentPerformanceStats filters={filters} refreshTrigger={refreshTrigger} />
 
                         <section className="card map-section">
                             <div className="card-header">
@@ -171,7 +177,7 @@ export const AgentDetails = () => {
 
                     {/* COLUNA LATERAL */}
                     <aside className="details-sidebar">
-                        <AgentVisitHistory userId={id as string} />
+                        <AgentVisitHistory userId={id as string} onVisitDeleted={handleVisitDeleted} />
                     </aside>
                 </div>
             </div>

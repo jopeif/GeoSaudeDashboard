@@ -292,9 +292,13 @@
 }
 
 .input-group label {
-    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    font-size: 0.72rem;
     font-weight: 800;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 
     color: var(--text-muted);

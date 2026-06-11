@@ -38,6 +38,10 @@
     color: var(--text-main);
 }
 
+.registration-search input::placeholder {
+    color: var(--text-light);
+}
+
 .registration-filter-row {
     display: flex;
     justify-content: space-between;

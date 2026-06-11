@@ -74,6 +74,15 @@ export const visitService = {
     async delete(id: string): Promise<{ success: boolean }> {
         const { data } = await api.delete<{ success: boolean }>(`/visit/by-id/${id}/`);
         return data;
+    },
+
+    /**
+     * Exclui permanentemente uma visita pelo ID (apenas SUPERVISOR)
+     * DELETE /visit/delete/by-id/{id}
+     */
+    async deleteById(id: string): Promise<{ success: boolean }> {
+        const { data } = await api.delete<{ success: boolean }>(`/visit/delete/by-id/${id}`);
+        return data;
     }
 
 

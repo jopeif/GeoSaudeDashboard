@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 import { dashboardService } from '../../services/Dashboard.service';
 import { userService } from '../../services/User.service';
@@ -139,12 +139,16 @@ export const DashboardHome = () => {
       );
     };
 
+
+
   return (
     <div className="dashboard-home">
 
-      <h2 className="page-title">
-        Painel de Supervisão
-      </h2>
+      <div className="dashboard-header-with-actions">
+        <h2 className="page-title">
+          Painel de Supervisão
+        </h2>
+      </div>
 
       <DashboardFiltersComponent
         filters={filters}

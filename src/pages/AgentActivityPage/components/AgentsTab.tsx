@@ -23,7 +23,11 @@ type StatusFilter =
     | "ACTIVE"
     | "BANNED";
 
-export const AgentsTab = () => {
+interface AgentsTabProps {
+    refreshTrigger?: number;
+}
+
+export const AgentsTab = ({ refreshTrigger = 0 }: AgentsTabProps) => {
 
     const [users, setUsers] =
         useState<UserDetails[]>([]);
@@ -44,7 +48,7 @@ export const AgentsTab = () => {
 
         fetchUsers();
 
-    }, []);
+    }, [refreshTrigger]);
 
     const fetchUsers = async () => {
 

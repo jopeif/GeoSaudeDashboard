@@ -2,6 +2,7 @@ export interface DashboardFilters {
   startDate?: string;
   endDate?: string;
   userId?: string;
+  agentId?: string;
   localityCode?: string;
   groupBy?: 'day' | 'week' | 'month';
 }

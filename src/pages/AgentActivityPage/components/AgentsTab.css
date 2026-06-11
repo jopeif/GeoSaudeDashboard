@@ -38,6 +38,10 @@
     color: var(--text-main);
 }
 
+.agents-search input::placeholder {
+    color: var(--text-light);
+}
+
 .agents-filter-row {
     display: flex;
     justify-content: space-between;

@@ -13,10 +13,12 @@ export const dashboardService = {
    */
   async getKPIs(filters: DashboardFilters): Promise<KPIResponse> {
     const params: any = { ...filters };
-    if (params.userId) {
+    if (params.userId && !params.agentId) {
       params.agentId = params.userId;
-      delete params.userId;
     }
+    delete params.userId;
+    
+    console.log("getKPIs params final:", params);
     const { data } = await api.get<KPIResponse>('/dashboard/kpis', { params });
     return data;
   },
@@ -26,10 +28,11 @@ export const dashboardService = {
    */
   async getCharts(filters: DashboardFilters): Promise<ChartsResponse> {
     const params: any = { groupBy: 'day', ...filters }; 
-    if (params.userId) {
+    if (params.userId && !params.agentId) {
       params.agentId = params.userId;
-      delete params.userId;
     }
+    delete params.userId;
+    
     const { data } = await api.get<ChartsResponse>('/dashboard/charts', { params });
     return data;
   },
