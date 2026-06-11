@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
 import { MapPin, Calendar, Clock, AlertCircle, CheckCircle2, ChevronDown, Trash2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { visitService } from '../../../services/Visit.service';
 import type { VisitHistoryShallowItem, AgentHistoryPaginatedResponse } from '../../../types/visit';
 import './AgentVisitHistory.css';
