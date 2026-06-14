@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { MapPin, ChevronRight, CheckCircle, BarChart3, Users, Sun, Moon } from 'lucide-react';
 import logoTrans from './assets/logoTrans.png';
