@@ -1,48 +1,73 @@
-# GeoSaúde Dashboard 🦠🗺️
+# React + TypeScript + Vite
 
-O **GeoSaúde Dashboard** é o painel de controle administrativo e de supervisão epidemiológica construído para acompanhar e otimizar o trabalho de agentes de saúde em campo no combate e prevenção de endemias (como a Dengue, Zika e Chikungunya).
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## ✨ Funcionalidades Principais
+Currently, two official plugins are available:
 
-*   **Painel de Supervisão Completo:** Visão macro com gráficos e indicadores-chave (KPIs) sobre visitas totais, focos encontrados e inspeções pendentes, com atualizações em tempo real.
-*   **Gestão de Agentes:** Acompanhe a trajetória de campo de cada agente, com rotas desenhadas diretamente no mapa, métricas individuais de eficiência e histórico minucioso de cada visita.
-*   **Gestão Administrativa (Admin):** Controle central de Secretarias de Saúde, permitindo o cadastro, bloqueio, e monitoramento de desempenho das regionais.
-*   **Mapa de Calor (Heatmap):** Ferramenta visual que exibe a densidade de focos endêmicos reportados, fundamental para tomada de decisões e direcionamento de recursos.
-*   **Tema Claro e Escuro Nativo:** Suporte completo e polido a *Dark Mode* integrado em todas as telas, gráficos e modais para maior conforto visual.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## 🚀 Tecnologias Utilizadas
+## React Compiler
 
-Este projeto foi construído com ferramentas modernas do ecossistema front-end para garantir performance e responsividade:
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-*   **[React 18](https://react.dev/)** + **[Vite](https://vitejs.dev/)**: O coração da aplicação, focado em alta velocidade de compilação.
-*   **[TypeScript](https://www.typescriptlang.org/)**: Para um código mais seguro e escalável.
-*   **[Recharts](https://recharts.org/)**: Biblioteca para criação de gráficos fluidos e interativos.
-*   **[Lucide React](https://lucide.dev/)**: Coleção de ícones bonitos e consistentes.
-*   **[Leaflet](https://leafletjs.com/)** / **[React-Leaflet](https://react-leaflet.js.org/)**: Motor do mapa de calor e das trajetórias em campo.
-*   **CSS Variável**: Arquitetura livre de TailwindCSS, garantindo um CSS puro (*Vanilla*) hiper-estilizado, escalável e com *Glassmorphism*.
+## Expanding the ESLint configuration
 
-## 🛠️ Como executar localmente
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-1. **Clone este repositório:**
-   ```bash
-   git clone https://github.com/jopeif/GeoSaudeDashboard.git
-   ```
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-2. **Acesse a pasta do projeto:**
-   ```bash
-   cd GeoSaudeDashboard
-   ```
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-3. **Instale as dependências:**
-   ```bash
-   npm install
-   ```
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-4. **Inicie o servidor de desenvolvimento:**
-   ```bash
-   npm run dev
-   ```
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-5. O aplicativo estará rodando em `http://localhost:5173`. 
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
----g
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
