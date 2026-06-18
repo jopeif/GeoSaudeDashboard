@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ChevronDown, Moon, Sun } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../contexts/AuthContext";
@@ -15,7 +15,7 @@ export const AdminNavbar = () => {
     const navigate = useNavigate();
 
     const { signOut } = useAuth();
-    const { isDark, toggleTheme } = useTheme();
+    const { isDark } = useTheme();
 
     const userName = useMemo(() => {
         return (

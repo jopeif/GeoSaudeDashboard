@@ -6,14 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import {
   User,
   ChevronDown,
-  Moon,
-  Sun,
   Menu
   //SearchX
 } from 'lucide-react';
 
 import { useAuth } from '../../contexts/AuthContext';
-import { useTheme } from '../../contexts/ThemeContext';
+
 import { ThemeSwitch } from '../ThemeSwitch/ThemeSwitch';
 
 import './Navbar.css';
@@ -28,7 +26,6 @@ export const Navbar = ({onLogout, onMenuClick}:NavbarProps) => {
   const navigate = useNavigate();
 
   const { user } = useAuth();
-  const { isDark, toggleTheme } = useTheme();
 
   const userName = useMemo(() => {
     return (
