@@ -34,6 +34,25 @@
     align-items: center;
 }
 
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.admin-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: transparent;
+}
+
+.dark .admin-logo {
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
 .admin-brand-texts {
     display: flex;
     flex-direction: column;
@@ -47,7 +66,7 @@
 
     text-transform: uppercase;
 
-    color: #469472;
+    color: var(--primary);
 }
 
 .admin-brand-title {
@@ -64,6 +83,7 @@
 .admin-navbar-right {
     display: flex;
     align-items: center;
+    gap: 20px;
 }
 
 .admin-user-wrapper {
@@ -109,7 +129,7 @@
     font-size: 12px;
     font-weight: 600;
 
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 .admin-avatar {
@@ -124,20 +144,17 @@
 
     background: linear-gradient(
         135deg,
-        #469472,
+        var(--primary),
         #63ab8a
     );
 
     color: white;
 
     font-weight: 800;
-
-    box-shadow:
-        0 6px 16px rgba(70,148,114,.24);
 }
 
 .admin-user-chevron {
-    color: #94a3b8;
+    color: var(--text-light);
 }
 
 /* DROPDOWN */

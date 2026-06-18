@@ -14,6 +14,7 @@ import {
 
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
+import { ThemeSwitch } from '../ThemeSwitch/ThemeSwitch';
 
 import './Navbar.css';
 
@@ -87,14 +88,7 @@ export const Navbar = ({onLogout, onMenuClick}:NavbarProps) => {
       {/* RIGHT */}
       <div className="navbar-right">
 
-        <button 
-          onClick={toggleTheme} 
-          className="navbar-theme-toggle"
-          title="Alternar tema"
-          style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', color: 'var(--text-muted)' }}
-        >
-          {isDark ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+        <ThemeSwitch />
 
         {/* USER */}
         <div className="navbar-user-wrapper">

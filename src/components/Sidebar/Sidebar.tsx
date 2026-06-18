@@ -12,8 +12,10 @@ import {
 } from 'lucide-react';
 
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 
-import logo from "../../imgs/logo.png";
+import logoLight from "../../imgs/logo-icon.png";
+import logoDark from "../../imgs/logo-icon-dark.png";
 
 import './Sidebar.css';
 
@@ -53,6 +55,7 @@ interface SidebarProps {
 export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
     const { user } = useAuth();
+    const { isDark } = useTheme();
 
     const isAdmin =
         user?.role === 'ADMIN' ||
@@ -68,7 +71,7 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 <div className="sidebar-brand">
 
                     <img
-                        src={logo}
+                        src={isDark ? logoDark : logoLight}
                         alt="GeoSaúde"
                         className="sidebar-logo"
                     />
@@ -80,7 +83,10 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                         </span>
 
                         <h1 className="sidebar-brand-name">
-                            GeoSaúde
+                            <span className="text-brand-green">G</span>
+                            <span className="text-brand-blue">eo</span>
+                            <span className="text-brand-green">S</span>
+                            <span className="text-brand-blue">aúde</span>
                         </h1>
 
                     </div>

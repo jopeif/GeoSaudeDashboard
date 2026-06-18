@@ -64,7 +64,7 @@
     font-weight: 800;
     letter-spacing: 0.5px;
 
-    color: #469472;
+    color: var(--primary);
 }
 
 /* =========================
@@ -252,7 +252,7 @@
     font-size: 12px;
     font-weight: 600;
 
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 /* =========================
@@ -314,7 +314,7 @@
 
 .type-tag {
     background: rgba(70, 148, 114, 0.12);
-    color: #469472;
+    color: var(--primary);
 }
 
 .prop-tag {
@@ -367,7 +367,7 @@
 
     padding: 14px 18px;
 
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-color);
     border-radius: 16px;
 
     background: var(--card-bg);
@@ -383,8 +383,8 @@
 }
 
 .btn-load-more:hover {
-    background: #469472;
-    border-color: #469472;
+    background: var(--primary);
+    border-color: var(--primary);
 
     color: white;
 
@@ -425,7 +425,7 @@
     font-size: 14px;
     font-weight: 600;
 
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 /* =========================
@@ -445,7 +445,7 @@
 
     border: 1px solid var(--border-color);
 
-    color: #64748b;
+    color: var(--text-muted);
 
     font-size: 14px;
     font-weight: 700;

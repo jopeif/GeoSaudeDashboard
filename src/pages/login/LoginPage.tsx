@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
-import logo from "../../imgs/logo.png";
+import logoLight from "../../imgs/logo-icon.png";
+import logoDark from "../../imgs/logo-icon-dark.png";
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import { authService } from '../../services/Auth.service';
 
 import './LoginPage.css';
@@ -12,6 +14,7 @@ import { AdminPanelSelector } from './components/AdminPanelSelector';
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { signIn, setSelectedPanel } = useAuth();
+  const { isDark } = useTheme();
 
   // Login states
   const [login, setLogin] = useState('');
@@ -135,9 +138,14 @@ export const LoginPage: React.FC = () => {
     <>
       <div className="login-app-header">
         <div className="mosquito-logo-placeholder">
-          <img src={logo} alt="GeoSaúde" />
+          <img src={isDark ? logoDark : logoLight} alt="GeoSaúde" />
         </div>
-        <h1>Geo<span className="geo-destaque">Saúde</span></h1>
+        <h1>
+          <span className="text-brand-green">G</span>
+          <span className="text-brand-blue">eo</span>
+          <span className="text-brand-green">S</span>
+          <span className="text-brand-blue">aúde</span>
+        </h1>
       </div>
       <div className="login-titles">
         <p className="login-intro">{intro}</p>

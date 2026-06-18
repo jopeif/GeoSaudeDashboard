@@ -98,7 +98,7 @@
     background:
         linear-gradient(
             135deg,
-            #469472,
+            var(--primary),
             #5da985
         );
 
@@ -137,7 +137,7 @@
 
     letter-spacing: 0.04em;
 
-    color: #64748b;
+    color: var(--text-muted);
 
     text-transform: uppercase;
 }

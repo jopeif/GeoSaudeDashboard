@@ -16,12 +16,12 @@
     --sidebar-shadow:
         8px 0 32px rgba(15,23,42,0.04);
 
-    --primary: #469472;
+    --primary: var(--primary);
     --primary-dark: #2f6d52;
     --primary-soft: #ecfdf5;
 
-    --text-main: #0f172a;
-    --text-soft: #64748b;
+    --text-main: var(--text-main);
+    --text-soft: var(--text-muted);
 
     --danger: #ef4444;
 }
@@ -89,6 +89,11 @@
         0 8px 20px rgba(0,0,0,0.08);
 }
 
+.dark .sidebar-logo {
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
 .sidebar-brand-texts {
     display: flex;
     flex-direction: column;
@@ -134,7 +139,7 @@
     font-size: 11px;
     font-weight: 800;
 
-    color: #94a3b8;
+    color: var(--text-light);
 
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -184,7 +189,7 @@
     background:
         linear-gradient(
             135deg,
-            #469472,
+            var(--primary),
             #5ca784
         );
 
@@ -346,7 +351,7 @@
 
     background: transparent;
 
-    color: #64748b;
+    color: var(--text-muted);
 
     font-size: 13px;
     font-weight: 600;
@@ -357,7 +362,7 @@
 }
 
 .sidebar-logout-btn:hover {
-    background: #f8fafc;
+    background: var(--card-soft);
 
     color: var(--primary);
 

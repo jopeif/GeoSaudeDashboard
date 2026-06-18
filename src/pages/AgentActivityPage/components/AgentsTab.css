@@ -72,9 +72,9 @@
 }
 
 .agents-status-filter button.active {
-    background: #469472;
+    background: var(--primary);
     color: white;
-    border-color: #469472;
+    border-color: var(--primary);
 }
 
 .agents-role-filter select {

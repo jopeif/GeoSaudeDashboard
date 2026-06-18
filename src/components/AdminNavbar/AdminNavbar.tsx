@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeContext";
+import { ThemeSwitch } from "../ThemeSwitch/ThemeSwitch";
+
+import logoLight from "../../imgs/logo-icon.png";
+import logoDark from "../../imgs/logo-icon-dark.png";
 
 import "./AdminNavbar.css";
 
@@ -32,30 +36,25 @@ export const AdminNavbar = () => {
         <header className="admin-navbar">
 
             <div className="admin-navbar-left">
-
-                <div className="admin-brand-texts">
-
-                    <span className="admin-brand-label">
-                        Sistema Administrativo
-                    </span>
-
-                    <h1 className="admin-brand-title">
-                        Painel Administrativo
-                    </h1>
-
+                <div className="admin-brand">
+                    <img
+                        src={isDark ? logoDark : logoLight}
+                        alt="GeoSaúde"
+                        className="admin-logo"
+                    />
+                    <div className="admin-brand-texts">
+                        <span className="admin-brand-label">
+                            Sistema Administrativo
+                        </span>
+                        <h1 className="admin-brand-title">
+                            Painel Administrativo
+                        </h1>
+                    </div>
                 </div>
-
             </div>
 
             <div className="admin-navbar-right">
-                <button 
-                    onClick={toggleTheme} 
-                    className="admin-theme-toggle"
-                    title="Alternar tema"
-                    style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px', color: 'var(--text-muted)' }}
-                >
-                    {isDark ? <Sun size={20} /> : <Moon size={20} />}
-                </button>
+                <ThemeSwitch />
 
                 <div className="admin-user-wrapper">
 

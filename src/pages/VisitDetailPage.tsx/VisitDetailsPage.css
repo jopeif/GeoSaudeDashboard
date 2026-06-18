@@ -1,18 +1,18 @@
 :root {
     --bg-page: #f4f7fb;
 
-    --card-bg: #ffffff;
-    --card-soft: #f8fafc;
+    --card-bg: var(--card-bg);
+    --card-soft: var(--card-soft);
 
-    --border-color: #e2e8f0;
-    --border-soft: #edf2f7;
+    --border-color: var(--border-color);
+    --border-soft: var(--border-soft);
 
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --text-light: #94a3b8;
+    --text-main: var(--text-main);
+    --text-muted: var(--text-muted);
+    --text-light: var(--text-light);
 
-    --primary: #469472;
-    --primary-hover: #37785c;
+    --primary: var(--primary);
+    --primary-hover: var(--primary-hover);
 
     --danger: #ef4444;
     --danger-bg: #fef2f2;

@@ -75,8 +75,8 @@
 }
 
 .agents-tabs button.active {
-    background: #469472;
-    border-color: #469472;
+    background: var(--primary);
+    border-color: var(--primary);
     color: white;
 }
 

@@ -282,22 +282,6 @@ const handleCreateHealthDepartment =
     return (
         <div className="admin-page">
 
-            <div className="admin-header">
-
-                <div>
-
-                    <h2>
-                        Painel Administrativo
-                    </h2>
-
-                    <p>
-                        Gerencie as Secretarias de Saúde cadastradas.
-                    </p>
-
-                </div>
-
-            </div>
-
             {/* RESUMO */}
 
             <section className="admin-summary">

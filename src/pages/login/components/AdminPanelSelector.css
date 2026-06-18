@@ -1,11 +1,11 @@
 :root{
-    --primary:#469472;
+    --primary:var(--primary);
     --primary-dark:#2f6d52;
 
-    --text-main:#0f172a;
-    --text-soft:#64748b;
+    --text-main:var(--text-main);
+    --text-soft:var(--text-muted);
 
-    --border:#e2e8f0;
+    --border:var(--border-color);
 }
 
 /* ========================================
@@ -180,7 +180,7 @@
     border-radius: 16px;
 
     background:
-        #f8fafc;
+        var(--card-soft);
 
     color: currentColor;
 }

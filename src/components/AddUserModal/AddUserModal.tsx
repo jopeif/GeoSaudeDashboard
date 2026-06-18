@@ -301,9 +301,9 @@ export const AddUserModal = ({
                                     />
                                 </div>
 
-                                <div className="form-group">
-                                    <label>Departamento de Saúde</label>
-                                    {isAdmin ? (
+                                {isAdmin && (
+                                    <div className="form-group">
+                                        <label>Departamento de Saúde</label>
                                         <select
                                             name="healthDepartment"
                                             value={formData.healthDepartment}
@@ -316,18 +316,8 @@ export const AddUserModal = ({
                                                 <option key={dept.id} value={dept.id}>{dept.name}</option>
                                             ))}
                                         </select>
-                                    ) : (
-                                        <input 
-                                            type="text" 
-                                            name="healthDepartment" 
-                                            value={formData.healthDepartment} 
-                                            onChange={handleInputChange} 
-                                            required 
-                                            placeholder="Ex: Secretaria Municipal de Saúde"
-                                            disabled={loading || !!successMessage || fixedHealthDepartment || isSupervisor}
-                                        />
-                                    )}
-                                </div>
+                                    </div>
+                                )}
                             </>
                         )}
 

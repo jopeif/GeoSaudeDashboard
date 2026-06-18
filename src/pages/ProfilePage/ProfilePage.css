@@ -54,7 +54,7 @@
     background:
         linear-gradient(
             135deg,
-            #469472,
+            var(--primary),
             #5fb388
         );
 }
@@ -83,7 +83,7 @@
     align-items: center;
     justify-content: center;
 
-    color: #469472;
+    color: var(--primary);
 
     box-shadow:
         0 8px 20px rgba(0,0,0,0.08);
@@ -193,7 +193,7 @@
     font-size: 0.78rem;
     font-weight: 700;
 
-    color: #64748b;
+    color: var(--text-muted);
 
     text-transform: uppercase;
 }
@@ -228,7 +228,7 @@
 }
 
 .system-info-row span {
-    color: #64748b;
+    color: var(--text-muted);
 
     font-weight: 600;
 }

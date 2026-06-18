@@ -45,7 +45,7 @@
     width: 4px;
     height: 100%;
 
-    background: #469472;
+    background: var(--primary);
 }
 
 .agent-kpi-card:hover {
@@ -75,7 +75,7 @@
 
 .agent-kpi-icon-bg.gray {
     background: rgba(100, 116, 139, 0.12);
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 .agent-kpi-icon-bg.green {
@@ -112,7 +112,7 @@
     letter-spacing: 0.7px;
     text-transform: uppercase;
 
-    color: #94a3b8;
+    color: var(--text-light);
 }
 
 .agent-kpi-content span {
@@ -161,7 +161,7 @@
 }
 
 .agent-chart-title svg {
-    color: #469472;
+    color: var(--primary);
 }
 
 /* =========================
@@ -216,7 +216,7 @@
 
     border: 1px solid var(--border-color);
 
-    color: #64748b;
+    color: var(--text-muted);
 
     font-size: 15px;
     font-weight: 700;

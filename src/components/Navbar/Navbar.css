@@ -12,10 +12,10 @@
     --navbar-shadow:
         0 4px 18px rgba(15,23,42,0.05);
 
-    --text-main: #0f172a;
-    --text-soft: #64748b;
+    --text-main: var(--text-main);
+    --text-soft: var(--text-muted);
 
-    --primary: #469472;
+    --primary: var(--primary);
     --primary-soft: #ecfdf5;
 
     --danger: #ef4444;
@@ -175,7 +175,7 @@
 }
 
 .navbar-search svg {
-    color: #94a3b8;
+    color: var(--text-light);
 
     flex-shrink: 0;
 }
@@ -196,7 +196,7 @@
 }
 
 .navbar-search input::placeholder {
-    color: #94a3b8;
+    color: var(--text-light);
 }
 
 /* ========================================
@@ -315,7 +315,7 @@
     background:
         linear-gradient(
             135deg,
-            #469472,
+            var(--primary),
             #63ab8a
         );
 
@@ -329,7 +329,7 @@
 }
 
 .navbar-user-chevron {
-    color: #94a3b8;
+    color: var(--text-light);
 }
 
 /* ========================================

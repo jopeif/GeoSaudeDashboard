@@ -71,9 +71,9 @@
 }
 
 .registration-status-filters button.active {
-    background: #469472;
+    background: var(--primary);
     color: white;
-    border-color: #469472;
+    border-color: var(--primary);
 }
 
 .registration-role-filter select {
@@ -139,7 +139,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #469472;
+    color: var(--primary);
     flex-shrink: 0;
 }
 
@@ -200,7 +200,7 @@
 }
 
 .registration-info svg {
-    color: #469472;
+    color: var(--primary);
     flex-shrink: 0;
 }
 
@@ -243,7 +243,7 @@
 }
 
 .accept-btn {
-    background: #469472;
+    background: var(--primary);
     color: white;
 }
 
