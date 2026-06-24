@@ -31,6 +31,7 @@ import { AgentsActivityPage } from './pages/AgentActivityPage/AgentActivityPage'
 import { AgentDetails } from './pages/AgentDetails/AgentDetails';
 
 import { AdminHome } from './pages/Admin/AdminHome/AdminHome';
+import { LogsPage } from './pages/Admin/LogsPage/LogsPage';
 
 import { AdminRoute } from './routes/AdminRoutes';
 
@@ -307,10 +308,14 @@ function App() {
             element={<AdminHome />}
           />
 
+          <Route
+            path="logs"
+            element={<LogsPage />}
+          />
+
           {/* futuras páginas */}
 
           {/* /admin/users */}
-          {/* /admin/logs */}
           {/* /admin/settings */}
 
         </Route>

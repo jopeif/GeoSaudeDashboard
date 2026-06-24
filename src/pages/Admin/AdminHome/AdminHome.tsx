@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
     Search,
     Plus,
-    ArrowUpDown
+    ArrowUpDown,
+    AlertTriangle
 } from "lucide-react";
 
 
@@ -24,6 +26,8 @@ type SortField =
     | "state";
 
 export const AdminHome = () => {
+
+    const navigate = useNavigate();
 
     const [healthDepartments, setHealthDepartments] =
         useState<HealthDepartment[]>([]);
@@ -378,6 +382,16 @@ const handleCreateHealthDepartment =
                 </div>
 
                 <div className="admin-toolbar-actions" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+
+                    <button
+                        className="admin-logs-btn"
+                        onClick={() => navigate('/admin/logs')}
+                        id="admin-logs-navigate-button"
+                    >
+                        <AlertTriangle size={18} />
+                        Logs de Telemetria
+                    </button>
+
                     <button
                         className="admin-users-create-btn"
                         onClick={() => handleOpenAddUserRole('ADMIN')}

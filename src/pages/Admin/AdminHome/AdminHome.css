@@ -234,6 +234,49 @@
 }
 
 /* ==========================================
+   LOGS BUTTON
+========================================== */
+
+.admin-logs-btn {
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    height: 48px;
+
+    padding: 0 22px;
+
+    border: 1px solid rgba(245, 158, 11, 0.35);
+
+    border-radius: 14px;
+
+    background: rgba(245, 158, 11, 0.08);
+
+    color: var(--warning);
+
+    font-size: .95rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+.admin-logs-btn:hover {
+
+    background: rgba(245, 158, 11, 0.15);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(245, 158, 11, .2);
+}
+
+/* ==========================================
    TABLE CARD
 ========================================== */
 
