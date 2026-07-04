@@ -2,7 +2,7 @@ export interface TelemetryLog {
     id: string;
     pinned: boolean;
     userId: string | null;
-    deviceModel: string;
+    deviceModel?: string;
     vendor: string;
     androidVersion: string;
     error: string;

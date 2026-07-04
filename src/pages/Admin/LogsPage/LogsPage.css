@@ -323,6 +323,7 @@
     flex-shrink: 0;
 }
 
+/* Mantido para compatibilidade caso haja uso residual */
 .log-device-info {
     display: flex;
     flex-direction: column;
@@ -333,11 +334,13 @@
     font-size: 0.9rem;
     font-weight: 700;
     color: var(--text-main);
+    white-space: nowrap;
 }
 
 .log-device-vendor {
-    font-size: 0.78rem;
+    font-size: 0.88rem;
     color: var(--text-muted);
+    font-weight: 500;
 }
 
 /* ANDROID BADGE */
@@ -985,6 +988,7 @@
         grid-template-columns: 1fr auto;
         grid-template-areas:
             "device  actions"
+            "model   model"
             "error   error"
             "user    date";
         gap: 10px 12px;
@@ -1012,41 +1016,46 @@
         font-size: 0.88rem;
     }
 
-    /* col 1 — Dispositivo */
+    /* col 1 — Dispositivo (fabricante + ícone) */
     .logs-table tbody tr.log-row td:nth-child(1) {
         grid-area: device;
     }
 
-    /* col 2 — Android: oculto */
+    /* col 2 — Modelo */
     .logs-table tbody tr.log-row td:nth-child(2) {
+        grid-area: model;
+    }
+
+    /* col 3 — Android: oculto */
+    .logs-table tbody tr.log-row td:nth-child(3) {
         display: none;
     }
 
-    /* col 3 — Erro (full width) */
-    .logs-table tbody tr.log-row td:nth-child(3) {
+    /* col 4 — Erro (full width) */
+    .logs-table tbody tr.log-row td:nth-child(4) {
         grid-area: error;
     }
 
-    /* col 4 — Usuário */
-    .logs-table tbody tr.log-row td:nth-child(4) {
+    /* col 5 — Usuário */
+    .logs-table tbody tr.log-row td:nth-child(5) {
         grid-area: user;
         align-self: center;
     }
 
-    /* col 5 — Data */
-    .logs-table tbody tr.log-row td:nth-child(5) {
+    /* col 6 — Data */
+    .logs-table tbody tr.log-row td:nth-child(6) {
         grid-area: date;
         justify-self: end;
         align-self: center;
     }
 
-    /* col 6 — Fixado: oculto */
-    .logs-table tbody tr.log-row td:nth-child(6) {
+    /* col 7 — Fixado: oculto */
+    .logs-table tbody tr.log-row td:nth-child(7) {
         display: none;
     }
 
-    /* col 7 — Ações */
-    .logs-table tbody tr.log-row td:nth-child(7) {
+    /* col 8 — Ações */
+    .logs-table tbody tr.log-row td:nth-child(8) {
         grid-area: actions;
         justify-self: end;
     }

@@ -542,6 +542,7 @@ export const LogsPage = () => {
                         <thead>
                             <tr>
                                 <th>Dispositivo</th>
+                                <th>Modelo</th>
                                 <th>Android</th>
                                 <th>Erro</th>
                                 <th>Usuário</th>
@@ -564,15 +565,17 @@ export const LogsPage = () => {
                                             <div className="log-device-icon">
                                                 <Smartphone size={14} />
                                             </div>
-                                            <div className="log-device-info">
-                                                <span className="log-device-model">
-                                                    {log.deviceModel}
-                                                </span>
-                                                <span className="log-device-vendor">
-                                                    {log.vendor}
-                                                </span>
-                                            </div>
+                                            <span className="log-device-vendor">
+                                                {log.vendor}
+                                            </span>
                                         </div>
+                                    </td>
+
+                                    {/* MODELO */}
+                                    <td>
+                                        <span className="log-device-model">
+                                            {log.deviceModel || '—'}
+                                        </span>
                                     </td>
 
                                     {/* ANDROID */}
