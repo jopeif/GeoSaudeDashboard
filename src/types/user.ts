@@ -9,7 +9,8 @@ export interface UserDetails {
     registration?: string;
     block?: string;
     accessLevel?: number;
-    healthDepartment?: any;
+    healthDepartment?: { id: string; name: string; city?: string; state?: string } | string | null;
+    healthDepartmentId?: string | null;
 }
 
 export interface FindAllUsersResponse {

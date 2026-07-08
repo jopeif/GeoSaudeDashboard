@@ -10,15 +10,22 @@ import {
     Smartphone,
     RefreshCw,
     User,
+    Mail,
+    Phone,
+    Shield,
+    Hash,
     Copy,
     X,
     Terminal,
+    ExternalLink,
+    Building2,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { telemetryService } from '../../../services/Telemetry.service';
 import { userService } from '../../../services/User.service';
 import type { TelemetryLog, TelemetryMeta } from '../../../types/telemetry';
+import type { UserDetails } from '../../../types/user';
 
 import './LogsPage.css';
 
@@ -76,29 +83,38 @@ export const LogsPage = () => {
         left: number;
     }
 
+    interface UserPopoverState {
+        user: UserDetails;
+        top: number;
+        left: number;
+    }
+
     const [errorPopover, setErrorPopover] =
         useState<ErrorPopoverState | null>(null);
 
     const [copiedErrorId, setCopiedErrorId] =
         useState<string | null>(null);
 
+    const [userPopover, setUserPopover] =
+        useState<UserPopoverState | null>(null);
+
     /*
-        Cache de nomes de usuário em memória.
+        Cache de perfis de usuário em memória.
         Persiste entre trocas de página — o mesmo userId
         nunca é buscado duas vezes na sessão.
         null = buscado, mas usuário não encontrado/erro.
     */
-    const userNameCache =
-        useRef<Map<string, string | null>>(
+    const userCache =
+        useRef<Map<string, UserDetails | null>>(
             new Map()
         );
 
     /*
-        Mapa de nomes resolvidos para a UI.
+        Mapa de perfis resolvidos para a UI.
         Separado do cache para forçar re-render.
     */
-    const [resolvedNames, setResolvedNames] =
-        useState<Record<string, string | null>>({});
+    const [resolvedUsers, setResolvedUsers] =
+        useState<Record<string, UserDetails | null>>({});
 
     const [resolvingUsers, setResolvingUsers] =
         useState(false);
@@ -149,10 +165,10 @@ export const LogsPage = () => {
     };
 
     /* ========================================
-       RESOLVE USER NAMES
+       RESOLVE USER PROFILES
     ======================================== */
 
-    const resolveUserNames = useCallback(
+    const resolveUserProfiles = useCallback(
         async (logsToResolve: TelemetryLog[]) => {
 
             /*
@@ -165,7 +181,7 @@ export const LogsPage = () => {
                         .map(l => l.userId)
                         .filter((id): id is string =>
                             id !== null &&
-                            !userNameCache.current.has(id)
+                            !userCache.current.has(id)
                         )
                 )
             ];
@@ -175,11 +191,11 @@ export const LogsPage = () => {
                     Todos já estão em cache — apenas
                     sincroniza o estado de UI.
                 */
-                const snapshot: Record<string, string | null> = {};
-                userNameCache.current.forEach((name, id) => {
-                    snapshot[id] = name;
+                const snapshot: Record<string, UserDetails | null> = {};
+                userCache.current.forEach((user, id) => {
+                    snapshot[id] = user;
                 });
-                setResolvedNames(snapshot);
+                setResolvedUsers(snapshot);
                 return;
             }
 
@@ -202,25 +218,25 @@ export const LogsPage = () => {
                     result.value.success &&
                     result.value.user
                 ) {
-                    userNameCache.current.set(
+                    userCache.current.set(
                         id,
-                        result.value.user.name
+                        result.value.user
                     );
                 } else {
                     /*
                         Marca como null para não tentar
                         buscar novamente nesta sessão.
                     */
-                    userNameCache.current.set(id, null);
+                    userCache.current.set(id, null);
                 }
             });
 
             /* Atualiza o estado de UI com o cache completo */
-            const snapshot: Record<string, string | null> = {};
-            userNameCache.current.forEach((name, id) => {
-                snapshot[id] = name;
+            const snapshot: Record<string, UserDetails | null> = {};
+            userCache.current.forEach((user, id) => {
+                snapshot[id] = user;
             });
-            setResolvedNames(snapshot);
+            setResolvedUsers(snapshot);
             setResolvingUsers(false);
         },
         []
@@ -258,8 +274,8 @@ export const LogsPage = () => {
             if (response.success) {
                 setLogs(sortLogs(response.data));
                 setMeta(response.meta);
-                /* Resolve nomes após carregar os logs */
-                await resolveUserNames(response.data);
+                /* Resolve perfis de usuário após carregar os logs */
+                await resolveUserProfiles(response.data);
             } else {
                 setError(
                     response.message ||
@@ -283,7 +299,7 @@ export const LogsPage = () => {
         } finally {
             setLoading(false);
         }
-    }, [resolveUserNames]);
+    }, [resolveUserProfiles]);
 
     useEffect(() => {
         fetchLogs(currentPage);
@@ -395,8 +411,39 @@ export const LogsPage = () => {
             : err;
     };
 
+    /* ========================================
+       USER POPOVER
+    ======================================== */
+
+    const handleOpenUserPopover = (
+        e: React.MouseEvent<HTMLButtonElement>,
+        user: UserDetails
+    ) => {
+        e.stopPropagation();
+        const rect = e.currentTarget.getBoundingClientRect();
+        setUserPopover({
+            user,
+            top: rect.bottom + 8,
+            left: rect.left,
+        });
+    };
+
+    const handleCloseUserPopover = () => {
+        setUserPopover(null);
+    };
+
+    const roleLabel = (role: string) => {
+        const map: Record<string, string> = {
+            AGENT: 'Agente de Campo',
+            SUPERVISOR: 'Supervisor',
+            ADM: 'Administrador',
+            SUPERADMIN: 'Super Admin',
+        };
+        return map[role] ?? role;
+    };
+
     /*
-        Retorna o nome resolvido, um skeleton durante
+        Retorna o botão clicável de usuário, um skeleton durante
         a resolução, ou o ID truncado como fallback.
     */
     const renderUserCell = (userId: string | null) => {
@@ -409,20 +456,28 @@ export const LogsPage = () => {
             );
         }
 
-        if (resolvingUsers && !(userId in resolvedNames)) {
+        if (resolvingUsers && !(userId in resolvedUsers)) {
             return (
                 <span className="log-user-skeleton" />
             );
         }
 
-        const name = resolvedNames[userId];
+        const user = resolvedUsers[userId];
 
-        if (name) {
+        if (user) {
             return (
-                <span className="log-user-name">
-                    <User size={12} />
-                    {name}
-                </span>
+                <button
+                    className="log-user-btn"
+                    onClick={(e) => handleOpenUserPopover(e, user)}
+                    title="Ver perfil completo do usuário"
+                    id={`log-user-btn-${userId}`}
+                >
+                    <div className="log-user-avatar">
+                        {user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <span className="log-user-name-text">{user.name}</span>
+                    <ExternalLink size={11} className="log-user-btn-icon" />
+                </button>
             );
         }
 
@@ -820,6 +875,172 @@ export const LogsPage = () => {
                                 {copiedErrorId === errorPopover.id ? 'Copiado!' : 'Copiar erro'}
                             </button>
                         </div>
+                    </div>
+                </>
+            )}
+
+            {/* POPOVER DE PERFIL DO USUÁRIO */}
+            {userPopover && (
+                <>
+                    <div
+                        className="log-error-overlay"
+                        onClick={handleCloseUserPopover}
+                    />
+                    <div
+                        className="log-user-popover"
+                        style={{
+                            top: userPopover.top,
+                            left: userPopover.left,
+                        }}
+                    >
+                        {/* Header com avatar + nome */}
+                        <div className="log-user-popover-header">
+                            <div className="log-user-popover-avatar">
+                                {userPopover.user.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div className="log-user-popover-identity">
+                                <span className="log-user-popover-name">
+                                    {userPopover.user.name}
+                                </span>
+                                <span
+                                    className={`log-user-popover-role log-user-role--${userPopover.user.role.toLowerCase()}`}
+                                >
+                                    {roleLabel(userPopover.user.role)}
+                                </span>
+                            </div>
+                            <button
+                                className="log-error-close-btn"
+                                onClick={handleCloseUserPopover}
+                                title="Fechar"
+                                id="log-user-popover-close"
+                            >
+                                <X size={14} />
+                            </button>
+                        </div>
+
+                        {/* Campos do perfil */}
+                        <div className="log-user-popover-body">
+
+                            <div className="log-user-popover-row">
+                                <span className="log-user-popover-label">
+                                    <Mail size={13} />
+                                    E-mail
+                                </span>
+                                <span className="log-user-popover-value">
+                                    {userPopover.user.email}
+                                </span>
+                            </div>
+
+                            <div className="log-user-popover-row">
+                                <span className="log-user-popover-label">
+                                    <Phone size={13} />
+                                    Telefone
+                                </span>
+                                <span className="log-user-popover-value">
+                                    {userPopover.user.phoneNumber || '—'}
+                                </span>
+                            </div>
+
+                            {userPopover.user.registration && (
+                                <div className="log-user-popover-row">
+                                    <span className="log-user-popover-label">
+                                        <Hash size={13} />
+                                        Matrícula
+                                    </span>
+                                    <span className="log-user-popover-value">
+                                        {userPopover.user.registration}
+                                    </span>
+                                </div>
+                            )}
+
+                            {userPopover.user.block && (
+                                <div className="log-user-popover-row">
+                                    <span className="log-user-popover-label">
+                                        <Shield size={13} />
+                                        Setor / Quadra
+                                    </span>
+                                    <span className="log-user-popover-value">
+                                        {userPopover.user.block}
+                                    </span>
+                                </div>
+                            )}
+
+                            {(() => {
+                                const dept = userPopover.user.healthDepartment;
+                                const deptId = userPopover.user.healthDepartmentId;
+
+                                /* Objeto populado com name */
+                                if (dept && typeof dept === 'object' && dept.name) {
+                                    return (
+                                        <div className="log-user-popover-row">
+                                            <span className="log-user-popover-label">
+                                                <Building2 size={13} />
+                                                Secretaria
+                                            </span>
+                                            <span className="log-user-popover-value">
+                                                {dept.name}
+                                                {dept.city && (
+                                                    <span className="log-user-popover-city">
+                                                        {dept.city}
+                                                        {dept.state ? ` — ${dept.state}` : ''}
+                                                    </span>
+                                                )}
+                                            </span>
+                                        </div>
+                                    );
+                                }
+
+                                /* Apenas UUID como string ou healthDepartmentId avulso */
+                                const rawId =
+                                    (typeof dept === 'string' && dept) ||
+                                    deptId ||
+                                    null;
+
+                                if (rawId) {
+                                    return (
+                                        <div className="log-user-popover-row">
+                                            <span className="log-user-popover-label">
+                                                <Building2 size={13} />
+                                                Secretaria
+                                            </span>
+                                            <span className="log-user-popover-value log-user-popover-id" title={rawId}>
+                                                {rawId.slice(0, 8)}...
+                                            </span>
+                                        </div>
+                                    );
+                                }
+
+                                return null;
+                            })()}
+
+                            <div className="log-user-popover-row">
+                                <span className="log-user-popover-label">
+                                    <User size={13} />
+                                    ID
+                                </span>
+                                <span className="log-user-popover-value log-user-popover-id">
+                                    {userPopover.user.id}
+                                </span>
+                            </div>
+
+                        </div>
+
+                        {/* Footer com badge de situação */}
+                        <div className="log-user-popover-footer">
+                            <span
+                                className={`log-user-popover-status ${
+                                    userPopover.user.banned
+                                        ? 'is-banned'
+                                        : 'is-active'
+                                }`}
+                            >
+                                {userPopover.user.banned ? 'Conta suspensa' : 'Conta ativa'}
+                            </span>
+                            <span className="log-user-popover-since">
+                                Desde {new Date(userPopover.user.createdAt).toLocaleDateString('pt-BR')}
+                            </span>
+                        </div>
+
                     </div>
                 </>
             )}

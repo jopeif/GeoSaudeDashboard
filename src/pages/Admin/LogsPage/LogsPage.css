@@ -394,18 +394,12 @@
     border: 1px solid rgba(239, 68, 68, 0.2);
     border-radius: 7px;
     cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.15s ease, background 0.15s ease;
-}
-
-/* Aparece ao hover na linha da tabela */
-.log-row:hover .log-error-expand-btn,
-.log-row.pinned .log-error-expand-btn {
-    opacity: 1;
+    transition: background 0.15s ease, transform 0.15s ease;
 }
 
 .log-error-expand-btn:hover {
     background: rgba(239, 68, 68, 0.18);
+    transform: translateY(-1px);
 }
 
 /* OVERLAY (fecha ao clicar fora) */
@@ -572,23 +566,72 @@
     color: var(--text-light);
 }
 
-/* Nome resolvido */
-.log-user-name {
+/* BOTÃO CLICÁVEL DE USUÁRIO */
+
+.log-user-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
 
-    font-size: 0.88rem;
-    font-weight: 600;
+    padding: 4px 8px 4px 4px;
+
+    background: rgba(0, 90, 156, 0.06);
+    border: 1px solid rgba(0, 90, 156, 0.15);
+    border-radius: 999px;
+
     color: var(--text-main);
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    max-width: 180px;
 }
 
-.log-user-name svg {
+.log-user-btn:hover {
+    background: rgba(0, 90, 156, 0.12);
+    border-color: var(--primary);
     color: var(--primary);
-    flex-shrink: 0;
 }
 
-/* Skeleton enquanto resolve o nome */
+.log-user-avatar {
+    width: 24px;
+    height: 24px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+    color: white;
+
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.log-user-name-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.log-user-btn-icon {
+    flex-shrink: 0;
+    opacity: 0.5;
+    transition: opacity 0.15s ease;
+}
+
+.log-user-btn:hover .log-user-btn-icon {
+    opacity: 1;
+}
+
+/* Skeleton enquanto resolve o perfil */
 .log-user-skeleton {
     display: inline-block;
 
@@ -611,6 +654,208 @@
 @keyframes skeleton-shimmer {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
+}
+
+/* ==========================================
+   POPOVER DE PERFIL DO USUÁRIO
+========================================== */
+
+.log-user-popover {
+    position: fixed;
+    z-index: 9999;
+    width: 360px;
+    max-width: calc(100vw - 32px);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.22),
+        0 0 0 1px rgba(0, 90, 156, 0.1);
+    animation: popover-enter 0.18s ease-out;
+    overflow: hidden;
+}
+
+/* Header */
+
+.log-user-popover-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 16px;
+
+    background: rgba(0, 90, 156, 0.05);
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.log-user-popover-avatar {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+    color: white;
+
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.log-user-popover-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+}
+
+.log-user-popover-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-main);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.log-user-popover-role {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 2px 8px;
+
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    width: fit-content;
+}
+
+.log-user-role--agent {
+    background: rgba(46, 139, 87, 0.12);
+    color: var(--secondary);
+}
+
+.log-user-role--supervisor {
+    background: rgba(0, 90, 156, 0.12);
+    color: var(--primary);
+}
+
+.log-user-role--adm,
+.log-user-role--superadmin {
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--warning);
+}
+
+/* Body */
+
+.log-user-popover-body {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.log-user-popover-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.log-user-popover-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    width: 100px;
+    flex-shrink: 0;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+
+    color: var(--text-muted);
+    padding-top: 2px;
+}
+
+.log-user-popover-label svg {
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.log-user-popover-value {
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--text-main);
+
+    word-break: break-word;
+    flex: 1;
+}
+
+.log-user-popover-id {
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    word-break: break-all;
+}
+
+/* Subtexto de cidade/estado da secretaria */
+.log-user-popover-city {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 400;
+}
+
+/* Footer */
+
+.log-user-popover-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 16px;
+
+    border-top: 1px solid var(--border-soft);
+
+    background: var(--card-soft);
+}
+
+.log-user-popover-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 3px 10px;
+
+    border-radius: 999px;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.log-user-popover-status.is-active {
+    background: rgba(46, 139, 87, 0.12);
+    color: var(--secondary);
+}
+
+.log-user-popover-status.is-banned {
+    background: rgba(239, 68, 68, 0.12);
+    color: var(--danger);
+}
+
+.log-user-popover-since {
+    font-size: 0.78rem;
+    color: var(--text-light);
 }
 
 /* DATE */
@@ -1097,7 +1342,7 @@
         white-space: nowrap;
     }
 
-    .log-user-name,
+    .log-user-btn,
     .log-user-anonymous,
     .log-user-id {
         font-size: 0.82rem;
