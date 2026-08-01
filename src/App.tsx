@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { MapPin, ChevronRight, CheckCircle, BarChart3, Users, Sun, Moon } from 'lucide-react';
-import logoTrans from './assets/logoTrans.png';
+import logoLight from './imgs/logo-icon.png';
+import logoDark from './imgs/logo-icon-dark.png';
 
 function App() {
   const [isDark, setIsDark] = useState(false);
@@ -42,18 +43,31 @@ function App() {
       <header className="glass" style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000, transition: 'all 0.3s ease' }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px var(--padding-horizontal)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <img src={logoTrans} alt="GeoSaúde Logo" style={{ height: '36px', objectFit: 'contain' }} />
+            <img src={isDark ? logoDark : logoLight} alt="GeoSaúde Logo" className="header-logo" />
+            <div className="brand-texts">
+              <span className="brand-label">Plataforma</span>
+              <h1 className="brand-name">
+                <span className="text-brand-green">G</span>
+                <span className="text-brand-blue">eo</span>
+                <span className="text-brand-green">S</span>
+                <span className="text-brand-blue">aúde</span>
+              </h1>
+            </div>
           </div>
           <nav className="desktop-nav" style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
             <a href="#sobre" className="body-text" style={{ fontWeight: 500, color: 'var(--text-secondary)' }}>Plataforma</a>
             <a href="#como-funciona" className="body-text" style={{ fontWeight: 500, color: 'var(--text-secondary)' }}>Funcionalidades</a>
             
             <button 
+              className={`theme-switch ${isDark ? 'dark' : 'light'}`}
               onClick={toggleTheme} 
-              style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               title="Alternar Tema"
             >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              <div className="theme-switch-track">
+                <Sun className="theme-switch-icon sun" size={14} />
+                <Moon className="theme-switch-icon moon" size={14} />
+                <div className="theme-switch-thumb"></div>
+              </div>
             </button>
             
             <a href="https://geo-saude-dashboard.vercel.app" className="btn btn-primary" style={{ height: '40px', padding: '0 20px', borderRadius: '6px' }}>
@@ -71,7 +85,7 @@ function App() {
                Sistema de Supervisão Epidemiológica
             </div>
             <h1 className="title-main" style={{ fontSize: 'clamp(36px, 5vw, 56px)', lineHeight: 1.15, marginBottom: '24px' }}>
-              Inteligência e <span style={{ color: 'var(--primary)' }}>Precisão</span> na Saúde Pública
+              <span className="text-brand-blue">Inteligência</span> e <span className="text-brand-green">Precisão</span> na Saúde Pública
             </h1>
             <p className="subtitle" style={{ fontSize: 'clamp(16px, 2vw, 20px)', marginBottom: '40px', maxWidth: '540px', lineHeight: 1.6 }}>
               Uma plataforma robusta para otimizar o trabalho de supervisores e agentes de saúde, com análise de dados em tempo real e mapas de calor epidemiológicos.
@@ -111,7 +125,7 @@ function App() {
               <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {/* Stats row */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
-                  <div style={{ backgroundColor: 'var(--primary)', color: 'var(--background)', padding: '16px', borderRadius: '8px', border: '1px solid var(--input-border)' }}>
+                  <div style={{ backgroundColor: 'var(--secondary)', color: '#0F172A', padding: '16px', borderRadius: '8px', border: '1px solid var(--input-border)' }}>
                     <div style={{ fontSize: '12px', fontWeight: 600, opacity: 0.9, marginBottom: '8px' }}>TOTAL DE VISITAS</div>
                     <div style={{ fontSize: '28px', fontWeight: 700 }}>290</div>
                   </div>
@@ -128,9 +142,21 @@ function App() {
                 <div style={{ height: '180px', backgroundColor: 'var(--background)', borderRadius: '8px', border: '1px solid var(--input-border)', position: 'relative', padding: '16px' }}>
                    <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>EVOLUÇÃO DE VISITAS</div>
                    {/* Fake chart lines */}
-                   <svg style={{ position: 'absolute', bottom: '20px', left: '20px', width: 'calc(100% - 40px)', height: '100px', overflow: 'visible' }}>
-                     <path d="M0,80 Q50,90 100,70 T200,60 T300,80 T400,50 T500,40" fill="none" stroke="var(--primary)" strokeWidth="2" />
-                     <path d="M0,95 L500,95" fill="none" stroke="#EF4444" strokeWidth="2" />
+                   <svg viewBox="0 0 500 100" preserveAspectRatio="none" style={{ position: 'absolute', bottom: '20px', left: '20px', width: 'calc(100% - 40px)', height: '100px', overflow: 'hidden' }}>
+                     {/* Grid lines horizontal */}
+                     <path d="M0,25 L500,25" fill="none" stroke="var(--input-border)" strokeWidth="1" strokeDasharray="4,4" vectorEffect="non-scaling-stroke" />
+                     <path d="M0,50 L500,50" fill="none" stroke="var(--input-border)" strokeWidth="1" strokeDasharray="4,4" vectorEffect="non-scaling-stroke" />
+                     <path d="M0,75 L500,75" fill="none" stroke="var(--input-border)" strokeWidth="1" strokeDasharray="4,4" vectorEffect="non-scaling-stroke" />
+                     <path d="M0,100 L500,100" fill="none" stroke="var(--input-border)" strokeWidth="1" strokeDasharray="4,4" vectorEffect="non-scaling-stroke" />
+                     {/* Grid lines vertical */}
+                     <path d="M100,0 L100,100" fill="none" stroke="var(--input-border)" strokeWidth="1" strokeDasharray="4,4" vectorEffect="non-scaling-stroke" />
+                     <path d="M200,0 L200,100" fill="none" stroke="var(--input-border)" strokeWidth="1" strokeDasharray="4,4" vectorEffect="non-scaling-stroke" />
+                     <path d="M300,0 L300,100" fill="none" stroke="var(--input-border)" strokeWidth="1" strokeDasharray="4,4" vectorEffect="non-scaling-stroke" />
+                     <path d="M400,0 L400,100" fill="none" stroke="var(--input-border)" strokeWidth="1" strokeDasharray="4,4" vectorEffect="non-scaling-stroke" />
+                     <path d="M500,0 L500,100" fill="none" stroke="var(--input-border)" strokeWidth="1" strokeDasharray="4,4" vectorEffect="non-scaling-stroke" />
+                     {/* Data lines */}
+                     <path d="M0,80 Q50,90 100,70 T200,60 T300,80 T400,50 T500,40" fill="none" stroke="var(--secondary)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+                     <path d="M0,95 L500,95" fill="none" stroke="#EF4444" strokeWidth="2" vectorEffect="non-scaling-stroke" />
                    </svg>
                 </div>
               </div>
@@ -223,8 +249,17 @@ function App() {
             <div className="reveal delay-200 opacity-0" style={{ display: 'flex', justifyContent: 'center' }}>
               {/* Login Page Mock */}
               <div className="card" style={{ width: '100%', maxWidth: '380px', padding: '32px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'var(--card-background)' }}>
-                 <div style={{ marginBottom: '16px' }}>
-                    <img src={logoTrans} alt="GeoSaúde" style={{ height: '48px', objectFit: 'contain' }} />
+                 <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <img src={isDark ? logoDark : logoLight} alt="GeoSaúde" className="header-logo" style={{ width: '48px', height: '48px' }} />
+                    <div className="brand-texts">
+                      <span className="brand-label" style={{ fontSize: '10px' }}>Plataforma</span>
+                      <h1 className="brand-name" style={{ fontSize: '24px' }}>
+                        <span className="text-brand-green">G</span>
+                        <span className="text-brand-blue">eo</span>
+                        <span className="text-brand-green">S</span>
+                        <span className="text-brand-blue">aúde</span>
+                      </h1>
+                    </div>
                  </div>
                  <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Plataforma de Supervisão</div>
                  <div style={{ fontSize: '16px', fontWeight: 600, marginBottom: '32px', color: 'var(--text-primary)' }}>Entrar no Sistema</div>
@@ -256,7 +291,16 @@ function App() {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '24px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <img src={logoTrans} alt="GeoSaúde" style={{ height: '32px', objectFit: 'contain' }} />
+              <img src={isDark ? logoDark : logoLight} alt="GeoSaúde" className="header-logo" style={{ width: '32px', height: '32px' }} />
+              <div className="brand-texts">
+                <span className="brand-label" style={{ fontSize: '7px' }}>Plataforma</span>
+                <h1 className="brand-name" style={{ fontSize: '16px' }}>
+                  <span className="text-brand-green">G</span>
+                  <span className="text-brand-blue">eo</span>
+                  <span className="text-brand-green">S</span>
+                  <span className="text-brand-blue">aúde</span>
+                </h1>
+              </div>
             </div>
             <div style={{ display: 'flex', gap: '24px' }}>
               <a href="#" className="body-text" style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Termos de Uso</a>

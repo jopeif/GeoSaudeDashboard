@@ -1,34 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  /* Brand Colors from Images */
-  --verde-saude: #2E8B57; /* Or #49A078 based on the button */
-  --verde-claro: #E8F5EE;
-  --azul-escuro: #0F172A; /* Dark navy from background */
+  /* Brand Colors from main branch */
+  --brand-blue: #005A9C;
+  --brand-green: #469472;
+  --brand-gray-neutral: #6B7280;
+  --brand-gray-light: #F2F4F7;
+  --brand-white: #FFFFFF;
 
   /* Functional Colors - Light Theme */
-  --primary: #2E8B57;
-  --primary-dark: #1F6B40;
-  --primary-light: rgba(46, 139, 87, 0.1);
-  --background: #F3F4F6;
-  --card-background: #FFFFFF;
-  --field-green: #F9FAFB;
-  --field-green-hover: #F3F4F6;
+  --primary: var(--brand-blue);
+  --primary-dark: #00487C;
+  --primary-light: rgba(0, 90, 156, 0.1);
+  --secondary: var(--brand-green);
+  --secondary-dark: #226b42;
+
+  --background: var(--brand-gray-light);
+  --card-background: var(--brand-white);
+  --field-green: #f8fafc; /* Kept name for compatibility with App.css */
+  --field-green-hover: #F2F4F7;
   
   /* Text Colors - Light */
-  --text-primary: #111827;
-  --text-secondary: #4B5563;
+  --text-primary: #1f2937;
+  --text-secondary: var(--brand-gray-neutral);
   --text-gray: #6B7280;
   --label-gray: #374151;
 
   /* State Colors */
   --status-empty: #9CA3AF;
-  --status-partial: #F59E0B;
-  --status-complete: #10B981;
-  --status-error: #EF4444;
+  --status-partial: #f59e0b;
+  --status-complete: var(--brand-green);
+  --status-error: #ef4444;
 
   /* Neutrals - Light */
-  --input-border: #D1D5DB;
+  --input-border: #e2e8f0;
+  --border-soft: #edf2f7;
 
   /* Spacings */
   --space-xxs: 4px;
@@ -62,22 +68,26 @@
 
 html.dark {
   /* Functional Colors - Dark Theme */
-  --primary: #4ADE80; /* Brighter green for dark mode */
-  --primary-dark: #22C55E;
-  --primary-light: rgba(74, 222, 128, 0.1);
-  --background: #0F172A; /* Match the navy background in the images */
-  --card-background: #1E293B; /* Match the card background in the images */
-  --field-green: #0F172A;
+  --primary: #2d86d0; 
+  --primary-dark: #4ea8f0;
+  --primary-light: rgba(45, 134, 208, 0.1);
+  --secondary: #34d399;
+  --secondary-dark: #10b981;
+
+  --background: #0f172a; 
+  --card-background: #1e293b; 
+  --field-green: #0f172a;
   --field-green-hover: #334155;
 
   /* Text Colors - Dark */
-  --text-primary: #F9FAFB;
-  --text-secondary: #94A3B8;
-  --text-gray: #CBD5E1;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-gray: #94a3b8;
   --label-gray: #E2E8F0;
 
   /* Neutrals - Dark */
   --input-border: #334155;
+  --border-soft: #475569;
 
   --card-elevation: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
 }
