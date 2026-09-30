@@ -4,6 +4,7 @@ import type {
   KPIResponse, 
   ChartsResponse, 
   HeatmapParams,
+  HeatmapResponse,
   AgentRouteParams
 } from '../types/dashboard';
 
@@ -12,13 +13,12 @@ export const dashboardService = {
    * Busca os indicadores (KPIs) com base nos filtros
    */
   async getKPIs(filters: DashboardFilters): Promise<KPIResponse> {
-    const params: any = { ...filters };
+    const params: Record<string, unknown> = { ...filters };
     if (params.userId && !params.agentId) {
       params.agentId = params.userId;
     }
     delete params.userId;
     
-    console.log("getKPIs params final:", params);
     const { data } = await api.get<KPIResponse>('/dashboard/kpis', { params });
     return data;
   },
@@ -27,7 +27,7 @@ export const dashboardService = {
    * Busca os dados dos gráficos com base nos filtros
    */
   async getCharts(filters: DashboardFilters): Promise<ChartsResponse> {
-    const params: any = { groupBy: 'day', ...filters }; 
+    const params: Record<string, unknown> = { groupBy: 'day', ...filters }; 
     if (params.userId && !params.agentId) {
       params.agentId = params.userId;
     }
@@ -37,13 +37,13 @@ export const dashboardService = {
     return data;
   },
 
-  async getHeatmapData(params: HeatmapParams) {
-    const { data } = await api.get('/dashboard/heatmap', { params });
+  async getHeatmapData(params: HeatmapParams): Promise<HeatmapResponse> {
+    const { data } = await api.get<HeatmapResponse>('/dashboard/heatmap', { params });
     return data;  
   },
 
   async getAgentRoute(params: AgentRouteParams) {
-    const { data } = await api.get('/dashboard/agent-route', {params})
-    return data
+    const { data } = await api.get('/dashboard/agent-route', {params});
+    return data;
   }
 };

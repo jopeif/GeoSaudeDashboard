@@ -64,6 +64,17 @@ export interface ChartsResponse {
   };
 }
 
+export interface HeatmapPoint {
+  lat: number;
+  lng: number;
+  weight?: number;
+}
+
+export interface HeatmapResponse {
+  success: boolean;
+  data: HeatmapPoint[];
+}
+
 export interface HeatmapParams {
   startDate?: string;
   endDate?: string;
@@ -83,4 +94,4 @@ export interface AgentRouteParams {
   minLng?: number;
   maxLat?: number;
   maxLng?: number;
-}
+}

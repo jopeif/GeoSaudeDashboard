@@ -23,6 +23,8 @@ import {
     Siren
 } from 'lucide-react';
 
+import { useTheme } from '../../../contexts/ThemeContext';
+
 import './AgentRouteMap.css';
 
 interface RoutePoint {
@@ -52,9 +54,19 @@ const MapController = ({
     const map = useMap();
 
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             map.invalidateSize();
-        }, 250);
+        }, 200);
+
+        const container = map.getContainer();
+        let observer: ResizeObserver | null = null;
+
+        if (typeof ResizeObserver !== 'undefined' && container) {
+            observer = new ResizeObserver(() => {
+                map.invalidateSize();
+            });
+            observer.observe(container);
+        }
 
         if (points.length > 0) {
             const bounds = L.latLngBounds(
@@ -68,6 +80,14 @@ const MapController = ({
                 padding: [50, 50]
             });
         }
+
+        return () => {
+            clearTimeout(timer);
+            if (observer && container) {
+                observer.unobserve(container);
+                observer.disconnect();
+            }
+        };
     }, [map, points]);
 
     return null;
@@ -80,6 +100,7 @@ const MapController = ({
 export const AgentRouteMap = ({
     points
 }: AgentRouteMapProps) => {
+    const { isDark } = useTheme();
     const navigate = useNavigate();
 
     const sortedPoints = [...points].sort(
@@ -99,6 +120,7 @@ export const AgentRouteMap = ({
     return (
         <div className="map-wrapper-container">
             <MapContainer
+                key={isDark ? 'route-map-dark' : 'route-map-light'}
                 center={[-5.1483, -38.0991]}
                 zoom={14}
                 className="leaflet-main-map"
@@ -107,22 +129,25 @@ export const AgentRouteMap = ({
 
                     {/* MAPA CLARO */}
                     <LayersControl.BaseLayer
-                        checked
+                        checked={!isDark}
                         name="Mapa Claro"
                     >
                         <TileLayer
-                            attribution="&copy; CARTO"
-                            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            className="map-tiles-light"
                         />
                     </LayersControl.BaseLayer>
 
                     {/* MAPA ESCURO */}
                     <LayersControl.BaseLayer
+                        checked={isDark}
                         name="Mapa Escuro"
                     >
                         <TileLayer
-                            attribution="&copy; CARTO"
-                            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            className="map-tiles-dark"
                         />
                     </LayersControl.BaseLayer>
 
@@ -131,18 +156,19 @@ export const AgentRouteMap = ({
                         name="Satélite"
                     >
                         <TileLayer
-                            attribution="&copy; Esri"
+                            attribution='&copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
                             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                         />
                     </LayersControl.BaseLayer>
 
-                    {/* PADRÃO */}
+                    {/* HUMANITÁRIO */}
                     <LayersControl.BaseLayer
-                        name="Padrão"
+                        name="Humanitário"
                     >
                         <TileLayer
-                            attribution="&copy; OpenStreetMap"
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles courtesy of <a href="https://www.hotosm.org/">HOT</a>'
+                            url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                            className="map-tiles-light"
                         />
                     </LayersControl.BaseLayer>
                 </LayersControl>

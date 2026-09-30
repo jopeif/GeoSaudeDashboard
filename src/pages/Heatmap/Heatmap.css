@@ -117,7 +117,8 @@
     min-width: 180px;
 }
 
-.heatmap-filter-group--actions {
+.heatmap-filter-group--actions,
+.heatmap-filter-actions {
     justify-content: flex-end;
 }
 
@@ -140,7 +141,7 @@
 }
 
 /* =========================
-   INPUTS
+   INPUTS & CONTROLS
 ========================= */
 
 .heatmap-filter-group input,
@@ -164,6 +165,15 @@
         border-color 0.2s ease,
         background 0.2s ease,
         box-shadow 0.2s ease;
+}
+
+.dark .heatmap-filter-group input[type="date"] {
+    color-scheme: dark;
+}
+
+.dark .heatmap-filter-group select option {
+    background: var(--card-bg);
+    color: var(--text-main);
 }
 
 .heatmap-filter-group input::placeholder {
@@ -191,18 +201,18 @@
 ========================= */
 
 .heatmap-btn-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
     width: 100%;
     height: 50px;
 
-    border: none;
-    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--card-soft),
-            var(--border-color)
-        );
+    background: var(--card-soft);
 
     color: var(--text-main);
 
@@ -214,21 +224,18 @@
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease,
-        background 0.2s ease;
+        background 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .heatmap-btn-clear:hover {
     transform: translateY(-1px);
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--border-color),
-            var(--border-soft)
-        );
+    background: var(--card-bg);
+    border-color: var(--primary);
 
     box-shadow:
-        0 10px 24px rgba(15,23,42,0.06);
+        0 10px 24px rgba(15, 23, 42, 0.08);
 }
 
 /* =========================
@@ -239,7 +246,8 @@
     position: relative;
 
     width: 100%;
-    height: 72vh;
+    height: 80vh;
+    min-height: 560px;
 
     overflow: hidden;
 
@@ -253,7 +261,7 @@
 }
 
 /* =========================
-   LEAFLET MAP
+   LEAFLET MAP & RESET
 ========================= */
 
 .leaflet-main-map {
@@ -261,19 +269,28 @@
     height: 100%;
 }
 
+.leaflet-container {
+    background: var(--card-bg) !important;
+    font-family: inherit !important;
+}
+
 /* =========================
-   LEAFLET CUSTOM
+   LEAFLET CONTROLS & DARK MODE
 ========================= */
 
 .leaflet-control-layers {
-    border: none !important;
-
+    border: 1px solid var(--border-color) !important;
     overflow: hidden;
+    border-radius: 16px !important;
 
-    border-radius: 18px !important;
+    background: var(--card-bg) !important;
+    color: var(--text-main) !important;
 
     box-shadow:
-        0 12px 28px rgba(15, 23, 42, 0.12) !important;
+        0 12px 28px rgba(0, 0, 0, 0.15) !important;
+
+    backdrop-filter: blur(8px);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .leaflet-control-layers-toggle {
@@ -281,31 +298,73 @@
     height: 42px !important;
 }
 
+.dark .leaflet-control-layers-toggle {
+    filter: invert(0.9) hue-rotate(180deg);
+}
+
+.leaflet-control-layers-expanded {
+    padding: 14px 18px !important;
+
+    background: var(--card-bg) !important;
+    color: var(--text-main) !important;
+
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.leaflet-control-layers-base label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 8px;
+
+    cursor: pointer;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.leaflet-control-layers-base input[type="radio"] {
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
 .leaflet-popup-content-wrapper {
     border-radius: 18px !important;
+    background: var(--card-bg) !important;
+    color: var(--text-main) !important;
 }
 
 .leaflet-control-zoom {
-    border: none !important;
-
+    border: 1px solid var(--border-color) !important;
     overflow: hidden;
-
-    border-radius: 16px !important;
-
-    box-shadow:
-        0 10px 24px rgba(15, 23, 42, 0.12);
+    border-radius: 14px !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12) !important;
 }
 
 .leaflet-control-zoom a {
     border: none !important;
-
     background: var(--card-bg) !important;
-
     color: var(--text-main) !important;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 .leaflet-control-zoom a:hover {
     background: var(--card-soft) !important;
+    color: var(--primary) !important;
+}
+
+.leaflet-control-attribution {
+    background: var(--card-bg) !important;
+    color: var(--text-muted) !important;
+    font-size: 0.72rem !important;
+    border-radius: 8px 0 0 0;
+    opacity: 0.85;
+}
+
+.leaflet-control-attribution a {
+    color: var(--primary) !important;
 }
 
 /* =========================
@@ -315,18 +374,21 @@
 .map-loading-overlay {
     position: absolute;
     inset: 0;
-
     z-index: 1000;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(4px);
 
-    backdrop-filter: blur(3px);
+    border-radius: 28px;
+    transition: background 0.3s ease;
+}
 
-    border-radius: 24px;
+.dark .map-loading-overlay {
+    background: rgba(15, 23, 42, 0.65);
 }
 
 .map-loading-card {
@@ -352,7 +414,6 @@
 
 .map-loading-icon {
     color: var(--primary);
-
     animation: mapSpin 0.9s linear infinite;
 }
 
@@ -360,10 +421,92 @@
     from {
         transform: rotate(0deg);
     }
-
     to {
         transform: rotate(360deg);
     }
+}
+
+/* =========================
+   HEATMAP LEGEND BADGE
+========================= */
+
+.heatmap-legend-badge {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    z-index: 999;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 12px 16px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(8px);
+    pointer-events: auto;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.heatmap-legend-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.heatmap-legend-title svg {
+    color: var(--primary);
+}
+
+.heatmap-legend-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.legend-gradient-line {
+    width: 120px;
+    height: 8px;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.legend-gradient-line.light-mode {
+    background: linear-gradient(
+        to right,
+        #2563eb,
+        #06b6d4,
+        #10b981,
+        #f59e0b,
+        #ef4444
+    );
+}
+
+.legend-gradient-line.dark-mode {
+    background: linear-gradient(
+        to right,
+        #00e5ff,
+        #00ff88,
+        #ffea00,
+        #ff6d00,
+        #ff1744
+    );
 }
 
 /* =========================
@@ -371,28 +514,29 @@
 ========================= */
 
 @media (max-width: 1200px) {
-
     .heatmap-filter-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .heatmap-filter-group--actions {
+    .heatmap-filter-group--actions,
+    .heatmap-filter-actions {
         grid-column: span 2;
     }
-
 }
 
 @media (max-width: 768px) {
+    .heatmap-page {
+        padding: 16px;
+        gap: 16px;
+    }
 
     .heatmap-page-title {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
 
     .heatmap-filter-container {
-        padding: 20px;
-
-        border-radius: 22px;
+        padding: 18px;
+        border-radius: 20px;
     }
 
     .heatmap-filter-header {
@@ -404,42 +548,54 @@
         grid-template-columns: 1fr;
     }
 
-    .heatmap-filter-group--actions {
+    .heatmap-filter-group--actions,
+    .heatmap-filter-actions {
         grid-column: auto;
     }
 
-    .btn-apply-filters {
-        width: 100%;
-    }
-
     .map-wrapper-container {
-        height: 65vh;
-
-        border-radius: 22px;
+        height: 72vh;
+        min-height: 460px;
+        border-radius: 20px;
     }
 
+    .heatmap-legend-badge {
+        bottom: 16px;
+        left: 16px;
+        padding: 8px 12px;
+    }
+
+    .legend-gradient-line {
+        width: 80px;
+    }
 }
 
 @media (max-width: 540px) {
-
     .heatmap-page-title {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
     }
 
     .heatmap-filter-container {
-        padding: 18px;
+        padding: 16px;
     }
 
     .heatmap-filter-header-left h3 {
         font-size: 1rem;
     }
 
-    .heatmap-filter-header-left p {
-        font-size: 0.84rem;
-    }
-
     .map-wrapper-container {
-        height: 58vh;
+        height: 68vh;
+        min-height: 400px;
+        border-radius: 16px;
     }
 
+    .heatmap-legend-badge {
+        bottom: 12px;
+        left: 12px;
+        padding: 6px 10px;
+    }
+
+    .legend-gradient-line {
+        width: 60px;
+    }
 }

@@ -8,7 +8,8 @@
     position: relative;
 
     width: 100%;
-    height: 500px;
+    height: 580px;
+    min-height: 480px;
 
     margin-top: 20px;
 

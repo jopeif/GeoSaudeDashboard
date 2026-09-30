@@ -69,3 +69,18 @@ body {
 /* Text Brand Utilities */
 .text-brand-blue { color: var(--primary); }
 .text-brand-green { color: var(--secondary); }
+
+/* ========================================
+   GLOBAL LEAFLET TILE STYLES (NO API KEY)
+======================================== */
+.map-tiles-light {
+  filter: none;
+}
+
+.map-tiles-dark {
+  filter: invert(100%) hue-rotate(180deg) brightness(90%) contrast(95%);
+}
+
+.dark .map-tiles-auto {
+  filter: invert(100%) hue-rotate(180deg) brightness(90%) contrast(95%);
+}

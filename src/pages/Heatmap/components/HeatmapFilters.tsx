@@ -173,10 +173,11 @@ export const HeatmapFilters: React.FC<
 
                 {/* ACTIONS */}
 
-                <div className="heatmap-filter-actions">
+                <div className="heatmap-filter-group heatmap-filter-group--actions heatmap-filter-actions">
 
                     <button
                         className="heatmap-btn-clear"
+                        type="button"
                         onClick={
                             onClearFilters
                         }
